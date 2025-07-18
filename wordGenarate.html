@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Processor with File Upload and TailwindCSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #9d00ff;
+            --neon-green: #00ff9d;
+            --dark-bg: #0f0f1a;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .neon-glow {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--neon-blue), 0 0 20px var(--neon-blue);
+        }
+
+        .neon-box {
+            box-shadow: 0 0 5px var(--neon-blue), 0 0 15px var(--neon-blue);
+        }
+
+        .neon-pink {
+            box-shadow: 0 0 5px var(--neon-pink), 0 0 15px var(--neon-pink);
+        }
+
+        .neon-purple {
+            box-shadow: 0 0 5px var(--neon-purple), 0 0 15px var(--neon-purple);
+        }
+
+        .neon-green {
+            box-shadow: 0 0 5px var(--neon-green), 0 0 15px var(--neon-green);
+        }
+
+        .sidebar {
+            background: rgba(15, 15, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 3px solid var(--neon-blue);
+        }
+
+        .header {
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 5px var(--neon-blue), 0 0 15px var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .content-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            display: none;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .clock {
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            }
+
+            50% {
+                box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            }
+
+            100% {
+                box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .textarea-neon,
+        .file-input-label {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .textarea-neon:focus {
+            box-shadow: 0 0 5px var(--neon-blue), 0 0 15px var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label:hover {
+            box-shadow: 0 0 5px var(--neon-purple), 0 0 15px var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+        }
+
+        .notification-badge {
+            background-color: var(--neon-pink);
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Header -->
+    <header class="header fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4">
+        <div class="flex items-center">
+            <button type="button" id="sidebar-toggle" class="mr-4 text-white hover:text-cyan-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <h1 class="text-xl font-bold neon-glow">PiNiK<span class="text-cyan-400">Hub</span></h1>
+        </div>
+
+        <div class="flex-1 mx-8">
+            <div class="relative">
+                <input type="text" placeholder="Search..." id="search-input" name="search" autocomplete="off"
+                    class="search-bar w-full py-2 px-4 rounded-full text-white outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-2.5 text-cyan-400"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <div id="clock" class="clock text-cyan-400 hidden md:block"></div>
+
+            <div class="relative">
+                <button type="button" class="text-white hover:text-cyan-400 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span
+                        class="notification-badge w-4 h-4 flex items-center justify-center rounded-full text-xs">3</span>
+                </button>
+            </div>
+
+
+            <div
+                class="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 flex items-center justify-center cursor-pointer pulse">
+                <span class="text-sm font-bold">JB</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar fixed left-0 top-16 bottom-0 w-64 z-40 transform transition-transform hidden">
+        <nav class="py-4">
+            <div class="mt-4 flex justify-end">
+                <button type="button"
+                    class="bg-danger-500/20 hover:bg-black-500/30 text-cyan-400 px-4 py-2 rounded-md text-3xl font-bold mb-6 neon-glow border-t shadow-mask shadow-none">
+                    <span class="adminName">ADMIN</span>
+                </button>
+            </div>
+            <div class="px-4 py-2 text-xs text-gray-400 uppercase">Main Menu</div>
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="dashboard">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Dashboard
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="projects">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Projects
+            </a>
+
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="attackPage">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                ATTACK
+            </a>
+
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="messages">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+                Messages
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="settings">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Settings
+            </a>
+
+            <div class="px-4 py-2 mt-6 text-xs text-gray-400 uppercase">ATTACK PAGE</div>
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="notes">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                ATTACK
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-4 py-3 text-white hover:text-cyan-400"
+                data-section="uploads">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                Uploads
+            </a>
+        </nav>
+    </aside>
+
+    <main class="pt-20 pb-8 px-4 md:px-8 ml-0 md:ml-64 transition-all duration-300">
+        <div id="wordGenarate">
+            <div
+                class="max-w-3xl mx-auto p-4 rounded shadow min-w-full divide-y divide-cyan-400 rounded-lg overflow-hidden shadow-lg">
+                <h1 class="text-2xl font-bold mb-4">Text Input and Processing</h1>
+
+                <!-- File input -->
+                <div class="mb-4 neon-box mt-4 neon-glow p-4 rounded-lg">
+                    <label for="fileInput" class="block mb-1 font-semibold text-gray-700"> <span
+                            class="text-3xl p-3 rounded-full bg-black border-b mr-3 neon-box text-white cursor-pointer">↥</span>
+                        UploadFiles</label>
+                    <input id="fileInput" type="file" multiple class="hidden">
+                </div>
+
+                <!-- Textarea input -->
+                <div class="bg-gray-900/50 p-2 rounded-lg neon-box">
+                    <textarea id="textInput" spellcheck="false"
+                        class="textarea-neon bg-black hover:neon-glow w-full h-40 p-3 border-gray-800 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter your text here..."></textarea>
+                </div>
+            </div>
+            <div
+                class="max-w-3xl mx-auto p-2 rounded-lg min-w-full divide-y divide-cyan-400 rounded-lg overflow-hidden shadow-lg">
+
+                <!-- Processed result view with copy button -->
+                <div class="flex items-center justify-between mb-2 w-full mt-3 bg-black p-2 border-t">
+                    <h2 class="text-lg font-semibold">Processed Words</h2>
+                    <!-- Copy icon button -->
+                    <button type="button" id="copyBtn" class="copyBtn p-2 hover:bg-gray-800 rounded"
+                        aria-label="Copy generated words" title="Copy generated words">
+                        <!-- SVG icon for copy -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                            <g fill="#fff">
+                                <path
+                                    d="M32 2H8C5.79 2 4 3.79 4 6v28h4V6h24V2zm6 8H16c-2.21 0-4 1.79-4 4v28c0 2.21 1.79 4 4 4h22c2.21 0 4-1.79 4-4V14c0-2.21-1.79-4-4-4zm0 32H16V14h22v28z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+                <div class="bg-gray-900/50 p-3 rounded-lg neon-box mb-4">
+                    <!-- Output display -->
+                    <div id="wordListContainer" class="textarea-neon border-none rounded-lg p-3 h-48 overflow-y-auto">
+                        <p class="text-gray-400">Processed words will appear here...</p>
+                    </div>
+                </div>
+                <div class="bg-gray-900/50 p-6 rounded-lg neon-box">
+                    <div class="mt-4 flex space-x-4 text-sm text-gray-600 flex justify-between">
+                        <div><strong>Word Count:</strong> <span id="wordStats"
+                                class="text-3xl neon-glow cursor-pointer p-2 m-2 text-black">0</span></div>
+                        <div><strong>Member Codes:</strong> <span id="memberStats"
+                                class="text-3xl neon-glow cursor-pointer p-2 m-2 text-black">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+
+//word Genarate script
+
+        function getOrCreateElementById(id, tag = "div") {
+            let el = document.getElementById(id);
+            if (!el) {
+                el = document.createElement(tag);
+                el.id = id;
+                document.body.appendChild(el);
+            }
+            return el;
+        }
+
+        const textInput = document.getElementById("textInput");
+        const wordListContainer = document.getElementById("wordListContainer");
+        const wordStats = document.getElementById("wordStats");
+        const memberStats = document.getElementById("memberStats");
+        const copyBtn = document.getElementById("copyBtn");
+        const fileInput = document.getElementById("fileInput");
+
+        let processedWords = [];
+
+        // Utility to remove duplicates
+        function removeDuplicates(arr) {
+            const seen = new Set();
+            return arr.filter((item) => {
+                const lowerItem = item.toLowerCase();
+                if (!seen.has(lowerItem)) {
+                    seen.add(lowerItem);
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        // Display words
+        function displayWordList(words) {
+            wordListContainer.innerHTML = "";
+            if (words.length === 0) {
+                wordListContainer.innerHTML =`<p style="color:red;">No valid words found.</p>`;
+                wordStats.textContent = "0";
+                memberStats.textContent = "0";
+                return;
+            }
+
+            wordStats.textContent = words.length;
+            const list = document.createElement("div");
+            list.className = "flex flex-wrap gap-2";
+
+            words.forEach((word) => {
+                const span = document.createElement("span");
+                span.className =
+                    "bg-blue-200 text-black px-2 py-1 rounded text-sm";
+                span.textContent = word;
+                list.appendChild(span);
+            });
+            wordListContainer.appendChild(list);
+        }
+
+        // Main processing
+        function processInput() {
+            const text = textInput.value;
+
+            if (typeof processInput.isProcessing === "undefined") {
+                processInput.isProcessing = false;
+            }
+            if (processInput.isProcessing) return;
+            processInput.isProcessing = true;
+
+            if (!text.trim()) {
+                document.getElementById("memberStats").textContent = "0";
+                displayWordList([]);
+                processInput.isProcessing = false;
+                return;
+            }
+
+            const cleanedText = text.replace(/[^a-zA-Z0-9\s]/g, " ");
+            let words = cleanedText
+                .split(/\s+/)
+                .map((w) => w.trim())
+                .filter((w) => w.length >= 6 && w.length <= 14);
+
+            words = removeDuplicates(words);
+            words.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+            textInput.value = cleanedText;
+            displayWordList(words);
+            processedWords = words;
+
+            // Example pattern for member codes
+            const memberCodes = words.filter(
+                (word) =>
+                    /^[a-zA-Z]+[\d_]+$/.test(word) ||
+                    /^[\d_]+[a-zA-Z]+$/.test(word) ||
+                    /^[a-zA-Z]+$/.test(word) ||
+                    /^\d+$/.test(word),
+            );
+            document.getElementById("memberStats").textContent =
+                memberCodes.length.toString();
+
+            processInput.isProcessing = false;
+        }
+
+        // Event listener for textarea input
+        textInput.addEventListener("input", processInput);
+
+        // Handle file uploads
+        document
+            .getElementById("fileInput")
+            .addEventListener("change", (event) => {
+                const files = event.target.files;
+                if (!files.length) return;
+
+                Array.from(files).forEach((file) => {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const content = e.target.result;
+                        // Append file content to existing textarea input
+                        textInput.value += "\n" + content;
+                        // Trigger processing
+                        processInput();
+                    };
+
+                    // Read text files, or fallback to read as text regardless of type
+                    reader.readAsText(file);
+                });
+            });
+
+        // Copy button handler
+        document.getElementById("copyBtn").addEventListener("click", () => {
+            if (processedWords.length === 0) {
+                wordListContainer.innerHTML =`<span style="color:red;">No words to copy !</span>`;
+                return;
+            }
+            const textToCopy = processedWords.join("\n");
+            navigator.clipboard
+                .writeText(textToCopy)
+                .then(() => {
+                    alert("Copied to clipboard!");
+                })
+                .catch((err) => {
+                    alert("Failed to copy: " + err);
+                });
+        });
+    </script>
+</body>
+
+</html>

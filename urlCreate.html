@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Animated Website</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply Inter font family globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #fff;
+            margin: 0;
+            padding-top: 64px;
+            padding-bottom: 48px;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar for a cleaner look (optional, but enhances professionalism) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            /* Light blue-gray track */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            /* Blue thumb */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+            /* Darker blue on hover */
+        }
+
+        /* Ensure smooth transitions for animations */
+        .sidebar {
+            transition: transform 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Fixed Header -->
+    <header
+        class="fixed top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg p-4 z-50 flex items-center justify-between rounded-b-lg">
+        <div class="flex items-center space-x-3">
+            <button id="sidebarToggle"
+                class="text-white focus:outline-none p-2 rounded-md hover:bg-blue-700 transition duration-300">
+                <!-- Hamburger Icon using SVG for simplicity and customizability -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+            <h1 class="text-2xl font-bold tracking-wide">Awesome Dashboard</h1>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-lg">
+            <a href="#home" class="hover:text-blue-200 transition duration-300">Home</a>
+            <a href="#about" class="hover:text-blue-200 transition duration-300">About</a>
+            <a href="#services" class="hover:text-blue-200 transition duration-300">Services</a>
+            <a href="#contact" class="hover:text-blue-200 transition duration-300">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Animated Sidebar -->
+    <aside id="sidebar"
+        class="sidebar fixed top-0 left-0 w-64 bg-gray-800 text-white h-full transform -translate-x-full shadow-2xl z-40 rounded-r-lg">
+        <div class="p-6 text-center border-b border-gray-700">
+            <h2 class="text-3xl font-semibold text-yellow-400">Menu</h2>
+        </div>
+        <nav class="mt-8">
+            <a href="#DASHBOARD"
+                class="block py-3 px-6 text-lg bg-black bg-black border-b-2 border-blue-400 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">DASHBOARD</a>
+            <a href="#"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">ID Search</a>
+            <a href="#DATA_TABLE"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Data Table</a>
+            <a href="#ID_RESET"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">ID RESET</a>
+            <a href="#PROFILE"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Profile</a>
+            <a href="#ADMIN_ACTIVITY"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Admin Activity</a>
+        </nav>
+    </aside>
+
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Category Tabs -->
+        <div class="flex overflow-x-auto pb-2 mb-6 scrollbar-hide">
+            <div class="flex space-x-2">
+                <button type="button"
+                    class="category-tab whitespace-nowrap px-5 py-2 rounded-lg font-medium text-sm bg-gray-900/50 active">
+                    All Items
+                </button>
+                <button type="button" id="combinedUrls" onclick="combinedUrls()"
+                    class="mt-16 bg-red-500 p-4 text-white whitespace-nowrap rounded-lg font-medium shadow-sm ">
+                    combinedUrls
+                </button>
+            </div>
+        </div>
+    </main>
+    <script>
+
+        const apiList = [
+            "/api/module",
+            "/api/affiliate/member/tier",
+            "/api/affiliate/member/type",
+            "/api/affiliate/member",
+            "/api/transfer/pending",
+            "/api/payment/DRX2408061253256DBDT/check-status",
+            "/api/payment2/notify/callback/bpay",
+            "/api/affiliate/apply/agent",
+            "/api/affiliate/url/detail",
+            "/api/agent",
+            "/api/agent/agentTeamReport",
+            "/api/agent/commission",
+            "/api/agent/mobile/request",
+            "/api/agent/payout/method",
+            "/api/agent/update/wallet/detail",
+            "/api/agent/withdrawal/list",
+            "/api/fingerprint/list",
+            "/api/member",
+            "/api/member/1907/secondaryContacts",
+            "/api/member/629970/resetTempPassword",
+            "/api/member/96311/status",
+            "/api/member/demokk2",
+            "/api/member/memberBettingPassEventGroup",
+            "/api/member/password",
+            "/api/member/undefined",
+            "/api/member/undefined/loginlog",
+            "/api/member/undefined/passFingerprint",
+            "/api/member/undefined/passLoginIp",
+            "/api/member/undefined/remark",
+            "/api/member/undefined/summary",
+            "/api/member/withdrawal/all",
+            "/api/member/withdrawal/all?membercode=&status=-1&types=&start_time=2024-06-01+00:00:00&end_time=2024-06-24+23:59:59&page=1&size=1000&currency=",
+            "/api/member/withdrawal/all?membercode=&status=-1&types=&start_time=2024-06-24+00:00:00&end_time=2024-06-24+23:59:59&page=1&size=1000&currency=",
+            "/api/member/withdrawal/all?membercode=&status=2&types=&start_time=2024-06-01+00:00:00&end_time=2024-06-24+23:59:59&page=1&size=1000&currency=",
+            "/api/member/withdrawal/update",
+            "/api/memberRole/getAllRoleGroupList?page=1&size=1000&is_active=1&role_name=&currency=",
+            "/api/memberRole/getAllRoleGroupList?page=1&size=1000&is_active=1&role_name=&currency=BDT",
+            "/api/onlineMembers/stat?currency=",
+            "/api/onlineMembers/stat?currency=BDT",
+            "/api/payment/DRX24072908303451BDT/process",
+            "/api/payment2/bank",
+            "/api/payment2/gateway_account",
+            "/api/payment2/getWALimitCount?currency=",
+            "/api/payment2/getWALimitCount?currency=BDT",
+            "/api/payment2/member_bank_account?page=1&is_full_search=true",
+            "/api/payment2/payment_member_group?currency_code=",
+            "/api/payment2/transaction_count?statuses=&currency_code=",
+            "/api/payment2/transaction_count?statuses=&currency_code=BDT",
+            "/api/payment2/transaction_summary",
+            "/api/payment2/transaction?currency_code=BDT&start_date=&end_date=&is_full_search=true",
+            "/api/rebate/claimed/all",
+            "/api/report/wlSummary?currency=&dateFrom=2024-06-24+00:00:00&dateTo=2024-06-24+23:59:59",
+            "/api/rewardStore/claim",
+            "/api/smsLog/search",
+            "/api/smsLogging/search_forgot",
+            "/api/tag?size=999&page=1&currency=&tag_type=-1",
+            "/api/tag?size=999&page=1&currency=BDT&tag_type=-1",
+            "/api/tag/member/2314",
+            "/api/tag/member/2317",
+            "/api/token/refresh",
+            "/api/transaction/update/remark",
+            "/api/transfer/1075102/make",
+            "/api/transfer/1973/make",
+            "/api/transfer/histories?is_full_search=1",
+            "/api/transfer/histories?membercode=&status=-1&type=-1&types=1,2,3,4,5,6,7,8,9,10&from_wallet=&to_wallet=&size=100&page=1&is_full_search=1&currency=BDT",
+            "/api/transfer/pending",
+            "/api/transfer/summary",
+            "/api/user/187/password",
+            "/api/user/fingerprint/techjimmy",
+            "/api/user/getNonAffiliateSysAdmin",
+            "/api/user/login_log/123444",
+            "/api/user/password",
+            "/api/user/user_currency",
+            "/api/vipMemberGroup/list/all?currency=",
+            "/api/vipMemberGroup/list/all?currency=BDT"
+
+            // ... more APIs
+        ];
+
+        const urlList = [
+            "https://009gopalanuni.hippo8.xyz",
+            "https://3.110.77.150",
+            "https://7878.speed99taka.com/login",
+            "https://84587.penguin888.xyz/login",
+            "https://8796gmfe.gamius88.com",
+            "https://888agentreg.1688ninja.xyz",
+            "https://888agentreg.turtle888.xyz",
+            "https://ag.crazytime88.app",
+            "https://ag.gamius88.com",
+            "https://ag.krikya99.com",
+            "https://ag.playcrazytime.app",
+            "https://agapi.1688ninja.xyz",
+            "https://agapi.bigape88.xyz",
+            "https://agapi.gamius88.com",
+            "https://agapi.iceage888.xyz",
+            "https://agapi.penguin888.xyz",
+            "https://agapi.pokedex68.xyz",
+            "https://agapi.tuskobd.com",
+            "https://agapi.unicorn88.xyz",
+            "https://agentreg.bigape88.xyz",
+            "https://bdt.gamius88.com",
+            "https://bdt.gamius99.com",
+            "https://bdt88.gamius88.com",
+            "https://beapi.1688ninja.xyz",
+            "https://beapi.iceage888.xyz",
+            "https://beapi.penguin888.xyz",
+            "https://beapi.sharky77.xyz",
+            "https://beapi.turtle888.xyz",
+            "https://beapi.unicorn88.xyz",
+            "https://becmsapi.bigape88.xyz",
+            "https://becmsapi.gamius88.com",
+            "https://becmsapi.sharky777.xyz",
+            "https://becmsapi.turtle888.xyz",
+            "https://becmsgenerator168.1688ninja.xyz",
+            "https://bengal99.1688ninja.xyz",
+            "https://bengal99.1688ninja.xyz/",
+            "https://bhaggo.com",
+            "https://cashout.speed99taka.com",
+            "https://cdn.livechat-files.com",
+            "https://contenttaka.krikya99.com",
+            "https://dhoni88agents.com/bd/",
+            "https://dhoni88official.com/",
+            "https://dpay.services",
+            "https://feapi.1688ninja.xyz",
+            "https://feapi.sharky777.xyz",
+            "https://fecmsapi.1688ninja.xyz",
+            "https://fecmsapi.turtle888.xyz",
+            "https://ferockapi.turtle888.xyz",
+            "https://fit.9terawolf.com",
+            "https://fit.9terawolf.com",
+            "https://fitmedia.9terawolf.com",
+            "https://frontguard.tuskobd.com",
+            "https://fspayapi.takapay.services",
+            "https://gamius99.com",
+            "https://getbombus562i.897909.com",
+            "https://gmp8.turtle888.xyz/",
+            "https://goodluck178.1688ninja.xyz",
+            "https://infinity777.1688ninja.xyz/",
+            "https://ipfeapi.hippo8.xyz",
+            "https://jaya.gamius88.com",
+            "https://jianagonghe4hbki.897909.com",
+            "https://media.9terawolf.com",
+            "https://naancheese.hippo8.xyz",
+            "https://nagad88.net",
+            "https://nagad88referral.com/",
+            "https://netbo9.pokedex68.xyz",
+            "https://ngpay.speed99taka.com",
+            "https://paytaka.online",
+            "https://pg2.takapay.services",
+            "https://pp-int.gamius88.com",
+            "https://pp-int.gamius99.com",
+            "https://rockstar.turtle888.xyz",
+            "https://rukongapi.penguin888.xyz",
+            "https://securelauncher1008.gamius99.com",
+            "https://staging.gamius88.com",
+            "https://stagingv2.gamius88.com",
+            "https://stgbo.takapay.services",
+            "https://takaworldfe.krikya99.com",
+            "https://unikl8be.gamius88.com",
+            "https://www.ab8945621.com/en-BD",
+            "https://www.nagad88bd10.xyz"
+        ];
+
+        // Function to combine each URL with each API endpoint
+        const generateFullUrls = (urls, apis) => {
+            const fullUrls = [];
+            urls.forEach(baseUrl => {
+                apis.forEach(api => {
+                    // Ensure no double slashes
+                    const fullUrl = `${baseUrl.replace(/\/+$/, '')}${api}`;
+                    fullUrls.push(fullUrl);
+                });
+            });
+            return fullUrls;
+        };
+
+        // Generate all combinations
+        const combinedUrls = generateFullUrls(urlList, apiList);
+        const ul = document.createElement('ul');
+        combinedUrls.forEach(url => {
+            const li = document.createElement('li');
+            li.classList="text-blue-300 p-1 mt-2 ml-3 block bg-gray-800 hover:bg-red-500";
+            li.innerHTML = `<a href="${url}" class="hover:p-2 hover:rounded-lg hover:font-bold hover:text-white hover:underline">${url}</a>`;
+            ul.appendChild(li);
+        });
+        document.body.appendChild(ul);
+
+        // Output the result
+        // console.log(combinedUrls);
+    </script>
+    <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
+</body>
+
+</html>

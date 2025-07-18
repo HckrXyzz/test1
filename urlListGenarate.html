@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>URL List Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #9d00ff;
+            --neon-green: #00ff9d;
+            --dark-bg: #0f0f1a;
+        }
+
+        body {
+            font-family: "Quicksand", sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .neon-glow {
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 15px var(--neon-blue),
+                0 0 20px var(--neon-blue);
+        }
+
+        .neon-box {
+            box-shadow:
+                0 0 5px var(--neon-blue),
+                0 0 15px var(--neon-blue);
+        }
+
+        .neon-pink {
+            box-shadow:
+                0 0 5px var(--neon-pink),
+                0 0 15px var(--neon-pink);
+        }
+
+        .neon-purple {
+            box-shadow:
+                0 0 5px var(--neon-purple),
+                0 0 15px var(--neon-purple);
+        }
+
+        .neon-green {
+            box-shadow:
+                0 0 5px var(--neon-green),
+                0 0 15px var(--neon-green);
+        }
+
+        .sidebar {
+            background: rgba(15, 15, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 3px solid var(--neon-blue);
+        }
+
+        .header {
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow:
+                0 0 5px var(--neon-blue),
+                0 0 15px var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .content-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            display: none;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .clock {
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow:
+                    0 0 5px var(--neon-blue),
+                    0 0 10px var(--neon-blue);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 10px var(--neon-blue),
+                    0 0 20px var(--neon-blue);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 5px var(--neon-blue),
+                    0 0 10px var(--neon-blue);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .textarea-neon,
+        .file-input-label {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .textarea-neon:focus {
+            box-shadow:
+                0 0 5px var(--neon-blue),
+                0 0 15px var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label:hover {
+            box-shadow:
+                0 0 5px var(--neon-purple),
+                0 0 15px var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+        }
+
+        .notification-badge {
+            background-color: var(--neon-pink);
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <header class="fixed top-0 left-0 right-0 bg-indigo-700 text-white shadow-lg p-2 z-50">
+        <div class="flex items-center space-x-3">
+            <button type="button" id="sidebarToggle"
+                class="text-white focus:outline-none p-2 rounded-md hover:bg-blue-700 transition duration-300">
+                <!-- Hamburger Icon using SVG for simplicity and customizability -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+            <h1 class="text-2xl font-bold tracking-wide uppercase">
+                URL List Generator
+            </h1>
+        </div>
+        <nav class="hidden md:flex space-x-6 text-lg">
+            <a href="#home" class="hover:text-blue-200 transition duration-300">Home</a>
+            <a href="#about" class="hover:text-blue-200 transition duration-300">About</a>
+            <a href="#services" class="hover:text-blue-200 transition duration-300">Services</a>
+            <a href="#contact" class="hover:text-blue-200 transition duration-300">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Animated Sidebar -->
+    <aside id="sidebar"
+        class="sidebar fixed top-0 left-0 w-64 bg-gray-800 text-white h-full transform -translate-x-full shadow-2xl z-40 rounded-r-lg">
+        <div class="p-6 text-center border-b border-gray-700">
+            <h2 class="text-3xl font-semibold text-yellow-400">Menu</h2>
+        </div>
+        <nav class="mt-8">
+            <a href="#DASHBOARD"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">DASHBOARD</a>
+            <a href="#"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">ID Search</a>
+            <a href="#DATA_TABLE"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Data Table</a>
+            <a href="#ID_RESET"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">ID RESET</a>
+            <a href="#PROFILE"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Profile</a>
+            <a href="#ADMIN_ACTIVITY"
+                class="block py-3 px-6 text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
+                onclick="closeSidebar()">Admin Activity</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto p-6 md:p-8 relative z-10">
+        <!-- Section 1: Hero -->
+        <section id="DASHBOARD"
+            class="bg-gray-900/100 p-8 md:p-12 rounded-xl shadow-lg mb-10 text-left animate-fade-in-up transition duration-500 delay-100">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 bg-clip-text border-b-4 border-gray-600">
+                URL List Generator
+            </h2>
+            <div class="mt-4 mb-4 p-2 rounded bg-gray-800 cursor-pointer">
+                <label for="fileInput"></label>
+                <input type="file" id="fileInput">
+            </div>
+            <textarea id="textInput"
+                class="textarea-neon w-full h-64 p-2 rounded-lg text-white outline-none resize-none" spellcheck="false"
+                placeholder="Paste text containing URLs here...">
+        </textarea>
+        </section>
+
+        <!-- Section 2: Output -->
+        <section id="output"
+            class="bg-gray-900/100 p-8 md:p-12 rounded-xl shadow-lg mb-10 text-left animate-fade-in-up transition duration-500 delay-100">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 bg-clip-text text-transparent">
+                Output
+            </h2>
+            <div id="outputList" class="mt-4 rounded-lg mb-4 p-4 border-t-4 border-red-600">
+                <ul id="urlList">
+                    <li
+                        class="text-blue underline hover:text-blue-400 text-lg transition duration-300 bg-black rounded-lg p-2 mt-2">
+                        <a href="https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html"
+                            target="_blank">https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html</a>
+                    </li>
+                    <li
+                        class="text-blue underline hover:text-blue-400 text-lg transition duration-300 bg-black rounded-lg p-2 mt-2">
+                        <a href="https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html"
+                            target="_blank">https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html</a>
+                    </li>
+                    <li
+                        class="text-blue underline hover:text-blue-400 text-lg transition duration-300 bg-black rounded-lg p-2 mt-2">
+                        <a href="https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html"
+                            target="_blank">https://gist.githubusercontent.com/HckrXyzz/7930d1a46ed4f135d4ccd11c30846d54/raw/55bc19cebccc7efa5348828d8f3e37b47e73e97b/index.html</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section id="page" class="mt-8 mb-4 p-2 bg-gray-900/100"></section>
+    </main>
+
+    <script>
+        const textInput = document.getElementById("textInput");
+        const urlListContainer = document.getElementById("urlList");
+        const fileInput = document.getElementById("fileInput");
+
+        textInput.addEventListener("input", function () {
+            const text = this.value;
+            const urls = extractUrls(text);
+            displayUrls(urls);
+        });
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const text = e.target.result;
+                    const urls = extractUrls(text);
+                    displayUrls(urls);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+
+        function extractUrls(text) {
+            // Regular expression to find URLs
+            const urlRegex = /(https?:\/\/|ftp:\/\/|www\.)[^\s/$.?#].[^\s]*/gi;
+            const matches = text.match(urlRegex);
+            return matches ? matches : [];
+        }
+
+        function displayUrls(urls) {
+            urlListContainer.innerHTML = ""; // Clear previous list
+
+            if (urls.length > 0) {
+                urls.forEach((url) => {
+                    const listItem = document.createElement("li");
+                    listItem.className =
+                        "text-blue underline hover:text-blue-400 text-lg transition duration-300 bg-black rounded-lg p-2 mt-2";
+                    const link = document.createElement("a");
+                    link.href =
+                        url.startsWith("http") || url.startsWith("ftp")
+                            ? url
+                            : "http://" + url; // Add http:// if missing
+                    link.textContent = url;
+                    link.target = "_blank"; // Open in a new tab
+                    listItem.appendChild(link);
+                    listItem.onclick = function () {
+                        alert("No URLs found in the text.");
+                    };
+                    urlListContainer.appendChild(listItem);
+                });
+            } else {
+                const listItem = document.createElement("li");
+                listItem.className = "text-red-600";
+                listItem.textContent = "No URLs found in the text.";
+                urlListContainer.appendChild(listItem);
+
+            }
+        }
+    </script>
+    <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
+</body>
+
+</html>
