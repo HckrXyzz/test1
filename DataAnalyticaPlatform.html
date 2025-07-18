@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataAnalytica - Professional Data Analysis Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+          @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        --neon-pink: #ff00ff;
+        --neon-blue: #00ffff;
+        --neon-purple: #9d00ff;
+        --neon-green: #00ff9d;
+        --dark-bg: #0f0f1a;
+      }
+
+      body {
+        font-family: "Quicksand", sans-serif;
+        background-color: var(--dark-bg);
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      .neon-glow {
+        text-shadow:
+          0 0 5px #fff,
+          0 0 10px #fff,
+          0 0 15px cyan,
+          0 0 20px cyan;
+      }
+
+        .neon-glow {
+            box-shadow:
+                0px 0px 100px rgba(255, 212, 59, 0.5),
+                0px 0px 100px rgba(255, 102, 0, 0.5);
+            text-shadow:
+                0px 0px 100px rgba(23, 22, 16, 0.5),
+                0px 0px 100px rgba(118, 111, 106, 0.5);
+        }
+
+        .text-shadow {
+            text-shadow:
+                0px 0px 100px rgb(148, 148, 148),
+                0px 0px 100px rgba(153, 151, 150, 0.5);
+        }
+
+        .neon-box {
+            box-shadow:
+                0px 0px 100px rgba(255, 212, 59, 0.5),
+                0px 0px 100px rgba(255, 102, 0, 0.5);
+            text-shadow:
+                0px 0px 100px rgba(255, 212, 59, 0.5),
+                0px 0px 100px rgba(255, 102, 0, 0.5);
+                background-color: #0f0f1a;
+                color: #fff;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 p-2 border-b-4 bg-black">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <button id="sidebar-toggle" class="mr-4 text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    <h1 class="text-xl font-bold text-white ml-2">DataAnalytica</h1>
+                </div>
+            </div>
+
+            <div class="flex-1 mx-4 max-w-xl">
+                <div class="relative">
+                    <input type="text" placeholder="Search datasets, analyses, or tools..."
+                        class="w-full py-2 pl-10 pr-4 text-gray-700 bg-gray-100 rounded-lg focus:outline-none focus:neon-box bg-gray-900 focus:ring-2 focus:ring-blue-500">
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center">
+                <div class="relative mr-4">
+                    <button type="button" class="hover:text-blue-600 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                            </path>
+                        </svg>
+                    </button>
+                    <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+                </div>
+                <div class="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
+                    JD
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-16 h-full w-64 shadow-lg z-50 overflow-hidden bg-black bottom-0 ">
+        <nav class="py-4">
+            <div class="px-4 mb-6">
+                <h2 class="text-xs font-semibold uppercase tracking-wider">Main</h2>
+                <ul class="mt-2">
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-blue-600 bg-blue-50 rounded-md font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>
+                            Analytics
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                </path>
+                            </svg>
+                            Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Schedule
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="px-4 mb-6">
+                <h2 class="text-xs font-semibold uppercase tracking-wider">Tools</h2>
+                <ul class="mt-2">
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            Reports
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="px-4">
+                <h2 class="text-xs font-semibold uppercase tracking-wider">Recent Projects</h2>
+                <ul class="mt-2">
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <div class="h-3 w-3 rounded-full bg-green-500 mr-3"></div>
+                            Sales Data Analysis
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <div class="h-3 w-3 rounded-full bg-yellow-500 mr-3"></div>
+                            Customer Segmentation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            <div class="h-3 w-3 rounded-full bg-purple-500 mr-3"></div>
+                            Market Research
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main" class="pt-20 pb-8 px-4 md:px-8 ml-0 md:ml-64 transition-all duration-300">
+        <div class="container mx-auto px-6 py-8">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-white">Data Analysis Dashboard</h2>
+                <p class="text-gray-600 mt-1">Upload, analyze, and visualize your data</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="neon-box bg-gray-900 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white">Analysis Status</h3>
+                        <span
+                            class="text-sm font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">Active</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class= "text-sm">Current Session</p>
+                            <p class="text-3xl font-bold text-white" id="session-time">00:00:00</p>
+                        </div>
+                        <div>
+                            <p class= "text-sm">Total Time</p>
+                            <p class="text-3xl font-bold text-white" id="total-time">00:00:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="neon-box bg-gray-900 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white">Data Points</h3>
+                        <span
+                            class="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">Processing</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class= "text-sm">Analyzed</p>
+                            <p class="text-3xl font-bold text-white">1,245</p>
+                        </div>
+                        <div>
+                            <p class= "text-sm">Total</p>
+                            <p class="text-3xl font-bold text-white">5,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="neon-box bg-gray-900 rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white">User Activity</h3>
+                        <span
+                            class="text-sm font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded-full">Tracking</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class= "text-sm">Page Views</p>
+                            <p class="text-3xl font-bold text-white" id="page-views">1</p>
+                        </div>
+                        <div>
+                            <p class= "text-sm">Time on Page</p>
+                            <p class="text-3xl font-bold text-white" id="time-on-page">18:39:41</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div class="neon-box bg-gray-900 rounded-lg shadow p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-white mb-4">Data Input</h3>
+                        <textarea id="data-input"
+                            class="w-full h-40 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Paste your data here (CSV, JSON, or plain text)..."></textarea>
+                    </div>
+
+                    <div class="neon-box bg-gray-900 rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-white mb-4">File Upload</h3>
+                        <div class="file-drop-area p-8 text-center" id="drop-area">
+                            <input type="file" id="file-input" class="file-input" multiple="">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-blue-500" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                </path>
+                            </svg>
+                            <p class="mt-4 text-gray-700">Drag and drop files here or <span
+                                    class="text-blue-600 font-medium">browse</span></p>
+                            <p class="text-sm mt-1">Supports CSV, Excel, JSON, and text files</p>
+                        </div>
+                        <div id="file-list" class="mt-4 space-y-2">
+                            <div class="flex items-center justify-between bg-gray-50 p-2 rounded">
+                                <div class="flex items-center">
+                                    <div class="text-blue-500 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                    </div><span class="text-sm">Composer.html</span>
+                                </div><span class="text-xs">86.67 KB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="neon-box bg-gray-900 rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">Analysis Options</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium  mb-1">Analysis Type</label>
+                            <select
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option selected="selected">Descriptive Statistics</option>
+                                <option>Correlation Analysis</option>
+                                <option>Regression Analysis</option>
+                                <option>Time Series Analysis</option>
+                                <option>Cluster Analysis</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Data Visualization</label>
+                            <select
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option selected="selected">Bar Chart</option>
+                                <option>Line Chart</option>
+                                <option>Scatter Plot</option>
+                                <option>Pie Chart</option>
+                                <option>Heatmap</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Processing Speed</label>
+                            <div class="flex items-center">
+                                <input type="range" min="1" max="5" value="3"
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span>Slower</span>
+                                <span>Faster</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                                <span class="ml-2 text-sm text-gray-700">Auto-detect data types</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                                <span class="ml-2 text-sm text-gray-700">Clean missing values</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                                <span class="ml-2 text-sm text-gray-700">Export results automatically</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Working Overlay -->
+    <div id="working-overlay"
+        class="hidden working-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div class="neon-box bg-gray-900 rounded-lg p-8 max-w-md w-full text-center">
+            <div class="h-20 w-20 mx-auto mb-6 relative">
+                <div class="absolute inset-0 rounded-full border-4 border-blue-200"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent spin"></div>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Analysis in Progress</h3>
+            <p class="text-gray-600 mb-6">Please wait while we process your data</p>
+            <div class="mb-6">
+                <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-blue-600 rounded-full" style="width: 45%"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-gray-600">
+                    <span>Processing...</span>
+                    <span id="countdown">00:00:00</span>
+                </div>
+            </div>
+            <button type="button" id="stop-button"
+                onclick="document.getElementById('working-overlay').classList.toggle('hidden')"
+                class="px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                Stop Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-200 py-4 px-6 mt-8 text-center">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="text-gray-600 text-sm mb-4 ml-16 ">
+                © 2023 DataAnalytica. All rights reserved.
+            </div>
+            <div class="flex items-center">
+                <button type="button" id="start-button"
+                    class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors pulse">
+                    Start Analysis
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Keep alive script
+        function keepAlive() {
+            const keepAliveInterval = setInterval(() => {
+                if (document.hidden) {
+                    console.log("Page is minimized but still running");
+                }
+            }, 5000);
+
+            return keepAliveInterval;
+        }
+
+        const keepAliveInterval = keepAlive();
+
+        // User analytics tracking
+        let pageViews = 0;
+        let pageEntryTime = new Date();
+        let totalTimeOnPage = 0;
+
+        function updateAnalytics() {
+            pageViews++;
+            document.getElementById('page-views').textContent = pageViews;
+
+            setInterval(() => {
+                const currentTime = new Date();
+                const timeSpent = Math.floor((currentTime - pageEntryTime) / 1000);
+                totalTimeOnPage = timeSpent;
+
+                const hours = Math.floor(timeSpent / 3600);
+                const minutes = Math.floor((timeSpent % 3600) / 60);
+                const seconds = timeSpent % 60;
+
+                document.getElementById('time-on-page').textContent =
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        updateAnalytics();
+
+        // Header hide on scroll
+        let lastScrollTop = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+
+            if (sidebar.classList.contains('hidden')) {
+                mainContent.classList.remove('pl-64');
+            } else {
+                mainContent.classList.add('pl-64');
+            }
+        });
+
+        // File upload handling
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropArea.classList.add('dragover');
+        }
+
+        function unhighlight() {
+            dropArea.classList.remove('dragover');
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false);
+        fileInput.addEventListener('change', handleFiles, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles({ target: { files } });
+        }
+
+        function handleFiles(e) {
+            const files = e.target.files;
+            fileList.innerHTML = '';
+
+            Array.from(files).forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center justify-between bg-gray-50 p-2 rounded';
+
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'flex items-center';
+
+                const fileIcon = document.createElement('div');
+                fileIcon.className = 'text-blue-500 mr-2';
+                fileIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                `;
+
+                const fileName = document.createElement('span');
+                fileName.className = 'text-sm text-gray-700';
+                fileName.textContent = file.name;
+
+                fileInfo.appendChild(fileIcon);
+                fileInfo.appendChild(fileName);
+
+                const fileSize = document.createElement('span');
+                fileSize.className = 'text-xs';
+                fileSize.textContent = formatFileSize(file.size);
+
+                fileItem.appendChild(fileInfo);
+                fileItem.appendChild(fileSize);
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Working timer and button functionality
+        const startButton = document.getElementById('start-button');
+        const stopButton = document.getElementById('stop-button');
+        const workingOverlay = document.getElementById('working-overlay');
+        const countdownElement = document.getElementById('countdown');
+        const sessionTimeElement = document.getElementById('session-time');
+        const progressBar = document.getElementById('progress-bar');
+
+        let workingTime = 0;
+        let workingInterval;
+        let totalWorkingTime = 0;
+        let isWorking = false;
+
+        function updateWorkingTime() {
+            workingTime++;
+            totalWorkingTime++;
+
+            const hours = Math.floor(workingTime / 3600);
+            const minutes = Math.floor((workingTime % 3600) / 60);
+            const seconds = workingTime % 60;
+
+            countdownElement.textContent =
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            sessionTimeElement.textContent =
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Update total time
+            const totalHours = Math.floor(totalWorkingTime / 3600);
+            const totalMinutes = Math.floor((totalWorkingTime % 3600) / 60);
+            const totalSeconds = totalWorkingTime % 60;
+
+            document.getElementById('total-time').textContent =
+                `${totalHours.toString().padStart(2, '0')}:${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+
+            // Update progress bar
+            const progress = (workingTime % 100) + 1;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        startButton.addEventListener('click', () => {
+            if (!isWorking) {
+                isWorking = true;
+                workingOverlay.classList.toggle('hidden');
+                startButton.textContent = 'Analysis Running...';
+                startButton.classList.remove('pulse');
+                startButton.classList.add('bg-gray-500');
+                startButton.disabled = true;
+
+                workingInterval = setInterval(updateWorkingTime, 1000);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (isWorking) {
+                isWorking = false;
+                workingOverlay.classList.remove('active');
+                startButton.textContent = 'Start Analysis';
+                startButton.classList.remove('bg-gray-500');
+                startButton.classList.add('pulse');
+                startButton.disabled = false;
+
+                clearInterval(workingInterval);
+                workingTime = 0;
+            }
+        });
+
+        // Responsive adjustments for mobile
+        function adjustForMobile() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('hidden');
+                mainContent.classList.remove('pl-64');
+            } else {
+                sidebar.classList.remove('hidden');
+                mainContent.classList.add('pl-64');
+            }
+        }
+
+        window.addEventListener('resize', adjustForMobile);
+        adjustForMobile();
+    </script>
+    <script>
+        (function () {
+            function c() {
+                var b = a.contentDocument || a.contentWindow.document;
+                if (b) {var d = b.createElement('script');d.innerHTML = "window.__CF$cv$params={r:'952d6109a03a3e01',t:'MTc1MDQ0NDY2My4wMDAwMDA'};
+                var a = document.createElement('script');a.nonce = ''; a.src = '/cdn-cgi/challenge-platform/scripts/jsd/main.js';
+                document.getElementsByTagName('head')[0].appendChild(a); "; b.getElementsByTagName('head')[0].appendChild(d)
+            }
+        }
+            if (document.body) {
+            var a = document.createElement('iframe'); a.height = 1;
+            a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } }
+        } }) ();
+    </script>
+
+</body>
+
+</html>
