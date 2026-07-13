@@ -1,0 +1,2992 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <script>
+    window.livecodes = window.livecodes || {};
+  </script>
+  <title>allreadyFollowTable</title>
+  <meta name="title" content="allreadyFollowTable">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style id="__livecodes_styles__">
+    /*! tailwindcss v4.1.16 | MIT License | https://tailwindcss.com */
+    @layer properties {
+      @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
+
+        *,
+        :before,
+        :after,
+        ::backdrop {
+          --tw-divide-x-reverse: 0;
+          --tw-border-style: solid;
+          --tw-font-weight: initial;
+          --tw-shadow: 0 0 #0000;
+          --tw-shadow-color: initial;
+          --tw-shadow-alpha: 100%;
+          --tw-inset-shadow: 0 0 #0000;
+          --tw-inset-shadow-color: initial;
+          --tw-inset-shadow-alpha: 100%;
+          --tw-ring-color: initial;
+          --tw-ring-shadow: 0 0 #0000;
+          --tw-inset-ring-color: initial;
+          --tw-inset-ring-shadow: 0 0 #0000;
+          --tw-ring-inset: initial;
+          --tw-ring-offset-width: 0px;
+          --tw-ring-offset-color: #fff;
+          --tw-ring-offset-shadow: 0 0 #0000;
+        }
+      }
+    }
+
+    @layer theme {
+
+      :root,
+      :host {
+        --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --color-blue-400: oklch(70.7% .165 254.624);
+        --color-blue-500: oklch(62.3% .214 259.815);
+        --color-slate-700: oklch(37.2% .044 257.287);
+        --color-slate-800: oklch(27.9% .041 260.031);
+        --color-slate-900: oklch(20.8% .042 265.755);
+        --color-gray-100: oklch(96.7% .003 264.542);
+        --color-gray-200: oklch(92.8% .006 264.531);
+        --color-gray-800: oklch(27.8% .033 256.848);
+        --color-gray-950: oklch(13% .028 261.692);
+        --color-white: #fff;
+        --spacing: .25rem;
+        --text-xs: .75rem;
+        --text-xs--line-height: calc(1 / .75);
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+        --radius-lg: .5rem;
+        --default-transition-duration: .15s;
+        --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+        --default-font-family: var(--font-sans);
+        --default-font-feature-settings: var(--font-sans--font-feature-settings);
+        --default-font-variation-settings: var(--font-sans--font-variation-settings);
+        --default-mono-font-family: var(--font-mono);
+        --default-mono-font-feature-settings: var(--font-mono--font-feature-settings);
+        --default-mono-font-variation-settings: var(--font-mono--font-variation-settings);
+      }
+    }
+
+    @layer base {
+
+      *,
+      :after,
+      :before,
+      ::backdrop {
+        box-sizing: border-box;
+        border: 0 solid;
+        margin: 0;
+        padding: 0;
+      }
+
+      ::file-selector-button {
+        box-sizing: border-box;
+        border: 0 solid;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      :host {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        line-height: 1.5;
+        font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+        font-feature-settings: var(--default-font-feature-settings, normal);
+        font-variation-settings: var(--default-font-variation-settings, normal);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        line-height: inherit;
+      }
+
+      hr {
+        height: 0;
+        color: inherit;
+        border-top-width: 1px;
+      }
+
+      abbr:where([title]) {
+        -webkit-text-decoration: underline dotted;
+        text-decoration: underline dotted;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: inherit;
+        font-weight: inherit;
+      }
+
+      a {
+        color: inherit;
+        -webkit-text-decoration: inherit;
+        -webkit-text-decoration: inherit;
+        -webkit-text-decoration: inherit;
+        text-decoration: inherit;
+      }
+
+      b,
+      strong {
+        font-weight: bolder;
+      }
+
+      code,
+      kbd,
+      samp,
+      pre {
+        font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+        font-feature-settings: var(--default-mono-font-feature-settings, normal);
+        font-variation-settings: var(--default-mono-font-variation-settings, normal);
+        font-size: 1em;
+      }
+
+      small {
+        font-size: 80%;
+      }
+
+      sub,
+      sup {
+        vertical-align: baseline;
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+      }
+
+      sub {
+        bottom: -.25em;
+      }
+
+      sup {
+        top: -.5em;
+      }
+
+      table {
+        text-indent: 0;
+        border-color: inherit;
+        border-collapse: collapse;
+      }
+
+      :-moz-focusring {
+        outline: auto;
+      }
+
+      progress {
+        vertical-align: baseline;
+      }
+
+      summary {
+        display: list-item;
+      }
+
+      ol,
+      ul,
+      menu {
+        list-style: none;
+      }
+
+      img,
+      svg,
+      video,
+      canvas,
+      audio,
+      iframe,
+      embed,
+      object {
+        vertical-align: middle;
+        display: block;
+      }
+
+      img,
+      video {
+        max-width: 100%;
+        height: auto;
+      }
+
+      button,
+      input,
+      select,
+      optgroup,
+      textarea {
+        font: inherit;
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        opacity: 1;
+        background-color: #0000;
+        border-radius: 0;
+      }
+
+      ::file-selector-button {
+        font: inherit;
+        font-feature-settings: inherit;
+        font-variation-settings: inherit;
+        letter-spacing: inherit;
+        color: inherit;
+        opacity: 1;
+        background-color: #0000;
+        border-radius: 0;
+      }
+
+      :where(select:is([multiple], [size])) optgroup {
+        font-weight: bolder;
+      }
+
+      :where(select:is([multiple], [size])) optgroup option {
+        padding-inline-start: 20px;
+      }
+
+      ::file-selector-button {
+        margin-inline-end: 4px;
+      }
+
+      ::placeholder {
+        opacity: 1;
+        color: currentColor;
+      }
+
+      @supports (color: color-mix(in lab, red, red)) {
+        ::placeholder {
+          color: color-mix(in oklab, currentColor 50%, transparent);
+        }
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      ::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+
+      ::-webkit-date-and-time-value {
+        min-height: 1lh;
+        text-align: inherit;
+      }
+
+      ::-webkit-datetime-edit {
+        display: inline-flex;
+      }
+
+      ::-webkit-datetime-edit-fields-wrapper {
+        padding: 0;
+      }
+
+      ::-webkit-datetime-edit {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-year-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-month-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-day-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-hour-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-minute-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-second-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-millisecond-field {
+        padding-block: 0;
+      }
+
+      ::-webkit-datetime-edit-meridiem-field {
+        padding-block: 0;
+      }
+
+      :-moz-ui-invalid {
+        box-shadow: none;
+      }
+
+      button,
+      input:where([type="button"], [type="reset"], [type="submit"]) {
+        appearance: button;
+      }
+
+      ::file-selector-button {
+        appearance: button;
+      }
+
+      ::-webkit-inner-spin-button {
+        height: auto;
+      }
+
+      ::-webkit-outer-spin-button {
+        height: auto;
+      }
+
+      [hidden]:where(:not([hidden="until-found"])) {
+        display: none !important;
+      }
+    }
+
+    @layer components;
+
+    @layer utilities {
+      .ml-2 {
+        margin-left: calc(var(--spacing) * 2);
+      }
+
+      .min-h-screen {
+        min-height: 100vh;
+      }
+
+      .cursor-pointer {
+        cursor: pointer;
+      }
+
+      :where(.divide-x > :not(:last-child)) {
+        --tw-divide-x-reverse: 0;
+        border-inline-style: var(--tw-border-style);
+        border-inline-start-width: calc(1px * var(--tw-divide-x-reverse));
+        border-inline-end-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+      }
+
+      :where(.divide-blue-500 > :not(:last-child)) {
+        border-color: var(--color-blue-500);
+      }
+
+      .overflow-x-auto {
+        overflow-x: auto;
+      }
+
+      .rounded {
+        border-radius: .25rem;
+      }
+
+      .rounded-lg {
+        border-radius: var(--radius-lg);
+      }
+
+      .border {
+        border-style: var(--tw-border-style);
+        border-width: 1px;
+      }
+
+      .border-b {
+        border-bottom-style: var(--tw-border-style);
+        border-bottom-width: 1px;
+      }
+
+      .border-gray-200 {
+        border-color: var(--color-gray-200);
+      }
+
+      .border-slate-700 {
+        border-color: var(--color-slate-700);
+      }
+
+      .bg-blue-400 {
+        background-color: var(--color-blue-400);
+      }
+
+      .bg-gray-800 {
+        background-color: var(--color-gray-800);
+      }
+
+      .bg-gray-950 {
+        background-color: var(--color-gray-950);
+      }
+
+      .bg-slate-900 {
+        background-color: var(--color-slate-900);
+      }
+
+      .p-3 {
+        padding: calc(var(--spacing) * 3);
+      }
+
+      .p-4 {
+        padding: calc(var(--spacing) * 4);
+      }
+
+      .px-2 {
+        padding-inline: calc(var(--spacing) * 2);
+      }
+
+      .px-3 {
+        padding-inline: calc(var(--spacing) * 3);
+      }
+
+      .py-1 {
+        padding-block: calc(var(--spacing) * 1);
+      }
+
+      .font-mono {
+        font-family: var(--font-mono);
+      }
+
+      .text-xs {
+        font-size: var(--text-xs);
+        line-height: var(--tw-leading, var(--text-xs--line-height));
+      }
+
+      .font-bold {
+        --tw-font-weight: var(--font-weight-bold);
+        font-weight: var(--font-weight-bold);
+      }
+
+      .font-semibold {
+        --tw-font-weight: var(--font-weight-semibold);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      .whitespace-nowrap {
+        white-space: nowrap;
+      }
+
+      .text-gray-100 {
+        color: var(--color-gray-100);
+      }
+
+      .text-gray-200 {
+        color: var(--color-gray-200);
+      }
+
+      .text-slate-700 {
+        color: var(--color-slate-700);
+      }
+
+      .text-white {
+        color: var(--color-white);
+      }
+
+      .shadow,
+      .shadow-sm {
+        --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a);
+        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      }
+
+      .transition {
+        transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+        transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+        transition-duration: var(--tw-duration, var(--default-transition-duration));
+      }
+
+      @media (hover: hover) {
+        .hover\:bg-slate-800:hover {
+          background-color: var(--color-slate-800);
+        }
+      }
+    }
+
+    @property --tw-divide-x-reverse {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0;
+    }
+
+    @property --tw-border-style {
+      syntax: "*";
+      inherits: false;
+      initial-value: solid;
+    }
+
+    @property --tw-font-weight {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-shadow {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0 0 #0000;
+    }
+
+    @property --tw-shadow-color {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-shadow-alpha {
+      syntax: "<percentage>";
+      inherits: false;
+      initial-value: 100%;
+    }
+
+    @property --tw-inset-shadow {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0 0 #0000;
+    }
+
+    @property --tw-inset-shadow-color {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-inset-shadow-alpha {
+      syntax: "<percentage>";
+      inherits: false;
+      initial-value: 100%;
+    }
+
+    @property --tw-ring-color {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-ring-shadow {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0 0 #0000;
+    }
+
+    @property --tw-inset-ring-color {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-inset-ring-shadow {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0 0 #0000;
+    }
+
+    @property --tw-ring-inset {
+      syntax: "*";
+      inherits: false
+    }
+
+    @property --tw-ring-offset-width {
+      syntax: "<length>";
+      inherits: false;
+      initial-value: 0;
+    }
+
+    @property --tw-ring-offset-color {
+      syntax: "*";
+      inherits: false;
+      initial-value: #fff;
+    }
+
+    @property --tw-ring-offset-shadow {
+      syntax: "*";
+      inherits: false;
+      initial-value: 0 0 #0000;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script>
+  <script type="importmap">{
+  "imports": {}
+}</script>
+</head>
+
+<body>
+  <div id="app" class="min-h-screen p-4 bg-gray-800 text-gray-100">
+
+    <div class="overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
+
+      <table class="filtered-data-table">
+        <thead class="bg-slate-900 text-white">
+          <tr class="divide-x divide-blue-500 bg-gray-950">
+            <th class="p-3 border-b border-slate-700">INDEX</th>
+            <th class="p-3 border-b border-slate-700"> AGENT NAME</th>
+            <th class="p-3 border-b border-slate-700">USERNAME</th>
+            <th class="p-3 border-b border-slate-700">DEPOSIT ID</th>
+            <th class="p-3 border-b border-slate-700">REFERENCE NO</th>
+            <th class="p-3 border-b border-slate-700">CUSTOMER NUMBER</th>
+            <th class="p-3 border-b border-slate-700">AMOUNT</th>
+            <th class="p-3 border-b border-slate-700">DEPOSIT DATE</th>
+            <th class="p-3 border-b border-slate-700">AGENT NUMBER</th>
+            <th class="p-3 border-b border-slate-700">IMAGE LINK</th>
+            <th class="p-3 border-b border-slate-700">DATE POSTED</th>
+            <th class="p-3 border-b border-slate-700">SSP API STATUS</th>
+            <th class="p-3 border-b border-slate-700">DATE</th>
+            <th class="p-3 border-b border-slate-700">PAYMENT REMARKS</th>
+            <th class="p-3 border-b border-slate-700">SETTLED TRANSACTION ID</th>
+            <th class="p-3 border-b border-slate-700">STATUS</th>
+            <th class="p-3 border-b border-slate-700">Update by</th>
+            <th class="p-3 border-b border-slate-700">Extra</th>
+            <th class="p-3 border-b border-slate-700">CASHOUT</th>
+            <th class="p-3 border-b border-slate-700">Manual Input any remark </th>
+            <th class="p-3 border-b border-slate-700">Credit time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">1728</td>
+            <td class="p-3 border border-gray-200">SSP-AG-TEJO010-NG</td>
+            <td class="p-3 border border-gray-200">1989466296</td>
+            <td class="p-3 border border-gray-200">D1389647985</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGB79KKBYD</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGB79KKBYD')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1989466296</td>
+            <td class="p-3 border border-gray-200">300</td>
+            <td class="p-3 border border-gray-200">2026-07-11</td>
+            <td class="p-3 border border-gray-200">1851998422</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1oWQ0NMG7vsmpkQg2JqgotlgsIvIvTiOy')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783752258</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/11/2026 02:44 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">1736</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GEKKO042-NG</td>
+            <td class="p-3 border border-gray-200">mehedy2729</td>
+            <td class="p-3 border border-gray-200">D1389653192</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KX7Y85DK</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KX7Y85DK')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1837567761</td>
+            <td class="p-3 border border-gray-200">4930</td>
+            <td class="p-3 border border-gray-200">2026-07-11</td>
+            <td class="p-3 border border-gray-200">1762437457</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-100485de-395a-4201-9404-8f19e7afca9a-IMG_20260711_124007.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783753892</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/11/2026 03:11 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">1796</td>
+            <td class="p-3 border border-gray-200">SSP-AG-HAYA001-NG</td>
+            <td class="p-3 border border-gray-200">maiya300</td>
+            <td class="p-3 border border-gray-200">D1389745312</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGB2A08AJ0</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGB2A08AJ0')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1746340298</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-11</td>
+            <td class="p-3 border border-gray-200">1901922563</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-04e9c304-e291-437e-8206-c3e9da0391e7-1490.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783945844</td>
+            <td class="p-3 border border-gray-200">Unconfirmed</td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:30 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">0174XXXX300</td>
+            <td class="p-3 border border-gray-200">CUSTOMER NUMBER</td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">1990</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PINGU012-UP</td>
+            <td class="p-3 border border-gray-200">sanjaymondol</td>
+            <td class="p-3 border border-gray-200">D1390483275</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC9BAL0VB</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC9BAL0VB')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1312678861</td>
+            <td class="p-3 border border-gray-200">5000</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1790713251</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-94d206c6-3602-470a-a62f-23827e18545b-file_902639.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783939923</td>
+            <td class="p-3 border border-gray-200">Unconfirmed</td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:52 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">0131XXXX861</td>
+            <td class="p-3 border border-gray-200">CUSTOMER NUMBER</td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2495</td>
+            <td class="p-3 border border-gray-200">SSP-PS-DELTA001D-NG</td>
+            <td class="p-3 border border-gray-200">1628261385</td>
+            <td class="p-3 border border-gray-200">D1390830870</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">57NX8C5O</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '57NX8C5O')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1628261385</td>
+            <td class="p-3 border border-gray-200">2000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1962472714</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-dc8238e6-ba01-44f9-af9c-f133dbe82b54-IMG_20260713_125035.webp')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783927002</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:16 PM</td>
+            <td class="p-3 border border-gray-200">75NX8C5O</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">1628261385</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2496</td>
+            <td class="p-3 border border-gray-200">SSP-AG-BRIM020-BK</td>
+            <td class="p-3 border border-gray-200">nirob5467</td>
+            <td class="p-3 border border-gray-200">D1390844722</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NXYXU2</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NXYXU2')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1849517080</td>
+            <td class="p-3 border border-gray-200">3900</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1771505060</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1Q4eFE7AS_seo22dLLA_L62Kzj9jT3vgi')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783927281</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:21 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2502</td>
+            <td class="p-3 border border-gray-200">SSP-AG-WISE002-BK</td>
+            <td class="p-3 border border-gray-200">DGD9BWX7XX</td>
+            <td class="p-3 border border-gray-200">D1390829085</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD9BWX7XX</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD9BWX7XX')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1759506482</td>
+            <td class="p-3 border border-gray-200">4000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1860442233</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-f65fad98-2eca-4f29-abd4-7b02dd3db521-image.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783927724</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:28 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2503</td>
+            <td class="p-3 border border-gray-200">SSP-AG-CYPHER030-BK</td>
+            <td class="p-3 border border-gray-200">suhag690164</td>
+            <td class="p-3 border border-gray-200">A-D1389189288</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGA7954EL9</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGA7954EL9')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1806690164</td>
+            <td class="p-3 border border-gray-200">5000</td>
+            <td class="p-3 border border-gray-200">2026-07-10</td>
+            <td class="p-3 border border-gray-200">1625070196</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-1d7e2491-965d-44b7-a549-5e6cb4163764-27679.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783928019</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:33 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2507</td>
+            <td class="p-3 border border-gray-200">SSP-AG-TEJO043-RK</td>
+            <td class="p-3 border border-gray-200">Saiem1986</td>
+            <td class="p-3 border border-gray-200">D1390846082</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NYGVVG</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NYGVVG')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1712245960</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1823587707</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1L9eSYXJYAvCgQT3LJ_lZ3QipY7gWB3T3')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783928519</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:41 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2508</td>
+            <td class="p-3 border border-gray-200">SSP-PS-WILLOW051-NG</td>
+            <td class="p-3 border border-gray-200">smonp570</td>
+            <td class="p-3 border border-gray-200">D1390854498</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NEV5ZQ</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NEV5ZQ')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1341910179</td>
+            <td class="p-3 border border-gray-200">20000</td>
+            <td class="p-3 border border-gray-200">2026-07-10</td>
+            <td class="p-3 border border-gray-200">1310313544</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-538532c2-18cb-41fd-b5dc-22995ecf21b7-Screenshot_20260713-133937_Nagad.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783929027</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:50 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2510</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PHOENIX006-RK</td>
+            <td class="p-3 border border-gray-200">ashik3838</td>
+            <td class="p-3 border border-gray-200">D1390818031</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD6BW6EZS</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD6BW6EZS')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1326870138</td>
+            <td class="p-3 border border-gray-200">490</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1345662494</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-dc2e7440-9a56-4f12-99d3-db31386f65e8-Screenshot_2026-07-13-13-59-28-25_9a0991d06c39f5556bb727ecc6fd035e.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783929788</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 04:03 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2513</td>
+            <td class="p-3 border border-gray-200">SSP-AG-NEON007-BK</td>
+            <td class="p-3 border border-gray-200">rjuttom</td>
+            <td class="p-3 border border-gray-200">D1390849034</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NYH5TH</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NYH5TH')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1933462000</td>
+            <td class="p-3 border border-gray-200">495</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1866369898</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-340c30cd-411a-4bcb-940d-1f0f1b08426a-file_903151.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783930121</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 04:08 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2515</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PINGU006-UP</td>
+            <td class="p-3 border border-gray-200">joysen0000</td>
+            <td class="p-3 border border-gray-200">D1390822637</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD1BW9095</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD1BW9095')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1602656469</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1845067996</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-6133d55b-9577-4098-9457-ebbc919827ef-Screenshot_20260713-122606.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783931667</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 04:34 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2516</td>
+            <td class="p-3 border border-gray-200">SSP-AG-AEGIS006-NG</td>
+            <td class="p-3 border border-gray-200">nishatkhan25</td>
+            <td class="p-3 border border-gray-200">D1390777900</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NXIBPB</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NXIBPB')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1754315141</td>
+            <td class="p-3 border border-gray-200">3700</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1819700114</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-0e2f10df-d2b1-4aff-93d4-59e374e0a573-Screenshot_20260713-103431.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783932013</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 04:40 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2517</td>
+            <td class="p-3 border border-gray-200">SSP-PS-NAVY033-UP</td>
+            <td class="p-3 border border-gray-200">abirsk9000</td>
+            <td class="p-3 border border-gray-200">D1390886908</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXDAR8CE</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXDAR8CE')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1970586168</td>
+            <td class="p-3 border border-gray-200">20000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1342581427</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1Z7dHR6eycbx8TU11L2IzAjSRpeu11bHI')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783933294</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:01 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2519</td>
+            <td class="p-3 border border-gray-200">SSP-AG-ISO035-RK</td>
+            <td class="p-3 border border-gray-200">sajeeb26</td>
+            <td class="p-3 border border-gray-200">A-D1390625046</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC7BKLJAB</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC7BKLJAB')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1818758053</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1345188420</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1uSotA9sJgW-Dd8rud0aar9HUy0w2CNNH')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783933916</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:11 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2520</td>
+            <td class="p-3 border border-gray-200">SSP-AG-OWL013-RK</td>
+            <td class="p-3 border border-gray-200">sorif1984</td>
+            <td class="p-3 border border-gray-200">D1390883024</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NYWH5O</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NYWH5O')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1724066378</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1770334003</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-cfc2d93c-32bb-4d35-9fad-9364924b3c10-Screenshot_20260713-144304.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783933926</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:12 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2521</td>
+            <td class="p-3 border border-gray-200">SSP-PS-DREAM011D-NG</td>
+            <td class="p-3 border border-gray-200">1577664933</td>
+            <td class="p-3 border border-gray-200">D1390821608</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXCWF00S</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXCWF00S')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1577664933</td>
+            <td class="p-3 border border-gray-200">3000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1326852186</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://s.247cs.live/rqhaef?t=1783934400552')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783932740</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 04:52 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2523</td>
+            <td class="p-3 border border-gray-200">SSP-AG-BREACH012-BK</td>
+            <td class="p-3 border border-gray-200">id01961810429</td>
+            <td class="p-3 border border-gray-200">A-D1390622620</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD8BM8XGS</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD8BM8XGS')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1961810429</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1609656481</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1hpZHd0ee6aQRExzb80jKIC9ZaGHRi98V')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783934736</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:25 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2525</td>
+            <td class="p-3 border border-gray-200">SSP-AG-BRIM010-NG</td>
+            <td class="p-3 border border-gray-200">shmrat0160</td>
+            <td class="p-3 border border-gray-200">D1390902462</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NQYFMN</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NQYFMN')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1806370160</td>
+            <td class="p-3 border border-gray-200">6000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1941564607</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1hffweqF0ynbzy6fkrxP2iEepLAzVEp7v')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783935579</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:39 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2527</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GROCK044-RK</td>
+            <td class="p-3 border border-gray-200">mal121l</td>
+            <td class="p-3 border border-gray-200">D1390901538</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6734952086</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6734952086')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1344741163</td>
+            <td class="p-3 border border-gray-200">2920</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1849586837</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1OhTTKOXbwE4ZfSAo_qg0VRatoXrlLcyr')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783935810</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:43 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2528</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GROCK037-UP</td>
+            <td class="p-3 border border-gray-200">mehedi13941</td>
+            <td class="p-3 border border-gray-200">D1390898548</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735012101</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735012101')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1852289697</td>
+            <td class="p-3 border border-gray-200">290</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1886925794</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-3994be28-710d-4a22-aab5-0466cf830e9e-Screenshot_20260713-152014.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783935894</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:44 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2529</td>
+            <td class="p-3 border border-gray-200">SSP-AG-YASHA002-BK</td>
+            <td class="p-3 border border-gray-200">motajj</td>
+            <td class="p-3 border border-gray-200">D1383674628</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DFT1SQO8WN</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DFT1SQO8WN')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1781418271</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-06-29</td>
+            <td class="p-3 border border-gray-200">1868946095</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-2ec785d8-d24b-423a-9b86-5951640ec7aa-IMG_20260713_153248.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783936012</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:46 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2530</td>
+            <td class="p-3 border border-gray-200">SSP-AG-TEJO043-RK</td>
+            <td class="p-3 border border-gray-200">Farukalu</td>
+            <td class="p-3 border border-gray-200">D1390892778</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6734908271</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6734908271')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1750507080</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1823587707</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-a0b37103-dd15-42ec-a1db-224720569621-1000005673.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783936300</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:51 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2532</td>
+            <td class="p-3 border border-gray-200">SSP-AG-BREACH012-BK</td>
+            <td class="p-3 border border-gray-200">1920783820</td>
+            <td class="p-3 border border-gray-200">D1390418413</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD3C1Q59P</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD3C1Q59P')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1920783820</td>
+            <td class="p-3 border border-gray-200">700</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1609656481</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-d99404f7-fe71-46b8-90da-b15745e5d3e7-Screenshot_20260713_155842.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783937099</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:04 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2533</td>
+            <td class="p-3 border border-gray-200">SSP-AG-MARBLE003-BK</td>
+            <td class="p-3 border border-gray-200">alamin6077</td>
+            <td class="p-3 border border-gray-200">A-D1390897872</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2C3JU90</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2C3JU90')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1611437970</td>
+            <td class="p-3 border border-gray-200">9800</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1611437970</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1q0D4OqYB59zCbXqnHXkxR9REZRwXiYsr')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783937511</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:11 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2535</td>
+            <td class="p-3 border border-gray-200">SSP-AG-CYPHER010-UP</td>
+            <td class="p-3 border border-gray-200">Sana1212</td>
+            <td class="p-3 border border-gray-200">D1390877023</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXD7P7S5</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXD7P7S5')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1848091871</td>
+            <td class="p-3 border border-gray-200">8000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1857393116</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1dG4Rx0zuV-YMdtLPVLpSFmQRUjTuIAJz')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783937625</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:13 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2540</td>
+            <td class="p-3 border border-gray-200">SSP-PS-SNAKE019A-NG</td>
+            <td class="p-3 border border-gray-200">nur8281</td>
+            <td class="p-3 border border-gray-200">D1390919932</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD3C4XRXJ</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD3C4XRXJ')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1711473223</td>
+            <td class="p-3 border border-gray-200">5000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1307690893</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1w7TBmtQxFdWhMjzzc0mSWmvwyMOyqd1i')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783939501</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:45 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2544</td>
+            <td class="p-3 border border-gray-200">SSP-AG-NEON029-UP</td>
+            <td class="p-3 border border-gray-200">royp1234</td>
+            <td class="p-3 border border-gray-200">D1390934863</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXDHVROG</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXDHVROG')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1789043184</td>
+            <td class="p-3 border border-gray-200">4900</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1804806631</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/12X4so6CxZJEOs3W12d48Cz_2r7axduwV')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783941207</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:13 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2545</td>
+            <td class="p-3 border border-gray-200">SSP-AG-HAYA001-NG</td>
+            <td class="p-3 border border-gray-200">shishirb1</td>
+            <td class="p-3 border border-gray-200">D1390938934</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2C6N8LW</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2C6N8LW')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1721115627</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1901922563</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1gOvhsguKTWw936EX8te733eaYMGSSa3P')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783941339</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:15 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2546</td>
+            <td class="p-3 border border-gray-200">SSP-AG-ASTRA028-NG</td>
+            <td class="p-3 border border-gray-200">azimvai12345</td>
+            <td class="p-3 border border-gray-200">D1390937137</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2C6PR66</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2C6PR66')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1786337603</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1610566664</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1U2LVB1_ERtD2UsJLpj6J_b9jB6bevRDV')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783941502</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:18 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2547</td>
+            <td class="p-3 border border-gray-200">SSP-AG-NEON029-UP</td>
+            <td class="p-3 border border-gray-200">royp1234</td>
+            <td class="p-3 border border-gray-200">D1390934863</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXDHVR0G</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXDHVR0G')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1789043184</td>
+            <td class="p-3 border border-gray-200">4900</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1804806631</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1Co0YYzwsWQa2VS-dwRHLrYKoOQWWAMoR')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783941723</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:22 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2550</td>
+            <td class="p-3 border border-gray-200">SSP-PS-DEAN007-UP</td>
+            <td class="p-3 border border-gray-200">golap121r</td>
+            <td class="p-3 border border-gray-200">D1390947837</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6733522500</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6733522500')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1740540638</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1307875442</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-ff8bcfb0-a1d4-4b54-b8cc-dba83f8a9df2-share_1783886506876.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783942287</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:31 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2553</td>
+            <td class="p-3 border border-gray-200">SSP-AG-VIPER031-UP</td>
+            <td class="p-3 border border-gray-200">sabbir130</td>
+            <td class="p-3 border border-gray-200">D1390926239</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735178212</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735178212')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1717646265</td>
+            <td class="p-3 border border-gray-200">1500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1993836308</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-d19bfcc6-886d-4349-8cb3-391597c8b8ee-IMG_2916.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783942474</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:34 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2556</td>
+            <td class="p-3 border border-gray-200">SSP-AG-VIPER010-RK</td>
+            <td class="p-3 border border-gray-200">ner9901</td>
+            <td class="p-3 border border-gray-200">D1390954619</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2C8H9H4</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2C8H9H4')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1309436671</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1976314253</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1xPNGQliB-kBnVB1SZAoAjmKms2TwsoO5')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783943532</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 07:52 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2558</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SPECIAL001-RK</td>
+            <td class="p-3 border border-gray-200">rocky1122r</td>
+            <td class="p-3 border border-gray-200">D1390719059</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6733673082</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6733673082')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1710187547</td>
+            <td class="p-3 border border-gray-200">700</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">8888888888</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-bf892926-ccf3-4ac1-bd04-1c650fc3dad2-received_2093623718205155.jpeg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944208</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:03 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2559</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GROCK023-UP</td>
+            <td class="p-3 border border-gray-200">dulalhowladar</td>
+            <td class="p-3 border border-gray-200">D1390952941</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXDDWQ0D</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXDDWQ0D')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1879469878</td>
+            <td class="p-3 border border-gray-200">2000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1940440901</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-6c163f5a-6867-461f-b0ab-a4f6ad7ac355-Screenshot_2026-07-13-17-54-30-10_2ba307d76ef475a8eacf4cc6836e83fb.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944285</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:04 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2560</td>
+            <td class="p-3 border border-gray-200">SSP-AG-AEROX001-UP</td>
+            <td class="p-3 border border-gray-200">115090</td>
+            <td class="p-3 border border-gray-200">D1390960272</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735378351</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735378351')" style="">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1700633646</td>
+            <td class="p-3 border border-gray-200">12500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1926682528</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-e1c33264-4003-454a-9a3f-8300fcb5f945-Screenshot_20260713_173947.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944506</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:08 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2561</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SPECIAL001-RK</td>
+            <td class="p-3 border border-gray-200">skkhan52</td>
+            <td class="p-3 border border-gray-200">D1390953543</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735412109</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735412109')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1647564152</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">8888888888</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-8db5f061-3370-4f3d-8308-4bf4677e4c42-Screenshot_20260713-175811.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944770</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:12 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2562</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SPECIAL001-RK</td>
+            <td class="p-3 border border-gray-200">masudrana829</td>
+            <td class="p-3 border border-gray-200">D1390933392</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735101521</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735101521')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1905050829</td>
+            <td class="p-3 border border-gray-200">505</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">8888888888</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-738312cd-ed6d-422e-b153-aaff7804eebf-Screenshot_20260713_175230.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944777</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:12 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2564</td>
+            <td class="p-3 border border-gray-200">SSP-PS-KEZ010-UP</td>
+            <td class="p-3 border border-gray-200">alifu</td>
+            <td class="p-3 border border-gray-200">A-D1390884886</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">01KXDNQKGS</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '01KXDNQKGS')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1881995305</td>
+            <td class="p-3 border border-gray-200">20000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1621437678</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/11SY-9ndcD1lk1mS6zwEjWC0_xKuuOvvV')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783944875</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:14 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2565</td>
+            <td class="p-3 border border-gray-200">SSP-AG-KAYO009-NG</td>
+            <td class="p-3 border border-gray-200">belal103580</td>
+            <td class="p-3 border border-gray-200">D1390967675</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NWPN1O</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NWPN1O')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1910359280</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1627146000</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-70dc17c2-a02c-4b8a-8c31-df1f00cba43b-IMG_20260713_181414_1.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783945419</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:23 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2566</td>
+            <td class="p-3 border border-gray-200">SSP-AG-CYPHER005-RK</td>
+            <td class="p-3 border border-gray-200">Mdshahin1234nd</td>
+            <td class="p-3 border border-gray-200">D1390969745</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735527931</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735527931')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1329241202</td>
+            <td class="p-3 border border-gray-200">400</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1857392907</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1K0RqjsnqM_yAqhUETm9xNPeGM9fcb0-4')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946029</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:33 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2567</td>
+            <td class="p-3 border border-gray-200">SSP-PS-AYLA013E-UP</td>
+            <td class="p-3 border border-gray-200">tarekk16</td>
+            <td class="p-3 border border-gray-200">D1390958168</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6735461929</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6735461929')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1771831416</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1867614694</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-8db63a4c-f6ad-4ec3-92dd-ca9e640f9578-Screenshot_20260713_175155_Rocket.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946147</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:35 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2568</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN001-BK</td>
+            <td class="p-3 border border-gray-200">Monowar7573</td>
+            <td class="p-3 border border-gray-200">A-D1390605223</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC1BJTS9Z</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC1BJTS9Z')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1717048047</td>
+            <td class="p-3 border border-gray-200">5013</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1783789091</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1Q_X5q2ERSGaxSyIP6EPLsgvSwpzqqwLX')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946208</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:36 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2570</td>
+            <td class="p-3 border border-gray-200">SSP-AG-JETT050-NG</td>
+            <td class="p-3 border border-gray-200">mdshamol1234</td>
+            <td class="p-3 border border-gray-200">D1390967213</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">750024FY</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '750024FY')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1734861136</td>
+            <td class="p-3 border border-gray-200">1136</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1405013889</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-77850752-d804-477e-b706-26a06dd48617-Screenshot_20260713_181616_Nagad.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946583</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:43 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2571</td>
+            <td class="p-3 border border-gray-200">SSP-AG-RONY016-NG</td>
+            <td class="p-3 border border-gray-200">ismaill12345</td>
+            <td class="p-3 border border-gray-200">D1390974303</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75005T2H</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75005T2H')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1690161135</td>
+            <td class="p-3 border border-gray-200">300</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1711971319</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1r_bZaJFH4jSIcsKDmPST5frgmFea3ryS')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946597</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:43 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2572</td>
+            <td class="p-3 border border-gray-200">SSP-AG-ISO032-BK</td>
+            <td class="p-3 border border-gray-200">dolower</td>
+            <td class="p-3 border border-gray-200">D1390975017</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2CACXFU</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2CACXFU')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1815183914</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1313527055</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-5be45292-ca37-4f80-a4af-b58a7d29c52a-Screenshot_20260713-182455.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946655</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:44 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2574</td>
+            <td class="p-3 border border-gray-200">SSP-AG-HAYA005-UP</td>
+            <td class="p-3 border border-gray-200">mang702</td>
+            <td class="p-3 border border-gray-200">D1390982362</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O04NS</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O04NS')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1705503702</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1327870393</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1iJZ9UaNNhMzvf2CLFgKpwdPt0lkTRrdZ')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783946983</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:49 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2575</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SHAKER064-NG</td>
+            <td class="p-3 border border-gray-200">mdjubberali</td>
+            <td class="p-3 border border-gray-200">D1390519077</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NSQ1WF</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NSQ1WF')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1736120826</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1707441460</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-6c107056-8d41-4ae4-ac7b-342cdaa445c5-75NSQ1WF.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783947107</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 08:51 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2577</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PINGU012-BK</td>
+            <td class="p-3 border border-gray-200">raj2523</td>
+            <td class="p-3 border border-gray-200">D1390822472</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD5BW7TWJ</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD5BW7TWJ')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1755232594</td>
+            <td class="p-3 border border-gray-200">390</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1790713251</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-fe73ace6-9fd4-4263-a06b-81e99264e4c0-gdthyr.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783947668</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:01 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2582</td>
+            <td class="p-3 border border-gray-200">SSP-AG-RONY029-RK</td>
+            <td class="p-3 border border-gray-200">shobuj1999</td>
+            <td class="p-3 border border-gray-200">D1390989415</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">750054HR</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '750054HR')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1712229799</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1768109369</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1T7EGkm_q9J9wSs1N8Kd1SCZ4W4HMRg6a')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783947875</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:04 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2583</td>
+            <td class="p-3 border border-gray-200">SSP-AG-JETT015-NG</td>
+            <td class="p-3 border border-gray-200">uday22</td>
+            <td class="p-3 border border-gray-200">D1390973706</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O07EB6</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O07EB6')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1973220442</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1926479860</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-c346f54a-099c-4c4b-8352-a48e28b3376f-IMG-20260713-WA0000.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783948295</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:11 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2584</td>
+            <td class="p-3 border border-gray-200">SSP-AG-VIPER003-RK</td>
+            <td class="p-3 border border-gray-200">1753857523</td>
+            <td class="p-3 border border-gray-200">D1390977645</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O0A1L9</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O0A1L9')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1753857523</td>
+            <td class="p-3 border border-gray-200">700</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1964101132</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-1687eb79-6e90-4b8e-8795-d2bd5481d86f-Screenshot_20260713_190416_com_konasl_nagad_HomeActivity.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783948530</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:15 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2585</td>
+            <td class="p-3 border border-gray-200">SSP-AG-EULS002-NG</td>
+            <td class="p-3 border border-gray-200">shipoh8900</td>
+            <td class="p-3 border border-gray-200">D1390998676</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NRSF0L</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NRSF0L')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1806358900</td>
+            <td class="p-3 border border-gray-200">6500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1873776935</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1f60QJFu-bTgxLGZRKyFwEREv0jnafgFg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783949247</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:27 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2586</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GARNET015-NG</td>
+            <td class="p-3 border border-gray-200">nayonmir</td>
+            <td class="p-3 border border-gray-200">D1390975439</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD1CAP3YH</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD1CAP3YH')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1974423292</td>
+            <td class="p-3 border border-gray-200">680</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1821325919</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-955987b7-48d9-48fd-901e-d1f3676bc4cd-1000057266.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783949280</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:28 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2587</td>
+            <td class="p-3 border border-gray-200">SSP-PS-OMEGA008C-UP</td>
+            <td class="p-3 border border-gray-200">1332401962</td>
+            <td class="p-3 border border-gray-200">D1390991072</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NXZ0SN</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NXZ0SN')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1332401962</td>
+            <td class="p-3 border border-gray-200">1100</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1347185173</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-a954fb5c-3592-4697-b897-b58dad910463-IMG-20260713-WA0000.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783949358</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:29 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2588</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SHAKER023-BK</td>
+            <td class="p-3 border border-gray-200">Imranemon07</td>
+            <td class="p-3 border border-gray-200">A-D1390939402</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NZN4B7</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NZN4B7')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1971581809</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1852799709</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1bvZPBOpFsR9IuA1P7hE1iOohwKy5Lkco')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783949386</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:29 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2589</td>
+            <td class="p-3 border border-gray-200">SSP-AG-NEON045-UP</td>
+            <td class="p-3 border border-gray-200">sonatan8710</td>
+            <td class="p-3 border border-gray-200">D1391002075</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NS5TYZ</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NS5TYZ')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1626178710</td>
+            <td class="p-3 border border-gray-200">6000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1846665124</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1yhG3ZhiVTi3iBFjhKv-CBy6zGxelYiCQ')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783949997</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:39 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2590</td>
+            <td class="p-3 border border-gray-200">SSP-AG-KAYO023-RK</td>
+            <td class="p-3 border border-gray-200">Sazedul</td>
+            <td class="p-3 border border-gray-200">D1391007959</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD2CDZVEM</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD2CDZVEM')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1401787229</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1894355543</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1wWhIu4ONg5X02-cgbS_sOFqQ-emtI2GF')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783951031</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:57 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2591</td>
+            <td class="p-3 border border-gray-200">SSP-AG-VIPER038-RK</td>
+            <td class="p-3 border border-gray-200">1324800953</td>
+            <td class="p-3 border border-gray-200">D1391001422</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O0O0IS</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O0O0IS')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1324800951</td>
+            <td class="p-3 border border-gray-200">300</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1882884282</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-b1066c32-bf4a-4222-a88e-64c758602222-file_903332.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783951180</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 09:59 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2593</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GROCK038-RK</td>
+            <td class="p-3 border border-gray-200">mdsawkapali</td>
+            <td class="p-3 border border-gray-200">D1391002942</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NK4SBB</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NK4SBB')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1772874750</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1805413948</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/12xA_Dr2P1nFvbl4_Tnl_FwvhhgM0Pkdr')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783951310</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:01 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2594</td>
+            <td class="p-3 border border-gray-200">SSP-PS-DELTA059-UP</td>
+            <td class="p-3 border border-gray-200">bnp3011</td>
+            <td class="p-3 border border-gray-200">D1391013113</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD0CCQ64K</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD0CCQ64K')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1738608038</td>
+            <td class="p-3 border border-gray-200">1400</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1964093908</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-a4c94019-f735-4e0b-8a43-5b64a5eaee36-image.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783951409</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:03 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2595</td>
+            <td class="p-3 border border-gray-200">SSP-AG-JETT086-NG</td>
+            <td class="p-3 border border-gray-200">narayan247</td>
+            <td class="p-3 border border-gray-200">D1384575499</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75LQJ7W0</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75LQJ7W0')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1954779019</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-07-01</td>
+            <td class="p-3 border border-gray-200">1332381536</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1YNVgsnAnVEzsB4HS3Bka1vHhM4nqffXq')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1782914260</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/01/2026 09:57 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2596</td>
+            <td class="p-3 border border-gray-200">SSP-AG-WISE030-BK</td>
+            <td class="p-3 border border-gray-200">1991479858</td>
+            <td class="p-3 border border-gray-200">D1386771839</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DG6948CSRP</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DG6948CSRP')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1991479858</td>
+            <td class="p-3 border border-gray-200">980</td>
+            <td class="p-3 border border-gray-200">2026-07-06</td>
+            <td class="p-3 border border-gray-200">1831769234</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-31fcc9d3-30ba-4942-a635-d2ba513eed58-b13c9ce64751063189c0da3c01cf8ff0.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783345007</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/06/2026 09:36 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2597</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SMOKER003-NG</td>
+            <td class="p-3 border border-gray-200">mdboda816</td>
+            <td class="p-3 border border-gray-200">D1384329305</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75LMKT25</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75LMKT25')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1920799816</td>
+            <td class="p-3 border border-gray-200">700</td>
+            <td class="p-3 border border-gray-200">2026-07-01</td>
+            <td class="p-3 border border-gray-200">1632832753</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-0a35707a-3062-44ab-a056-e61d2eb3c880-Screenshot_2026-07-06-00-01-52-70_1ac437793f7d3b697403ad50cf2ff081.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783620792</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/10/2026 02:13 AM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2599</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN002-BK</td>
+            <td class="p-3 border border-gray-200">1758596489</td>
+            <td class="p-3 border border-gray-200">D1389400481</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGB39DTF75</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGB39DTF75')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1790761969</td>
+            <td class="p-3 border border-gray-200">400</td>
+            <td class="p-3 border border-gray-200">2026-07-11</td>
+            <td class="p-3 border border-gray-200">1319983802</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-90877e0f-fc72-4131-aa07-6d7538064c07-Screenshot_20260711-003531.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783710228</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/11/2026 03:03 AM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2600</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN005-BK</td>
+            <td class="p-3 border border-gray-200">riponn27</td>
+            <td class="p-3 border border-gray-200">D1389421901</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGB89EJ11E</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGB89EJ11E')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1990353247</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-11</td>
+            <td class="p-3 border border-gray-200">1330519889</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-702d802d-e7f2-4a83-9a26-bb6d3725782e-Screenshot_20260711-012930.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783746174</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/11/2026 01:02 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2601</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN005-BK</td>
+            <td class="p-3 border border-gray-200">jugol400</td>
+            <td class="p-3 border border-gray-200">D1390076908</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC3AI4J8T</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC3AI4J8T')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1402437829</td>
+            <td class="p-3 border border-gray-200">5000</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1330519889</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-2102f5a8-ba2f-4065-b6a0-beec73ea9c9d-Screenshot_2026-07-12-01-31-03-56_9a0991d06c39f5556bb727ecc6fd035e.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783799141</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/12/2026 03:45 AM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2602</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN005-BK</td>
+            <td class="p-3 border border-gray-200">bdkingstrong</td>
+            <td class="p-3 border border-gray-200">A-D1390204775</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC5AO9FIJ</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC5AO9FIJ')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1640539958</td>
+            <td class="p-3 border border-gray-200">3000</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1330519889</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-3bc73692-12f2-4947-93d4-3cac89d16f19-2835.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783831835</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/12/2026 12:50 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2603</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PHOENIX009-NG</td>
+            <td class="p-3 border border-gray-200">bhuiyan778899</td>
+            <td class="p-3 border border-gray-200">A-D1390281521</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75NRGFAO</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75NRGFAO')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1941399769</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1717527540</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1Lc6SCSR3EH_pzQKc6TJ9Uzmpxs4WArR4')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783838061</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/12/2026 02:34 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2604</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PHOENIX046-BK</td>
+            <td class="p-3 border border-gray-200">milonvai1100</td>
+            <td class="p-3 border border-gray-200">A-D1390286798</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6731019527</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6731019527')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1813107411</td>
+            <td class="p-3 border border-gray-200">200</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">13100788144</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1jJzR5R-Wf1jUYKv3Ycsv91H0CVBK_ov4')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783841711</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/12/2026 03:35 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2605</td>
+            <td class="p-3 border border-gray-200">SSP-AG-FAMAN002-BK</td>
+            <td class="p-3 border border-gray-200">nur2924</td>
+            <td class="p-3 border border-gray-200">D1390326612</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGC1AWC1IX</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGC1AWC1IX')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1310112924</td>
+            <td class="p-3 border border-gray-200">5000</td>
+            <td class="p-3 border border-gray-200">2026-07-12</td>
+            <td class="p-3 border border-gray-200">1319983802</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-d55f6a22-d488-410e-924d-ac365aeb9a9b-Screenshot_20260712-135436.png')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783844758</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/12/2026 04:25 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2607</td>
+            <td class="p-3 border border-gray-200">SSP-AG-WISE006-NG</td>
+            <td class="p-3 border border-gray-200">tanha5068</td>
+            <td class="p-3 border border-gray-200">A-D1332370580</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6305533123</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6305533123')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1937665068</td>
+            <td class="p-3 border border-gray-200">1000</td>
+            <td class="p-3 border border-gray-200">2026-03-20</td>
+            <td class="p-3 border border-gray-200">17087353014</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1YYBCO93vdHyZQ1zeGH14Xn2ee4XY_uLA')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783885436</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 03:43 AM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2608</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PINGU013-BK</td>
+            <td class="p-3 border border-gray-200">1750828459</td>
+            <td class="p-3 border border-gray-200">A-D1390810120</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6734328677</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6734328677')" style="">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1750828459</td>
+            <td class="p-3 border border-gray-200">25000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">18866955335</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1qE1C85vyxok1aXqOt0O3nCbm4k5yVEZa')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783924293</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 02:31 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2609</td>
+            <td class="p-3 border border-gray-200">SSP-AG-SMOKER003-NG</td>
+            <td class="p-3 border border-gray-200">akhi7703</td>
+            <td class="p-3 border border-gray-200">D1390885247</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75MM1IDY</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75MM1IDY')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1763937703</td>
+            <td class="p-3 border border-gray-200">2000</td>
+            <td class="p-3 border border-gray-200">2026-07-06</td>
+            <td class="p-3 border border-gray-200">1632832753</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-1.s3.amazonaws.com/uploads/bck1-031fcf61-4484-446c-9590-129bd9125a20-IMG-20260713-WA0000.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783933609</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 05:06 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2610</td>
+            <td class="p-3 border border-gray-200">SSP-AG-HAYA025-NG</td>
+            <td class="p-3 border border-gray-200">Joynalvai420</td>
+            <td class="p-3 border border-gray-200">A-D1390857080</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">6734724531</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '6734724531')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">19090599646</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">13435238135</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1csghuw32qfZcL57uY21WsJ3qlF82kY_i')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783938141</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 06:22 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2611</td>
+            <td class="p-3 border border-gray-200">SSP-AG-AEROX015-UP</td>
+            <td class="p-3 border border-gray-200">1796902113</td>
+            <td class="p-3 border border-gray-200">D1391009803</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD7CC5VRF</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD7CC5VRF')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1406010373</td>
+            <td class="p-3 border border-gray-200">7800</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1606589697</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-2.s3.amazonaws.com/uploads/bck2-a8525219-161a-4d59-88ad-40d2fb29c06e-Screenshot_2026-07-13-19-56-29-338_com.bKash.merchantapp.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783952619</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:23 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2612</td>
+            <td class="p-3 border border-gray-200">SSP-AG-GEKKO029-NG</td>
+            <td class="p-3 border border-gray-200">11rakib0011</td>
+            <td class="p-3 border border-gray-200">A-D1391013390</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75000IL2</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75000IL2')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1934683543</td>
+            <td class="p-3 border border-gray-200">600</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1881562040</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1rymce4gSLSWOD7F1zHUhqlT-gr65DQl7')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783952766</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:26 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2613</td>
+            <td class="p-3 border border-gray-200">SSP-AG-JETT050-NG</td>
+            <td class="p-3 border border-gray-200">mdshamol1234</td>
+            <td class="p-3 border border-gray-200">D1390967213</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O024FY</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O024FY')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1734861136</td>
+            <td class="p-3 border border-gray-200">1136</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1405013889</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://workflow-media-assets-3.s3.amazonaws.com/uploads/bck3-f5c70323-508a-4b8d-8b3e-2749d5af8d42-Screenshot_20260713_181616_Nagad.jpg')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783952885</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:28 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2614</td>
+            <td class="p-3 border border-gray-200">SSP-AG-CYPHER004-BK</td>
+            <td class="p-3 border border-gray-200">1986992930</td>
+            <td class="p-3 border border-gray-200">A-D1391011364</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD1CEGZ8V</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD1CEGZ8V')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1986992930</td>
+            <td class="p-3 border border-gray-200">500</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1629042502</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/19n_DEWaGWq_JvZLZYrP3ufro9H6dugI6')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783953275</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:34 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2615</td>
+            <td class="p-3 border border-gray-200">SSP-AG-OWL013-RK</td>
+            <td class="p-3 border border-gray-200">sumon202566</td>
+            <td class="p-3 border border-gray-200">A-D1391018428</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75O10KI9</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75O10KI9')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1811010588</td>
+            <td class="p-3 border border-gray-200">2000</td>
+            <td class="p-3 border border-gray-200">1984-07-27</td>
+            <td class="p-3 border border-gray-200">1770334003</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1QwAo5um6yAfjAD4yKALOwtC4zQIpBfs6')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783953412</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:36 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2616</td>
+            <td class="p-3 border border-gray-200">SSP-PS-DELTA069-NG</td>
+            <td class="p-3 border border-gray-200">rafirayhan</td>
+            <td class="p-3 border border-gray-200">A-D1391020362</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">75011D94</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, '75011D94')" style="">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1792741510</td>
+            <td class="p-3 border border-gray-200">7000</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1959423056</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1zF3u3SCASMPMWEFDZ1KN4g_ui9P8Tmea')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783953416</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:36 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+          <tr class=" status-highlight bg-blue-400 cursor-pointer">
+            <td class="p-3 border border-gray-200 font-bold">2617</td>
+            <td class="p-3 border border-gray-200">SSP-AG-PHOENIX016-RK</td>
+            <td class="p-3 border border-gray-200">rifat6031</td>
+            <td class="p-3 border border-gray-200">A-D1391021405</td>
+            <td class="p-3 border border-gray-200 whitespace-nowrap">
+              <span class="font-mono text-slate-700">DGD3CFH4O1</span>
+              <button type="button" class="ml-2 px-2 py-1 text-xs rounded transition bg-slate-900 text-gray-200 font-mono hover:bg-slate-800" onclick="copyValue(this, 'DGD3CFH4O1')">▤ Copy</button>
+            </td>
+            <td class="p-3 border border-gray-200">1791776031</td>
+            <td class="p-3 border border-gray-200">590</td>
+            <td class="p-3 border border-gray-200">2026-07-13</td>
+            <td class="p-3 border border-gray-200">1906080134</td>
+            <td class="p-3 border border-gray-200">
+              <button type="button" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white shadow hover:bg-slate-800 transition" onclick="displayImageModal('https://lh3.googleusercontent.com/d/1LX68FD-cSnON5ht5b6XHN8UhOig5JvfU')">📸 View Photo</button>
+            </td>
+            <td class="p-3 border border-gray-200">1783953559</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">07/13/2026 10:39 PM</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200">ALREADY FOLLOW UP</td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+            <td class="p-3 border border-gray-200"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
+  <script></script>
+</body>
+
+</html>
