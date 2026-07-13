@@ -8,6 +8,7 @@
   <title>allreadyFollowTable</title>
   <meta name="title" content="allreadyFollowTable">
   <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style id="__livecodes_styles__">
     /*! tailwindcss v4.1.16 | MIT License | https://tailwindcss.com */
@@ -2984,9 +2985,45 @@
       </table>
     </div>
   </div>
+<div id="imageModal" class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4" onclick="closeModal()">
+        <div class="relative bg-gray-900 p-2 rounded-lg max-w-2xl max-h-[85vh] overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg hover:bg-red-700 shadow">&times;</button>
+            <img id="modalTargetImg" src="" alt="Dynamic Resource Preview Window" class="max-w-full max-h-[80vh] object-contain rounded">
+        </div>
+    </div>
 
   <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
-  <script></script>
+  <script>
+  function copyValue(buttonElement, payloadText) {
+          navigator.clipboard
+            .writeText(payloadText)
+            .then(() => {
+              const defaultText = buttonElement.innerText;
+              buttonElement.innerText = "Copied!";
+              buttonElement.style.backgroundColor = "#dcfce7";
+              buttonElement.style.color = "#15803d";
+
+              setTimeout(() => {
+                buttonElement.innerText = defaultText;
+                buttonElement.style.backgroundColor = "";
+                buttonElement.style.color = "";
+              }, 1200);
+            })
+            .catch((err) => {
+              console.error("Could not copy string text value: ", err);
+            });
+        }
+
+        // Interactive Image Modal handler logic
+        function displayImageModal(imageSrcUrl) {
+          document.getElementById("modalTargetImg").src = imageSrcUrl;
+          document.getElementById("imageModal").style.display = "flex";
+        }
+
+        function closeModal() {
+          document.getElementById("imageModal").style.display = "none";
+        }
+  </script>
 </body>
 
 </html>
