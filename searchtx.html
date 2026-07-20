@@ -1,184 +1,276 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction Search Portal</title>
-    <!-- Tailwind CSS Play CDN -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction Lookup Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body class="bg-gray-900 text-gray-100 min-h-screen font-sans antialiased selection:bg-blue-500 selection:text-white">
-
-    <!-- Container View -->
-    <div class="max-w-2xl mx-auto px-4 py-12 sm:px-6">
-        
+  </head>
+  <body>
+    <div
+      class="bg-gray-900 text-gray-100 min-h-screen font-sans antialiased selection:bg-blue-500 selection:text-white"
+    >
+      <!-- Container View -->
+      <div class="max-w-3xl mx-auto px-4 py-12 sm:px-6">
         <!-- Header Section -->
         <div class="text-center mb-10">
-            <h1 class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-                TransactionID search Portal
-            </h1>
-            <p class="mt-3 text-sm text-gray-400 max-w-xl mx-auto">
-                Search via unique Transaction ID to extract corresponding structural profile mappings instantly.
-            </p>
+          <h1
+            class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
+          >
+            Data Lookup Portal
+          </h1>
+          <p class="mt-3 text-sm text-gray-400 max-w-xl mx-auto">
+            Search via unique Transaction ID to pull detailed transaction
+            records instantly from the master ledger.
+          </p>
         </div>
 
         <!-- Search Form Card -->
-        <div class="bg-gray-800 border border-gray-700/50 rounded-2xl p-6 shadow-xl mb-8">
-            <form id="lookupForm" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4">
-                <div class="flex-1">
-                    <label for="transactionId" class="sr-only">Transaction ID</label>
-                    <input 
-                        type="text" 
-                        id="transactionId" 
-                        placeholder="Enter ID (e.g. 75OZNU4O)" 
-                        required
-                        class="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-700 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-medium text-base"
-                    >
-                </div>
-                <button 
-                    type="submit"
-                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 shadow-lg shadow-blue-900/30 active:scale-[0.98] cursor-pointer text-center whitespace-nowrap"
-                >
-                    Search Records
-                </button>
-            </form>
-        </div>
-
-        <!-- Error Alert (Hidden by default) -->
-        <div id="errorMessage" class="hidden bg-red-950/40 border border-red-800/60 text-red-300 rounded-xl p-4 mb-8 text-sm flex items-start gap-3">
-            <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-            </svg>
-            <span id="errorText"></span>
-        </div>
-
-        <!-- Skeleton Loading State (Animated, hidden by default) -->
-        <div id="loadingState" class="hidden space-y-4 animate-pulse">
-            <div class="h-6 bg-gray-800 rounded-md w-1/4 mb-2"></div>
-            <div class="bg-gray-800 border border-gray-700/40 rounded-2xl p-6 space-y-4 shadow-lg">
-                <div class="flex justify-between border-b border-gray-700/40 pb-3"><div class="h-4 bg-gray-700 rounded w-1/3"></div><div class="h-4 bg-gray-700 rounded w-1/4"></div></div>
-                <div class="flex justify-between border-b border-gray-700/40 pb-3"><div class="h-4 bg-gray-700 rounded w-1/4"></div><div class="h-4 bg-gray-700 rounded w-1/2"></div></div>
-                <div class="flex justify-between border-b border-gray-700/40 pb-3"><div class="h-4 bg-gray-700 rounded w-1/3"></div><div class="h-32 bg-gray-700 rounded w-1/2"></div></div>
+        <div
+          class="bg-gray-800 border border-gray-700/50 rounded-2xl p-6 shadow-xl mb-8"
+        >
+          <form
+            id="lookupForm"
+            class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4"
+          >
+            <div class="flex-1">
+              <label for="transactionId" class="sr-only"
+                >Transaction ID / Reference No</label
+              >
+              <input
+                type="text"
+                id="transactionId"
+                placeholder="Enter Transaction ID (Column 1 matching)"
+                required
+                class="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-700 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-medium text-base"
+              />
             </div>
+            <button
+              type="submit"
+              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 shadow-lg shadow-blue-900/30 active:scale-[0.98] cursor-pointer text-center whitespace-nowrap"
+            >
+              Search Records
+            </button>
+          </form>
+        </div>
+
+        <!-- Error Alert -->
+        <div
+          id="errorMessage"
+          class="hidden bg-red-950/40 border border-red-800/60 text-red-300 rounded-xl p-4 mb-8 text-sm flex items-start gap-3"
+        >
+          <svg
+            class="w-5 h-5 text-red-400 shrink-0 mt-0.5"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+            />
+          </svg>
+          <span id="errorText"></span>
+        </div>
+
+        <!-- Skeleton Loading State -->
+        <div id="loadingState" class="hidden space-y-4 animate-pulse">
+          <div class="h-6 bg-gray-800 rounded-md w-1/4 mb-2"></div>
+          <div
+            class="bg-gray-800 border border-gray-700/40 rounded-2xl p-6 space-y-4 shadow-lg"
+          >
+            <div class="flex justify-between border-b border-gray-700/40 pb-3">
+              <div class="h-4 bg-gray-700 rounded w-1/3"></div>
+              <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+            </div>
+            <div class="flex justify-between border-b border-gray-700/40 pb-3">
+              <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+              <div class="h-4 bg-gray-700 rounded w-1/2"></div>
+            </div>
+          </div>
         </div>
 
         <!-- Dynamic Card Results Section Container -->
         <div id="resultContainer" class="space-y-6"></div>
-
+      </div>
     </div>
-
     <script>
-        const SPREADSHEET_ID = '1W-DmVo6eG-AO7ta8VmWo7ze1h0rVYhnnjYPklhtddjQ';
-        const SHEET_NAME = 'Sheet2'; 
+      const SPREADSHEET_ID = "1z8__XBXvmafdNZw6y8f4H0KP5QqWp30RiWwQ4QSvzPY";
+      const SHEET_NAME = "Sheet1";
 
-        document.getElementById('lookupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const txnId = document.getElementById('transactionId').value.trim();
-            const loadingState = document.getElementById('loadingState');
-            const errorDiv = document.getElementById('errorMessage');
-            const resultContainer = document.getElementById('resultContainer');
-            
-            loadingState.classList.remove('hidden');
-            errorDiv.classList.add('hidden');
-            resultContainer.innerHTML = '';
+      // Strictly defined columns requested matching your Google Sheet structure
+      const DEFINED_HEADERS = [
+        "AGENT NAME",
+        "USERNAME",
+        "DEPOSIT ID",
+        "REFERENCE NO",
+        "CUSTOMER NUMBER",
+        "AMOUNT",
+        "DEPOSIT DATE",
+        "AGENT NUMBER",
+        "IMAGE LINK",
+        "DATE POSTED",
+        "SSP API STATUS",
+        "DATE",
+        "PAYMENT REMARKS",
+        "SETTLED TRANSACTION ID",
+        "STATUS",
+        "Update by",
+        "Extra",
+        "Cashout Number",
+        "Manual Input any remark ",
+        "Credit time",
+      ];
 
-            const query = encodeURIComponent(`SELECT * WHERE A = '${txnId}'`);
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
+      document
+        .getElementById("lookupForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to connect to spreadsheet data feed.');
-                    return response.text();
-                })
-                .then(txt => {
-                    const jsonString = txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1);
-                    const data = JSON.parse(jsonString);
-                    
-                    loadingState.classList.add('hidden');
+          const txnId = document.getElementById("transactionId").value.trim();
+          const loadingState = document.getElementById("loadingState");
+          const errorDiv = document.getElementById("errorMessage");
+          const resultContainer = document.getElementById("resultContainer");
 
-                    if (data.status === 'error') {
-                        throw new Error(data.errors[0].detailed_message || 'Error processing query parameters.');
-                    }
+          loadingState.classList.remove("hidden");
+          errorDiv.classList.add("hidden");
+          resultContainer.innerHTML = "";
 
-                    const tableData = data.table;
-                    
-                    if (!tableData.rows || tableData.rows.length === 0) {
-                        showError(`No row matches found matching Transaction ID: "${txnId}"`);
-                        return;
-                    }
+          // Column 1 is Column A (AGENT NAME) as requested in your setup
+          const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
+          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
 
-                    // Extract headers mapping labels
-                    const columnHeaders = tableData.cols.map((col, idx) => col.label || `Column ${idx + 1}`);
+          fetch(url)
+            .then((response) => {
+              if (!response.ok)
+                throw new Error("Failed to connect to spreadsheet data feed.");
+              return response.text();
+            })
+            .then((txt) => {
+              const jsonString = txt.substring(
+                txt.indexOf("{"),
+                txt.lastIndexOf("}") + 1,
+              );
+              const data = JSON.parse(jsonString);
 
-                    let html = '';
+              loadingState.classList.add("hidden");
 
-                    // Generate a structural layout card for each matched spreadsheet row
-                    tableData.rows.forEach((row, rowIndex) => {
-                        html += `
-                            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl shadow-xl overflow-hidden">
+              if (data.status === "error") {
+                throw new Error(
+                  data.errors[0].detailed_message ||
+                    "Error processing query parameters.",
+                );
+              }
+
+              const tableData = data.table;
+
+              if (!tableData.rows || tableData.rows.length === 0) {
+                showError(
+                  `No records found matching Agent Name / Transaction ID: "${txnId}"`,
+                );
+                return;
+              }
+
+              let html = "";
+
+              // Loop through any matched rows
+              tableData.rows.forEach((row, rowIndex) => {
+                html += `
+                            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl shadow-xl overflow-hidden mb-6">
                                 <div class="bg-gray-950/40 px-6 py-4 border-b border-gray-700/50 flex justify-between items-center">
-                                    <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">Record Match #${rowIndex + 1}</h3>
-                                    <span class="inline-flex items-center rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-500/20">Verified</span>
+                                    <div>
+                                        <span class="text-xs font-bold uppercase tracking-wider text-blue-400 block mb-0.5">Matched Entry</span>
+                                        <h3 class="text-base font-bold text-white">${row.c[0] ? row.c[0].v || "Record" : "Record"}</h3>
+                                    </div>
+                                    <span class="inline-flex items-center rounded-md bg-gray-700 px-2.5 py-1 text-xs font-semibold text-gray-300 border border-gray-600">
+                                        Row Match #${rowIndex + 1}
+                                    </span>
                                 </div>
-                                <div class="p-6 space-y-4 divide-y divide-gray-700/40">
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                         `;
 
-                        row.c.forEach((cell, cellIndex) => {
-                            const label = columnHeaders[cellIndex];
-                            const rawValue = cell ? (cell.f || cell.v || '') : '';
-                            
-                            // Check clean string text variants to safely isolate Image Link inputs
-                            const isImage = typeof rawValue === 'string' && (rawValue.startsWith('http://') || rawValue.startsWith('https://')) && (/\.(jpeg|jpg|gif|png|webp)/i.test(rawValue) || label.toUpperCase().includes('IMAGE'));
-                            
-                            // Prevent empty spacers from creating border layout anomalies on index 0 items
-                            const ptClass = cellIndex === 0 ? '' : 'pt-4';
+                // Iterate dynamically over the 20 columns
+                DEFINED_HEADERS.forEach((label, index) => {
+                  const cell = row.c[index];
+                  const rawValue = cell ? cell.f || cell.v || "" : "";
 
-                            html += `
-                                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 ${ptClass}">
-                                    <span class="text-sm font-semibold text-gray-400 shrink-0 sm:w-1/3">${label}</span>
-                                    <div class="text-sm font-medium text-white break-all sm:w-2/3 text-left sm:text-right">
+                  // Visual formatting updates based on column roles
+                  const isImageColumn = label === "IMAGE LINK";
+                  const isStatusColumn = label === "STATUS";
+                  const isAmountColumn = label === "AMOUNT";
+                  const isRefColumn = label === "REFERENCE NO";
+                  // If it's an image link block, span full row width for better display room
+                  const blockSpanClass = isImageColumn
+                    ? "col-span-1 md:col-span-2 border-t border-gray-700/40 pt-4 mt-2"
+                    : "";
+
+                  html += `
+                                <div class="flex flex-col space-y-1 ${blockSpanClass}">
+                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">${label}</span>
+                                    <div class="text-sm font-medium text-gray-200 break-all text-left">
                             `;
 
-                            if (isImage) {
-                                html += `<img src="${rawValue}" alt="${label}" class="mt-1 max-h-48 rounded-xl object-contain border border-gray-700 shadow-md inline-block max-w-full">`;
-                            } else {
-                                // Status styling accent decoration rules
-                                if (label.toLowerCase() === 'status') {
-                                    const isApproved = rawValue.toLowerCase() === 'approved';
-                                    html += `<span class="${isApproved ? 'text-green-400 bg-green-950/30 ring-1 ring-green-800/50' : 'text-amber-400 bg-amber-950/30 ring-1 ring-amber-800/50'} px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider">${rawValue}</span>`;
-                                } else {
-                                    html += rawValue;
-                                }
-                            }
+                  if (
+                    isImageColumn &&
+                    rawValue &&
+                    (rawValue.startsWith("http://") ||
+                      rawValue.startsWith("https://"))
+                  ) {
+                    html += `
+                                    <div class="mt-1">
+                                        <a href="${rawValue}" target="_blank" class="group inline-block relative">
+                                            <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 rounded-xl object-contain border border-gray-700 shadow-md group-hover:opacity-90 transition-opacity max-w-full">
+                                            <span class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-[10px] text-white px-2 py-1 rounded-md font-bold opacity-0 group-hover:opacity-100 transition-opacity">Click to Expand ↗</span>
+                                        </a>
+                                    </div>`;
+                  } else if (isStatusColumn && rawValue) {
+                    const cleanVal = rawValue.toString().toLowerCase().trim();
+                    const isApproved =
+                      cleanVal === "approved" ||
+                      cleanVal === "success" ||
+                      cleanVal === "settled";
+                    const badgeColorClass = isApproved
+                      ? "text-green-400 bg-green-950/40 ring-green-800/60"
+                      : "text-amber-400 bg-amber-950/40 ring-amber-800/60";
+                    html += `<span class="${badgeColorClass} inline-block px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider ring-1">${rawValue}</span>`;
+                  } else if (isAmountColumn && rawValue) {
+                    html += `<span class="text-emerald-400 font-bold font-mono text-base">${rawValue}</span>`;
+                  } else {
+                    html +=
+                      rawValue ||
+                      `<span class="text-gray-600 italic text-xs">Empty</span>`;
+                  }
 
-                            html += `
+                  html += `
                                     </div>
                                 </div>
                             `;
-                        });
+                });
 
-                        html += `
+                html += `
                                 </div>
                             </div>
                         `;
-                    });
+              });
 
-                    resultContainer.innerHTML = html;
-                })
-                .catch(err => {
-                    loadingState.classList.add('hidden');
-                    showError(err.message);
-                    console.error(err);
-                });
+              resultContainer.innerHTML = html;
+            })
+            .catch((err) => {
+              loadingState.classList.add("hidden");
+              showError(err.message);
+              console.error(err);
+            });
         });
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            const errorText = document.getElementById('errorText');
-            errorText.textContent = message;
-            errorDiv.classList.remove('hidden');
-        }
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        const errorText = document.getElementById("errorText");
+        errorText.textContent = message;
+        errorDiv.classList.remove("hidden");
+      }
     </script>
-</body>
+  </body>
 </html>
