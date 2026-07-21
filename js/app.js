@@ -3,10 +3,19 @@ app.classList="min-h-screen bg-gray-800 text-gray-200 min-w-md";
 const script = document.createElement("script");
 const header = document.createElement("header");
 const main = document.createElement("main");
+main.classList="mt-16 ml-64 bg-gray-800 h-screen p-4 w-full";
 const aside = document.createElement("aside");
+aside.classList="fixed left-0 top-16 w-64 min-h-screen";
 const button = document.createElement("button");
 const container = document.createElement("div");
-
+const footer = document.createElement("footer");
+footer.id="footer";
+footer.classList="fixed bottom-0 left-0 h-16 right-0 z-50";
+const footerEl = document.createElement("div");
+footerEl.classList="flex justify-between items-center bg-gray-700 w-full p-2 ";
+footerEl.innerHTML=`<div class="text-center text-xs text-slate-400 border-t border-slate-200/50 dark:border-slate-800/50 pt-6 mt-6">
+      <span class="font-mono">🔐 Base URL: https://api.247cs.live</span> · <span class="font-mono">Bearer token active</span> · organized with ❤️
+    </div>`;
 header.id="header";
 header.classList ="fixed top-0 left-0 h-16 right-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm shadow-black backdrop-blur bg-slate-900";
 header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
@@ -72,5 +81,5 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
         </div>
       </div>
     </div>`;
-
+footer.append(footerEl);
 app.append(header,main,footer,aside);
