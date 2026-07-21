@@ -1,4 +1,5 @@
 const app = document.getElementById("app");
+app.classList="min-h-screen bg-gray-800 text-gray-200 min-w-md";
 const script = document.createElement("script");
 const header = document.createElement("header");
 const main = document.createElement("main");
@@ -7,7 +8,7 @@ const button = document.createElement("button");
 const container = document.createElement("div");
 
 header.id="header";
-header.classList="fixed top-0 left-0 h-16 right-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm shadow-black backdrop-blur bg-slate-900";
+header.classList ="fixed top-0 left-0 h-16 right-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm shadow-black backdrop-blur bg-slate-900";
 header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
       <div class="flex items-center justify-between w-full">
         <div class="flex items-center gap-4">
@@ -62,8 +63,6 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
           </div>
         </div>
       </div>
-
-      <!-- Mobile Search (inside header) -->
       <div class="md:hidden pb-3 pt-1 w-full">
         <div class="relative search-glow transition-all duration-300 rounded-xl">
           <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/60 transition-all duration-300 backdrop-blur-sm">
@@ -72,8 +71,6 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
           </svg>
         </div>
       </div>
-    </div>
-  </header>`;
+    </div>`;
 
-app.append(header,main,footer,aside,container)
-document.body.append(script);
+app.append(header,main,footer,aside);
