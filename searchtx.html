@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transaction Lookup Portal</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <div
@@ -98,8 +98,8 @@
       </div>
     </div>
     <script>
-      const SPREADSHEET_ID = "1L50h6wPo-kIdPtbULa5BGXKC4W9nXyRm2fXwfRySf28";
-      const SHEET_NAME = "sspall";
+      const SPREADSHEET_ID = "1qKSBopqQsoazYjHNM5xwAlAHEnBLfvFop1iXABhTv7s";
+      const SHEET_NAME = "July27";
 
       // Strictly defined columns requested matching your Google Sheet structure
       const DEFINED_HEADERS = [
@@ -141,7 +141,7 @@
 
           // Column 1 is Column A (AGENT NAME) as requested in your setup
           const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
-          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}$gid=1861996168`;
+          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
 
           fetch(url)
             .then((response) => {
@@ -222,7 +222,7 @@
                     html += `
                                     <div class="mt-1">
                                         <a href="${rawValue}" target="_blank" class="group inline-block relative">
-                                            <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 rounded-xl object-contain border border-gray-700 shadow-md group-hover:opacity-90 transition-opacity max-w-full">
+                                            <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 object-contain border border-gray-700 shadow-md group-hover:opacity-90 transition-opacity max-w-full">
                                             <span class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-[10px] text-white px-2 py-1 rounded-md font-bold opacity-0 group-hover:opacity-100 transition-opacity">Click to Expand ↗</span>
                                         </a>
                                     </div>`;
