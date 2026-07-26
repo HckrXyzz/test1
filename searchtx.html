@@ -98,8 +98,8 @@
       </div>
     </div>
     <script>
-      const SPREADSHEET_ID = "1z8__XBXvmafdNZw6y8f4H0KP5QqWp30RiWwQ4QSvzPY";
-      const SHEET_NAME = "Sheet14";
+      const SPREADSHEET_ID = "1L50h6wPo-kIdPtbULa5BGXKC4W9nXyRm2fXwfRySf28";
+      const SHEET_NAME = "sspall";
 
       // Strictly defined columns requested matching your Google Sheet structure
       const DEFINED_HEADERS = [
@@ -141,7 +141,7 @@
 
           // Column 1 is Column A (AGENT NAME) as requested in your setup
           const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
-          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
+          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}$gid=1861996168`;
 
           fetch(url)
             .then((response) => {
