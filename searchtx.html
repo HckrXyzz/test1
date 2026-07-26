@@ -42,16 +42,42 @@
                 id="transactionId"
                 placeholder="Enter Transaction ID (Column 1 matching)"
                 required
-                class="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-700 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all font-medium text-base"
+                class="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-700 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
             <button
               type="submit"
-              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 shadow-lg shadow-blue-900/30 active:scale-[0.98] cursor-pointer text-center whitespace-nowrap"
+              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 shadow-lg shadow-blue-900/30 active:scale-[0.98] cursor-pointer"
             >
               Search Records
             </button>
           </form>
+        </div>
+
+        <!-- Recent Searches Section -->
+        <div id="recentSearchesSection" class="mb-8 hidden">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-200">Recent Searches</h2>
+            <div class="flex gap-2">
+              <button
+                id="exportHistoryBtn"
+                class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-3 py-1 rounded-md transition-colors"
+                title="Export search history as JSON"
+              >
+                Export
+              </button>
+              <button
+                id="clearHistoryBtn"
+                class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-3 py-1 rounded-md transition-colors"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+          <div
+            id="recentSearchesList"
+            class="flex flex-wrap gap-2"
+          ></div>
         </div>
 
         <!-- Error Alert -->
@@ -100,6 +126,8 @@
     <script>
       const SPREADSHEET_ID = "1qKSBopqQsoazYjHNM5xwAlAHEnBLfvFop1iXABhTv7s";
       const SHEET_NAME = "July27";
+      const STORAGE_KEY = "transactionSearchHistory";
+      const MAX_HISTORY_ITEMS = 10;
 
       // Strictly defined columns requested matching your Google Sheet structure
       const DEFINED_HEADERS = [
@@ -125,6 +153,145 @@
         "Credit time",
       ];
 
+      // ===== LOCAL STORAGE MANAGEMENT =====
+      class SearchHistoryManager {
+        constructor(storageKey, maxItems) {
+          this.storageKey = storageKey;
+          this.maxItems = maxItems;
+        }
+
+        getHistory() {
+          try {
+            const data = localStorage.getItem(this.storageKey);
+            return data ? JSON.parse(data) : [];
+          } catch (error) {
+            console.error("Error reading search history:", error);
+            return [];
+          }
+        }
+
+        addSearch(transactionId) {
+          const history = this.getHistory();
+          const timestamp = new Date().toISOString();
+
+          // Create search entry with ISO timestamp and formatted time
+          const searchEntry = {
+            id: transactionId,
+            timestamp: timestamp,
+            formattedTime: new Date(timestamp).toLocaleString(),
+          };
+
+          // Remove duplicate if exists (keep most recent)
+          const filteredHistory = history.filter((item) => item.id !== transactionId);
+
+          // Add new entry at the beginning
+          const updatedHistory = [searchEntry, ...filteredHistory];
+
+          // Keep only max items
+          const limitedHistory = updatedHistory.slice(0, this.maxItems);
+
+          try {
+            localStorage.setItem(this.storageKey, JSON.stringify(limitedHistory));
+            this.renderHistory();
+            return true;
+          } catch (error) {
+            console.error("Error saving search history:", error);
+            return false;
+          }
+        }
+
+        clearHistory() {
+          try {
+            localStorage.removeItem(this.storageKey);
+            this.renderHistory();
+            return true;
+          } catch (error) {
+            console.error("Error clearing search history:", error);
+            return false;
+          }
+        }
+
+        renderHistory() {
+          const history = this.getHistory();
+          const recentSearchesSection = document.getElementById("recentSearchesSection");
+          const recentSearchesList = document.getElementById("recentSearchesList");
+
+          if (history.length === 0) {
+            recentSearchesSection.classList.add("hidden");
+            return;
+          }
+
+          recentSearchesSection.classList.remove("hidden");
+          recentSearchesList.innerHTML = "";
+
+          history.forEach((item) => {
+            const badge = document.createElement("button");
+            badge.type = "button";
+            badge.className =
+              "bg-blue-900/40 hover:bg-blue-900/60 border border-blue-700/60 text-blue-300 text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-2 group";
+            badge.title = `Searched: ${item.formattedTime}`;
+            
+            const timeObj = new Date(item.timestamp);
+            const timeStr = timeObj.toLocaleTimeString();
+            
+            badge.innerHTML = `
+              <span class="font-medium">${item.id}</span>
+              <span class="text-[10px] text-blue-400 opacity-60 group-hover:opacity-100 transition-opacity">${timeStr}</span>
+            `;
+            
+            badge.addEventListener("click", (e) => {
+              e.preventDefault();
+              document.getElementById("transactionId").value = item.id;
+              document.getElementById("lookupForm").dispatchEvent(new Event("submit"));
+            });
+
+            recentSearchesList.appendChild(badge);
+          });
+        }
+
+        exportHistory() {
+          const history = this.getHistory();
+          return {
+            exportDate: new Date().toISOString(),
+            totalSearches: history.length,
+            searches: history,
+          };
+        }
+
+        getHistoryJSON() {
+          return JSON.stringify(this.getHistory(), null, 2);
+        }
+      }
+
+      // Initialize history manager
+      const historyManager = new SearchHistoryManager(STORAGE_KEY, MAX_HISTORY_ITEMS);
+
+      // Render history on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        historyManager.renderHistory();
+      });
+
+      // Export history button
+      document.getElementById("exportHistoryBtn").addEventListener("click", () => {
+        const exportData = historyManager.exportHistory();
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `search-history-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Clear history button
+      document.getElementById("clearHistoryBtn").addEventListener("click", () => {
+        if (confirm("Are you sure you want to clear search history?")) {
+          historyManager.clearHistory();
+        }
+      });
+
+      // ===== MAIN SEARCH FUNCTIONALITY =====
       document
         .getElementById("lookupForm")
         .addEventListener("submit", function (e) {
@@ -135,11 +302,19 @@
           const errorDiv = document.getElementById("errorMessage");
           const resultContainer = document.getElementById("resultContainer");
 
+          if (!txnId) {
+            showError("Please enter a Transaction ID");
+            return;
+          }
+
+          // Save to history
+          historyManager.addSearch(txnId);
+
           loadingState.classList.remove("hidden");
           errorDiv.classList.add("hidden");
           resultContainer.innerHTML = "";
 
-          // Column 1 is Column A (AGENT NAME) as requested in your setup
+          // Column D (REFERENCE NO) as requested in your setup
           const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
           const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
 
@@ -222,8 +397,8 @@
                     html += `
                                     <div class="mt-1">
                                         <a href="${rawValue}" target="_blank" class="group inline-block relative">
-                                            <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 object-contain border border-gray-700 shadow-md group-hover:opacity-90 transition-opacity max-w-full">
-                                            <span class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-[10px] text-white px-2 py-1 rounded-md font-bold opacity-0 group-hover:opacity-100 transition-opacity">Click to Expand ↗</span>
+                                            <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 object-contain border border-gray-700 shadow-md group-hover:opacity-90 transition-opacity rounded-lg" />
+                                            <span class="absolute bottom-2 right-2 bg-black/75 backdrop-blur-xs text-[10px] text-white px-2 py-1 rounded-md font-bold opacity-0 group-hover:opacity-100 transition-opacity">View Full</span>
                                         </a>
                                     </div>`;
                   } else if (isStatusColumn && rawValue) {
@@ -271,6 +446,13 @@
         errorText.textContent = message;
         errorDiv.classList.remove("hidden");
       }
+
+      // ===== DEVELOPER UTILITIES =====
+      // Access in browser console:
+      // View history: console.log(historyManager.getHistoryJSON())
+      // Export history: historyManager.exportHistory()
+      // Clear history: historyManager.clearHistory()
+      window.searchHistoryManager = historyManager;
     </script>
   </body>
 </html>
