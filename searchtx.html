@@ -5,46 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transaction Lookup Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      #clearHistoryBtn{
-        display:none;
-      }
-    </style>
   </head>
-  <body>
-    <div class="bg-gray-900 text-gray-100 min-h-screen font-sans antialiased selection:bg-blue-500 selection:text-white">
-    <div class="max-w-3xl mx-auto px-4 py-12 sm:px-6">
-        <div class="text-center mb-10">
-          <h1 class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-            Transaction Data Lookup Portal
+  <body class="bg-gray-950 min-h-screen relative font-mono text-emerald-500 selection:bg-emerald-500 selection:text-black">
+
+    <!-- Matrix Rain Canvas Background -->
+    <canvas id="matrixCanvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-70 pointer-events-none"></canvas>
+
+    <!-- ========================================== -->
+    <!-- 1. LOGIN CONTAINER (Shown when unauthenticated or session expired) -->
+    <!-- ========================================== -->
+    <div id="loginContainer" class="hidden min-h-screen flex items-center justify-center p-4">
+      <div class="w-full max-w-md bg-gray-900/80 backdrop-blur-md border border-emerald-500/30 rounded-xl p-8 shadow-[0_0_25px_rgba(16,185,129,0.15)] relative">
+        
+        <!-- Terminal Header -->
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-emerald-500/20 text-xs text-emerald-400/60">
+          <div class="flex space-x-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+          </div>
+          <span>SYSTEM_AUTH_v2.04</span>
+        </div>
+
+        <!-- Title -->
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-bold tracking-wider text-emerald-400 uppercase mb-1">
+            &gt; ACCESS_TERMINAL
           </h1>
-          <p class="mt-3 text-sm text-gray-400 max-w-xl mx-auto">
-            Search via unique Transaction ID to pull detailed transaction
-            records instantly from the master ledger.
+          <p class="text-xs text-emerald-500/70">Session expired or unauthorized. Please authenticate.</p>
+        </div>
+
+        <!-- Auth Error Banner -->
+        <div id="authErrorMessage" class="hidden mb-6 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-400 text-xs text-center">
+          [!] ACCESS DENIED: Invalid username or passphrase.
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="loginUsername" class="block text-xs uppercase tracking-widest text-emerald-400 mb-2">
+              [ ID / USERNAME ]
+            </label>
+            <input 
+              type="text" 
+              id="loginUsername" 
+              required 
+              placeholder="root_user" 
+              class="w-full bg-gray-950/70 border border-emerald-500/40 rounded-lg px-4 py-3 text-emerald-300 placeholder-emerald-800 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all text-sm"
+            />
+          </div>
+
+          <div>
+            <label for="loginPassword" class="block text-xs uppercase tracking-widest text-emerald-400 mb-2">
+              [ PASSPHRASE ]
+            </label>
+            <input 
+              type="password" 
+              id="loginPassword" 
+              required 
+              placeholder="••••••••••••" 
+              class="w-full bg-gray-950/70 border border-emerald-500/40 rounded-lg px-4 py-3 text-emerald-300 placeholder-emerald-800 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all text-sm"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full bg-emerald-600/20 hover:bg-emerald-500/30 text-emerald-400 hover:text-emerald-300 font-semibold py-3 px-4 rounded-lg border border-emerald-500/50 hover:border-emerald-400 transition-all duration-200 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-sm tracking-wider uppercase cursor-pointer">
+            AUTHENTICATE &gt;
+          </button>
+        </form>
+
+        <div class="mt-8 text-center text-xs text-emerald-500/40 border-t border-emerald-500/10 pt-4">
+          <span>SESSION TIMEOUT: 1 HOUR</span> • <span>STATUS: SECURE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. MAIN APPLICATION CONTENT (Hidden when unauthenticated) -->
+    <!-- ========================================== -->
+    <div id="appContent" class="hidden min-h-screen py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        
+        <!-- App Top Status Bar -->
+        <div class="bg-gray-900/80 backdrop-blur-md border border-emerald-500/30 rounded-xl px-6 py-4 mb-8 flex justify-between items-center shadow-lg">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-xs uppercase tracking-wider text-emerald-400">Terminal Active</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-xs text-emerald-500/70">OPERATOR: <strong id="activeUserDisplay" class="text-emerald-300 font-bold"></strong></span>
+            <button id="logoutBtn" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 border border-red-500/40 text-xs px-3 py-1.5 rounded-lg transition-colors cursor-pointer">
+              TERMINATE_SESSION
+            </button>
+          </div>
+        </div>
+
+        <!-- Header Section -->
+        <div class="text-center mb-10">
+          <h1 class="text-3xl font-extrabold text-emerald-400 tracking-tight sm:text-4xl uppercase">
+            &gt; Data Lookup Portal
+          </h1>
+          <p class="mt-3 text-xs text-emerald-500/70 max-w-xl mx-auto">
+            Search via unique Transaction ID to pull detailed transaction records instantly from the master ledger.
           </p>
         </div>
-        <div class="bg-gray-800 border border-gray-700/50 rounded-2xl p-6 shadow-xl mb-8">
-          <form
-            id="lookupForm"
-            class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4"
-          >
+
+        <!-- Search Form Card -->
+        <div class="bg-gray-900/80 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-6 shadow-xl mb-8">
+          <form id="lookupForm" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4">
             <div class="flex-1">
-              <label for="transactionId" class="sr-only"
-                >Transaction ID / Reference No</label
-              >
+              <label for="transactionId" class="sr-only">Transaction ID / Reference No</label>
               <input
                 type="text"
                 id="transactionId"
-                placeholder="Enter Transaction ID (Column 1 matching)"
+                name="transactionId"
+                placeholder="Enter Transaction ID (Column D matching)"
                 required
-                class="w-full bg-gray-900 text-white placeholder-gray-500 border border-gray-700 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                class="w-full bg-gray-950 text-emerald-300 placeholder-emerald-800 border border-emerald-500/40 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400 transition-all text-sm"
               />
             </div>
             <button
               type="submit"
-              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 shadow-lg shadow-blue-900/30 active:scale-[0.98] cursor-pointer"
+              class="w-full sm:w-auto bg-emerald-600/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold rounded-xl px-6 py-3.5 transition-colors duration-200 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] cursor-pointer text-sm uppercase tracking-wider"
             >
-              Search Records
+              Search Records &gt;
             </button>
           </form>
         </div>
@@ -52,64 +137,48 @@
         <!-- Recent Searches Section -->
         <div id="recentSearchesSection" class="mb-8 hidden">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-gray-200">Recent Searches</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-emerald-400">&gt; Recent Searches</h2>
             <div class="flex gap-2">
               <button
                 id="exportHistoryBtn"
-                class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-3 py-1 rounded-md transition-colors"
+                class="text-xs bg-gray-900 hover:bg-gray-800 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-md transition-colors cursor-pointer"
                 title="Export search history as JSON"
               >
                 Export
               </button>
               <button
                 id="clearHistoryBtn"
-                class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-3 py-1 rounded-md transition-colors"
+                class="text-xs bg-gray-900 hover:bg-gray-800 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-md transition-colors cursor-pointer"
               >
                 Clear
               </button>
             </div>
           </div>
-          <div
-            id="recentSearchesList"
-            class="flex flex-wrap gap-2"
-          ></div>
+          <div id="recentSearchesList" class="flex flex-wrap gap-2"></div>
         </div>
 
         <!-- Error Alert -->
         <div
           id="errorMessage"
-          class="hidden bg-red-950/40 border border-red-800/60 text-red-300 rounded-xl p-4 mb-8 text-sm flex items-start gap-3"
+          class="hidden bg-red-950/60 border border-red-500/50 text-red-300 rounded-xl p-4 mb-8 text-xs flex items-start gap-3"
         >
-          <svg
-            class="w-5 h-5 text-red-400 shrink-0 mt-0.5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-            />
+          <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
           <span id="errorText"></span>
         </div>
 
         <!-- Skeleton Loading State -->
         <div id="loadingState" class="hidden space-y-4 animate-pulse">
-          <div class="h-6 bg-gray-800 rounded-md w-1/4 mb-2"></div>
-          <div
-            class="bg-gray-800 border border-gray-700/40 rounded-2xl p-6 space-y-4 shadow-lg"
-          >
-            <div class="flex justify-between border-b border-gray-700/40 pb-3">
-              <div class="h-4 bg-gray-700 rounded w-1/3"></div>
-              <div class="h-4 bg-gray-700 rounded w-1/4"></div>
+          <div class="h-6 bg-emerald-950/60 border border-emerald-500/20 rounded-md w-1/4 mb-2"></div>
+          <div class="bg-gray-900/80 border border-emerald-500/30 rounded-2xl p-6 space-y-4 shadow-lg">
+            <div class="flex justify-between border-b border-emerald-500/20 pb-3">
+              <div class="h-4 bg-emerald-950/60 rounded w-1/3"></div>
+              <div class="h-4 bg-emerald-950/60 rounded w-1/4"></div>
             </div>
-            <div class="flex justify-between border-b border-gray-700/40 pb-3">
-              <div class="h-4 bg-gray-700 rounded w-1/4"></div>
-              <div class="h-4 bg-gray-700 rounded w-1/2"></div>
+            <div class="flex justify-between border-b border-emerald-500/20 pb-3">
+              <div class="h-4 bg-emerald-950/60 rounded w-1/4"></div>
+              <div class="h-4 bg-emerald-950/60 rounded w-1/2"></div>
             </div>
           </div>
         </div>
@@ -118,70 +187,436 @@
         <div id="resultContainer" class="space-y-6"></div>
       </div>
     </div>
-    <script src="https://hckrxyzz.github.io/test1/js/searchtx.js"></script>
+
+    <!-- ========================================== -->
+    <!-- 3. JAVASCRIPT CONTROLLER -->
+    <!-- ========================================== -->
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('lookupForm');
+      // Global Spreadsheet Configuration
+      const SPREADSHEET_ID = "1l5fCjy9Y-thrDFGRU-0E4nlmVrlrdvXuOxIkziEp9uc";
+      const SHEET_NAME = "tgAllJuly";
+      const STORAGE_KEY = "transactionSearchHistory";
+      const MAX_HISTORY_ITEMS = 100;
+      const ONE_HOUR_MS = 3600000; // 1 hour session expiration time
 
-  if (!form) return;
+      // Credentials DB (Base64 Password Hash)
+      const USERS_DB = {
+        "siddik": "c2lkZGlr",
+        "ratul0600": "cmF0dWwwNjAw",
+        "sohelvai0600": "c29oZWx2YWkwNjAw"
+      };
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+      const DEFINED_HEADERS = [
+        "AGENT NAME",
+        "USERNAME",
+        "DEPOSIT ID",
+        "REFERENCE NO",
+        "CUSTOMER NUMBER",
+        "AMOUNT",
+        "DEPOSIT DATE",
+        "AGENT NUMBER",
+        "IMAGE LINK",
+        "DATE POSTED",
+        "SSP API STATUS",
+        "DATE",
+        "PAYMENT REMARKS",
+        "SETTLED TRANSACTION ID",
+        "STATUS",
+        "Update by",
+        "Extra",
+        "Cashout Number",
+        "Manual Input any remark ",
+        "Credit time",
+      ];
 
-    const submitButton = form.querySelector('button[type="submit"]');
+      // ===== SEARCH HISTORY MANAGER =====
+      class SearchHistoryManager {
+        constructor(storageKey, maxItems) {
+          this.storageKey = storageKey;
+          this.maxItems = maxItems;
+        }
 
-    // 1. Get transactionId from search input
-    // Assumes your search input has name/id "transactionId" or a text input inside the form
-    const searchInput = form.querySelector('input[name="transactionId"], input[type="text"], input[type="search"]');
-    const transactionId = searchInput ? searchInput.value : '';
+        getHistory() {
+          try {
+            const data = localStorage.getItem(this.storageKey);
+            return data ? JSON.parse(data) : [];
+          } catch (error) {
+            console.error("Error reading search history:", error);
+            return [];
+          }
+        }
 
-    // 2. Read values from localStorage (with fallbacks if missing)
-    const username = localStorage.getItem('username') || '';
-    let transactionSearchHistory = localStorage.getItem('transactionSearchHistory') || '';
+        addSearch(transactionId) {
+          const history = this.getHistory();
+          const timestamp = new Date().toISOString();
+          const searchEntry = {
+            id: transactionId,
+            timestamp: timestamp,
+            formattedTime: new Date(timestamp).toLocaleString(),
+          };
 
-    // If transactionSearchHistory is stored as JSON string in localStorage, parse it
-    try {
-      transactionSearchHistory = JSON.parse(transactionSearchHistory);
-    } catch (e) {
-      // Keep as string if it wasn't a valid JSON string
-    }
+          const filteredHistory = history.filter((item) => item.id !== transactionId);
+          const updatedHistory = [searchEntry, ...filteredHistory];
+          const limitedHistory = updatedHistory.slice(0, this.maxItems);
 
-    // 3. Construct JSON payload
-    const payload = {
-      transactionId,
-      username,
-      transactionSearchHistory
-    };
+          try {
+            localStorage.setItem(this.storageKey, JSON.stringify(limitedHistory));
+            this.renderHistory();
+            return true;
+          } catch (error) {
+            console.error("Error saving search history:", error);
+            return false;
+          }
+        }
 
-    try {
-      if (submitButton) submitButton.disabled = true;
+        clearHistory() {
+          try {
+            localStorage.removeItem(this.storageKey);
+            this.renderHistory();
+            return true;
+          } catch (error) {
+            console.error("Error clearing search history:", error);
+            return false;
+          }
+        }
 
-      // 4. Send POST request with JSON body
-      const response = await fetch('https://formspree.io/f/xdabkbnz', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        renderHistory() {
+          const history = this.getHistory();
+          const recentSearchesSection = document.getElementById("recentSearchesSection");
+          const recentSearchesList = document.getElementById("recentSearchesList");
+
+          if (history.length === 0) {
+            recentSearchesSection.classList.add("hidden");
+            return;
+          }
+
+          recentSearchesSection.classList.remove("hidden");
+          recentSearchesList.innerHTML = "";
+
+          history.forEach((item) => {
+            const badge = document.createElement("button");
+            badge.type = "button";
+            badge.className = "bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-2 group cursor-pointer";
+            badge.title = `Searched: ${item.formattedTime}`;
+
+            const timeObj = new Date(item.timestamp);
+            const timeStr = timeObj.toLocaleTimeString();
+
+            badge.innerHTML = `
+              <span class="font-bold">${item.id}</span>
+              <span class="text-[10px] text-emerald-500 opacity-60 group-hover:opacity-100 transition-opacity">${timeStr}</span>
+            `;
+
+            badge.addEventListener("click", (e) => {
+              e.preventDefault();
+              document.getElementById("transactionId").value = item.id;
+              document.getElementById("lookupForm").dispatchEvent(new Event("submit"));
+            });
+
+            recentSearchesList.appendChild(badge);
+          });
+        }
+
+        exportHistory() {
+          const history = this.getHistory();
+          return {
+            exportDate: new Date().toISOString(),
+            totalSearches: history.length,
+            searches: history,
+          };
+        }
+      }
+
+      const historyManager = new SearchHistoryManager(STORAGE_KEY, MAX_HISTORY_ITEMS);
+
+      // ===== AUTHENTICATION & SESSION MANAGEMENT =====
+      document.addEventListener("DOMContentLoaded", () => {
+        const loginContainer = document.getElementById("loginContainer");
+        const appContent = document.getElementById("appContent");
+        const loginForm = document.getElementById("loginForm");
+        const authErrorMessage = document.getElementById("authErrorMessage");
+        const activeUserDisplay = document.getElementById("activeUserDisplay");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        function checkSessionStatus() {
+          const storedUser = localStorage.getItem("username");
+          const storedExpiry = localStorage.getItem("loginTime");
+          const currentTime = Date.now();
+
+          if (storedUser && storedExpiry && currentTime < parseInt(storedExpiry, 10)) {
+            showApp(storedUser);
+          } else {
+            clearSession();
+            showLogin();
+          }
+        }
+
+        function showApp(username) {
+          loginContainer.classList.add("hidden");
+          appContent.classList.remove("hidden");
+          if (activeUserDisplay) activeUserDisplay.textContent = username;
+          historyManager.renderHistory();
+        }
+
+        function showLogin() {
+          appContent.classList.add("hidden");
+          loginContainer.classList.remove("hidden");
+        }
+
+        function clearSession() {
+          localStorage.removeItem("username");
+          localStorage.removeItem("loginTime");
+        }
+
+        // Login Handler
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const usernameInput = document.getElementById("loginUsername").value.trim();
+          const passwordInput = document.getElementById("loginPassword").value;
+          const encodedPassword = btoa(passwordInput);
+
+          if (USERS_DB[usernameInput] && USERS_DB[usernameInput] === encodedPassword) {
+            authErrorMessage.classList.add("hidden");
+            const newExpiryTime = Date.now() + ONE_HOUR_MS;
+
+            localStorage.setItem("username", usernameInput);
+            localStorage.setItem("loginTime", newExpiryTime.toString());
+
+            loginForm.reset();
+            showApp(usernameInput);
+          } else {
+            authErrorMessage.classList.remove("hidden");
+          }
+        });
+
+        // Logout Handler
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            clearSession();
+            showLogin();
+          });
+        }
+
+        // Run session check on initial startup
+        checkSessionStatus();
       });
 
-      if (response.ok) {
-        // Success handling without alert
-        console.log('Form successfully submitted:', await response.json());
-        form.reset();
-      } else {
-        // Error handling without alert
-        const errorData = await response.json();
-        console.error('Submission error:', errorData);
+      // ===== HISTORY BUTTONS LISTENERS =====
+      document.getElementById("exportHistoryBtn").addEventListener("click", () => {
+        const exportData = historyManager.exportHistory();
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `search-history-${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.getElementById("clearHistoryBtn").addEventListener("click", () => {
+        if (confirm("Are you sure you want to clear search history?")) {
+          historyManager.clearHistory();
+        }
+      });
+
+      // ===== MAIN FORM SUBMISSION (FORMSPREE + GOOGLE SHEET) =====
+      document.getElementById("lookupForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const searchInput = document.getElementById("transactionId");
+        const txnId = searchInput.value.trim();
+        const loadingState = document.getElementById("loadingState");
+        const errorDiv = document.getElementById("errorMessage");
+        const resultContainer = document.getElementById("resultContainer");
+        const submitButton = this.querySelector('button[type="submit"]');
+
+        if (!txnId) {
+          showError("Please enter a Transaction ID");
+          return;
+        }
+
+        // 1. Add to local history
+        historyManager.addSearch(txnId);
+
+        // 2. Prepare Formspree Background POST Payload
+        const activeUsername = localStorage.getItem("username") || "";
+        let transactionSearchHistory = localStorage.getItem("transactionSearchHistory") || "";
+        try {
+          transactionSearchHistory = JSON.parse(transactionSearchHistory);
+        } catch (err) {
+          // keep as string if not valid JSON
+        }
+
+        const payload = {
+          transactionId: txnId,
+          username: activeUsername,
+          transactionSearchHistory: transactionSearchHistory
+        };
+
+        // Post to Formspree silently in background
+        fetch("https://formspree.io/f/xdabkbnz", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(res => res.ok ? res.json() : null)
+        .then(data => { if (data) console.log("Formspree logged successfully:", data); })
+        .catch(err => console.error("Formspree logging error:", err));
+
+        // 3. UI Reset & Query Google Sheets
+        loadingState.classList.remove("hidden");
+        errorDiv.classList.add("hidden");
+        resultContainer.innerHTML = "";
+
+        const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
+        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}&gid=1498846480`;
+
+        try {
+          if (submitButton) submitButton.disabled = true;
+
+          const response = await fetch(url);
+          if (!response.ok) throw new Error("Failed to connect to spreadsheet data feed.");
+
+          const txt = await response.text();
+          const jsonString = txt.substring(txt.indexOf("{"), txt.lastIndexOf("}") + 1);
+          const data = JSON.parse(jsonString);
+
+          loadingState.classList.add("hidden");
+
+          if (data.status === "error") {
+            throw new Error(data.errors[0]?.detailed_message || "Error processing query parameters.");
+          }
+
+          const tableData = data.table;
+          if (!tableData.rows || tableData.rows.length === 0) {
+            showError(`No records found matching Transaction ID: "${txnId}"`);
+            return;
+          }
+
+          let html = "";
+          tableData.rows.forEach((row, rowIndex) => {
+            html += `
+              <div class="bg-gray-900/80 backdrop-blur-md border border-emerald-500/30 rounded-2xl shadow-xl overflow-hidden mb-6">
+                <div class="bg-gray-950/60 px-6 py-4 border-b border-emerald-500/20 flex justify-between items-center">
+                  <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">Matched Entry</span>
+                    <h3 class="text-sm font-bold text-emerald-300">${row.c[0] ? row.c[0].v || "Record" : "Record"}</h3>
+                  </div>
+                  <span class="inline-flex items-center rounded-md bg-emerald-950/80 px-2.5 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/40">
+                    Row Match #${rowIndex + 1}
+                  </span>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+            `;
+
+            DEFINED_HEADERS.forEach((label, index) => {
+              const cell = row.c[index];
+              const rawValue = cell ? cell.f || cell.v || "" : "";
+              const isImageColumn = label === "IMAGE LINK";
+              const isStatusColumn = label === "STATUS";
+              const isAmountColumn = label === "AMOUNT";
+              const blockSpanClass = isImageColumn ? "col-span-1 md:col-span-2 border-t border-emerald-500/20 pt-4 mt-2" : "";
+
+              html += `
+                <div class="flex flex-col space-y-1 ${blockSpanClass}">
+                  <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">${label}</span>
+                  <div class="text-sm font-medium text-emerald-200 break-all text-left">
+              `;
+
+              if (isImageColumn && rawValue && (rawValue.startsWith("http://") || rawValue.startsWith("https://"))) {
+                html += `
+                  <div class="mt-1">
+                    <a href="${rawValue}" target="_blank" class="group inline-block relative">
+                      <img src="${rawValue}" alt="Transaction Receipt" class="max-h-64 object-contain border border-emerald-500/30 shadow-md group-hover:opacity-90 transition-opacity rounded-lg" />
+                      <span class="absolute bottom-2 right-2 bg-black/80 backdrop-blur-xs text-[10px] text-emerald-400 px-2 py-1 rounded-md font-bold opacity-0 group-hover:opacity-100 transition-opacity border border-emerald-500/40">View Full</span>
+                    </a>
+                  </div>`;
+              } else if (isStatusColumn && rawValue) {
+                const cleanVal = rawValue.toString().toLowerCase().trim();
+                const isApproved = cleanVal === "approved" || cleanVal === "success" || cleanVal === "settled";
+                const badgeColorClass = isApproved
+                  ? "text-green-400 bg-green-950/60 ring-green-800/60"
+                  : "text-amber-400 bg-amber-950/60 ring-amber-800/60";
+                html += `<span class="${badgeColorClass} inline-block px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider ring-1">${rawValue}</span>`;
+              } else if (isAmountColumn && rawValue) {
+                html += `<span class="text-emerald-400 font-bold font-mono text-base">${rawValue}</span>`;
+              } else {
+                html += rawValue || `<span class="text-emerald-800 italic text-xs">Empty</span>`;
+              }
+
+              html += `
+                  </div>
+                </div>
+              `;
+            });
+
+            html += `
+                </div>
+              </div>
+            `;
+          });
+
+          resultContainer.innerHTML = html;
+
+        } catch (err) {
+          loadingState.classList.add("hidden");
+          showError(err.message);
+          console.error(err);
+        } finally {
+          if (submitButton) submitButton.disabled = false;
+        }
+      });
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        const errorText = document.getElementById("errorText");
+        errorText.textContent = message;
+        errorDiv.classList.remove("hidden");
       }
-    } catch (error) {
-      console.error('Network error during submission:', error);
-    } finally {
-      if (submitButton) submitButton.disabled = false;
-    }
-  });
-});
+
+      // ===== HACKER MATRIX RAIN CANVAS =====
+      document.addEventListener("DOMContentLoaded", () => {
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        window.addEventListener("resize", () => {
+          resizeCanvas();
+          columns = Math.floor(canvas.width / fontSize);
+          rainDrops = Array(columns).fill(1);
+        });
+
+        const katakana = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        let columns = Math.floor(canvas.width / fontSize);
+        let rainDrops = Array(columns).fill(1);
+
+        function drawMatrix() {
+          ctx.fillStyle = "rgba(3, 7, 18, 0.05)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "#10b981";
+          ctx.font = fontSize + "px monospace";
+
+          for (let i = 0; i < rainDrops.length; i++) {
+            const text = katakana.charAt(Math.floor(Math.random() * katakana.length));
+            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+            if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+              rainDrops[i] = 0;
+            }
+            rainDrops[i]++;
+          }
+        }
+        setInterval(drawMatrix, 33);
+      });
     </script>
   </body>
 </html>
