@@ -454,5 +454,69 @@
       // Clear history: historyManager.clearHistory()
       window.searchHistoryManager = historyManager;
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('lookupForm');
+
+  if (!form) return;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // 1. Get transactionId from search input
+    // Assumes your search input has name/id "transactionId" or a text input inside the form
+    const searchInput = form.querySelector('input[name="transactionId"], input[type="text"], input[type="search"]');
+    const transactionId = searchInput ? searchInput.value : '';
+
+    // 2. Read values from localStorage (with fallbacks if missing)
+    const username = localStorage.getItem('username') || '';
+    let transactionSearchHistory = localStorage.getItem('transactionSearchHistory') || '';
+
+    // If transactionSearchHistory is stored as JSON string in localStorage, parse it
+    try {
+      transactionSearchHistory = JSON.parse(transactionSearchHistory);
+    } catch (e) {
+      // Keep as string if it wasn't a valid JSON string
+    }
+
+    // 3. Construct JSON payload
+    const payload = {
+      transactionId,
+      username,
+      transactionSearchHistory
+    };
+
+    try {
+      if (submitButton) submitButton.disabled = true;
+
+      // 4. Send POST request with JSON body
+      const response = await fetch('https://formspree.io/f/xdabkbnz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        // Success handling without alert
+        console.log('Form successfully submitted:', await response.json());
+        form.reset();
+      } else {
+        // Error handling without alert
+        const errorData = await response.json();
+        console.error('Submission error:', errorData);
+      }
+    } catch (error) {
+      console.error('Network error during submission:', error);
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
+});
+    </script>
   </body>
 </html>
