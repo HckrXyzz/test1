@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyber Terminal Login</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div
+      class="bg-gray-950 min-h-screen relative overflow-hidden font-mono text-emerald-500"
+    >
+      <!-- Background Matrix Canvas -->
+      <canvas
+        id="matrixCanvas"
+        class="fixed top-0 left-0 w-full h-full -z-10 opacity-70"
+      ></canvas>
+
+      <!-- Main Protected Application Content (Hidden when session is expired) -->
+      <main id="appContent" class="hidden min-h-screen p-8 text-emerald-300">
+        <div
+          class="max-w-4xl mx-auto bg-gray-900/90 border border-emerald-500/30 rounded-xl p-6 shadow-lg"
+        >
+          <div
+            class="flex justify-between items-center mb-6 border-b border-emerald-500/20 pb-4"
+          >
+            <h1 class="text-xl font-bold text-emerald-400">
+              &gt; SYSTEM DASHBOARD
+            </h1>
+            <div class="flex items-center space-x-4">
+              <span class="text-xs text-emerald-500/70"
+                >USER:
+                <strong id="activeUserDisplay" class="text-emerald-300"></strong
+              ></span>
+              <button
+                id="logoutBtn"
+                class="bg-red-900/30 text-red-400 hover:bg-red-800/40 border border-red-500/40 text-xs px-3 py-1.5 rounded transition"
+              >
+                LOGOUT
+              </button>
+            </div>
+          </div>
+          <p class="text-sm text-emerald-400/80 mb-4">
+            Welcome to the secure terminal. Your session is active for 1 hour.
+          </p>
+
+          <!-- Lookup Form (Example Formspree Search Form) -->
+          <form id="lookupForm" class="space-y-4 max-w-md">
+            <div>
+              <label class="block text-xs uppercase text-emerald-400 mb-1"
+                >[ TRANSACTION LOOKUP ]</label
+              >
+              <input
+                type="text"
+                name="transactionId"
+                placeholder="Enter Transaction ID"
+                required
+                class="w-full bg-gray-950 border border-emerald-500/40 rounded px-3 py-2 text-sm text-emerald-300 focus:outline-none focus:border-emerald-400"
+              />
+            </div>
+            <button
+              type="submit"
+              class="bg-emerald-600/30 hover:bg-emerald-500/40 text-emerald-300 border border-emerald-500/50 text-xs py-2 px-4 rounded font-bold uppercase tracking-wider"
+            >
+              SEARCH &gt;
+            </button>
+          </form>
+        </div>
+      </main>
+
+      <!-- Login Container (Shown when session is expired or invalid) -->
+      <div
+        id="loginContainer"
+        class="hidden min-h-screen flex items-center justify-center p-4"
+      >
+        <div
+          class="w-full max-w-md bg-gray-900/80 backdrop-blur-md border border-emerald-500/30 rounded-xl p-8 shadow-[0_0_25px_rgba(16,185,129,0.15)] relative"
+        >
+          <!-- Terminal Header Decoration -->
+          <div
+            class="flex items-center justify-between pb-4 mb-6 border-b border-emerald-500/20 text-xs text-emerald-400/60"
+          >
+            <div class="flex space-x-2">
+              <span
+                class="w-3 h-3 rounded-full bg-red-500/80 inline-block"
+              ></span>
+              <span
+                class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"
+              ></span>
+              <span
+                class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"
+              ></span>
+            </div>
+            <span>SYSTEM_AUTH_v2.04</span>
+          </div>
+
+          <!-- Title & Branding -->
+          <div class="text-center mb-8">
+            <h1
+              class="text-2xl font-bold tracking-wider text-emerald-400 uppercase mb-1"
+            >
+              &gt; ACCESS_TERMINAL
+            </h1>
+            <p class="text-xs text-emerald-500/70">
+              Session expired or unauthorized. Please authenticate.
+            </p>
+          </div>
+
+          <!-- Error Message Banner -->
+          <div
+            id="errorMessage"
+            class="hidden mb-6 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-400 text-xs text-center"
+          >
+            [!] ACCESS DENIED: Invalid credentials.
+          </div>
+
+          <!-- Login Form -->
+          <form id="loginForm" class="space-y-6">
+            <div>
+              <label
+                for="username"
+                class="block text-xs uppercase tracking-widest text-emerald-400 mb-2"
+              >
+                [ ID / USERNAME ]
+              </label>
+              <input
+                type="text"
+                id="username"
+                required
+                placeholder="root_user"
+                class="w-full bg-gray-950/70 border border-emerald-500/40 rounded-lg px-4 py-3 text-emerald-300 placeholder-emerald-800 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all text-sm"
+              />
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-xs uppercase tracking-widest text-emerald-400 mb-2"
+              >
+                [ PASSPHRASE ]
+              </label>
+              <input
+                type="password"
+                id="password"
+                required
+                placeholder="••••••••••••"
+                class="w-full bg-gray-950/70 border border-emerald-500/40 rounded-lg px-4 py-3 text-emerald-300 placeholder-emerald-800 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all text-sm"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-emerald-600/20 hover:bg-emerald-500/30 text-emerald-400 hover:text-emerald-300 font-semibold py-3 px-4 rounded-lg border border-emerald-500/50 hover:border-emerald-400 transition-all duration-200 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] text-sm tracking-wider uppercase"
+            >
+              AUTHENTICATE &gt;
+            </button>
+          </form>
+
+          <div
+            class="mt-8 text-center text-xs text-emerald-500/40 border-t border-emerald-500/10 pt-4"
+          >
+            <span>SESSION TIMEOUT: 1 HOUR</span> • <span>STATUS: READY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. Authorized Database
+        const usersDB = {
+          siddik: "c2lkZGlr",
+          ratul0600: "cmF0dWwwNjAw",
+          sohelvai0600: "c29oZWx2YWkwNjAw",
+        };
+
+        // 1 Hour in milliseconds (1 * 60 * 60 * 1000)
+        const ONE_HOUR = 3600000;
+
+        const appContent = document.getElementById("appContent");
+        const loginContainer = document.getElementById("loginContainer");
+        const loginForm = document.getElementById("loginForm");
+        const errorMessage = document.getElementById("errorMessage");
+        const activeUserDisplay = document.getElementById("activeUserDisplay");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        // 2. Function to verify session status
+        function checkSessionStatus() {
+          const storedUser = localStorage.getItem("username");
+          const storedExpiry = localStorage.getItem("loginTime");
+          const currentTime = Date.now();
+
+          // Check if session exists and is NOT expired
+          if (
+            storedUser &&
+            storedExpiry &&
+            currentTime < parseInt(storedExpiry, 10)
+          ) {
+            showApp(storedUser);
+          } else {
+            // Session expired or missing -> force login
+            clearSession();
+            showLogin();
+          }
+        }
+
+        function showApp(username) {
+          loginContainer.classList.add("hidden");
+          appContent.classList.remove("hidden");
+          if (activeUserDisplay) activeUserDisplay.textContent = username;
+        }
+
+        function showLogin() {
+          appContent.classList.add("hidden");
+          loginContainer.classList.remove("hidden");
+        }
+
+        function clearSession() {
+          localStorage.removeItem("username");
+          localStorage.removeItem("loginTime");
+        }
+
+        // 3. Login Form Submit Handler
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const usernameInput = document
+            .getElementById("username")
+            .value.trim();
+          const passwordInput = document.getElementById("password").value;
+          const encodedPassword = btoa(passwordInput);
+
+          if (
+            usersDB[usernameInput] &&
+            usersDB[usernameInput] === encodedPassword
+          ) {
+            errorMessage.classList.add("hidden");
+
+            // Calculate new expiry timestamp (Now + 1 hour)
+            const newExpiryTime = Date.now() + ONE_HOUR;
+
+            // Save credentials and expiration time to localStorage
+            localStorage.setItem("username", usernameInput);
+            localStorage.setItem("loginTime", newExpiryTime.toString());
+
+            // Clear inputs
+            loginForm.reset();
+
+            // Grant access to app
+            showApp(usernameInput);
+          } else {
+            errorMessage.classList.remove("hidden");
+          }
+        });
+
+        // 4. Logout Button Action
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", () => {
+            clearSession();
+            showLogin();
+          });
+        }
+
+        // 5. Run session check immediately on load
+        checkSessionStatus();
+
+        // 6. Matrix Rain Canvas Animation
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        window.addEventListener("resize", () => {
+          resizeCanvas();
+          columns = Math.floor(canvas.width / fontSize);
+          rainDrops = Array(columns).fill(1);
+        });
+
+        const katakana =
+          "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const fontSize = 14;
+        let columns = Math.floor(canvas.width / fontSize);
+        let rainDrops = Array(columns).fill(1);
+
+        function drawMatrix() {
+          ctx.fillStyle = "rgba(3, 7, 18, 0.05)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "#10b981";
+          ctx.font = fontSize + "px monospace";
+
+          for (let i = 0; i < rainDrops.length; i++) {
+            const text = katakana.charAt(
+              Math.floor(Math.random() * katakana.length),
+            );
+            ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+            if (
+              rainDrops[i] * fontSize > canvas.height &&
+              Math.random() > 0.975
+            ) {
+              rainDrops[i] = 0;
+            }
+            rainDrops[i]++;
+          }
+        }
+        setInterval(drawMatrix, 33);
+      });
+    </script>
+  </body>
+</html>
