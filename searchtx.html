@@ -124,10 +124,10 @@
       </div>
     </div>
     <script>
-      const SPREADSHEET_ID = "1qKSBopqQsoazYjHNM5xwAlAHEnBLfvFop1iXABhTv7s";
-      const SHEET_NAME = "July27";
+      const SPREADSHEET_ID = "1l5fCjy9Y-thrDFGRU-0E4nlmVrlrdvXuOxIkziEp9uc";
+      const SHEET_NAME = "tgAllJuly";
       const STORAGE_KEY = "transactionSearchHistory";
-      const MAX_HISTORY_ITEMS = 10;
+      const MAX_HISTORY_ITEMS = 100;
 
       // Strictly defined columns requested matching your Google Sheet structure
       const DEFINED_HEADERS = [
@@ -316,7 +316,7 @@
 
           // Column D (REFERENCE NO) as requested in your setup
           const query = encodeURIComponent(`SELECT * WHERE D = '${txnId}'`);
-          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}`;
+          const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tq=${query}&sheet=${SHEET_NAME}&gid=1498846480`;
 
           fetch(url)
             .then((response) => {
