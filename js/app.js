@@ -1,25 +1,15 @@
-const app = document.getElementById("app");
-app.classList="min-h-screen bg-gray-800 text-gray-200 min-w-md";
-const script = document.createElement("script");
-const header = document.createElement("header");
-const main = document.createElement("main");
-main.classList="mt-16 ml-64 bg-gray-800 h-screen p-4 w-full";
-const aside = document.createElement("aside");
-aside.classList="fixed left-0 top-16 w-64 min-h-screen";
-const button = document.createElement("button");
-const container = document.createElement("div");
-const footer = document.createElement("footer");
-footer.id="footer";
-footer.classList="fixed bottom-0 left-0 h-16 right-0 z-50";
-const footerEl = document.createElement("div");
-footerEl.classList="flex justify-between items-center bg-gray-700 w-full p-2 ";
-footerEl.innerHTML=`<div class="text-center text-xs text-slate-400 border-t border-slate-200/50 dark:border-slate-800/50 pt-6 mt-6">
-      <span class="font-mono">🔐 Base URL: https://api.247cs.live</span> · <span class="font-mono">Bearer token active</span> · organized with ❤️
-    </div>`;
-header.id="header";
-header.classList ="fixed top-0 left-0 h-16 right-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm shadow-black backdrop-blur bg-slate-900";
-header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
-      <div class="flex items-center justify-between w-full">
+// Helper to create HTML elements from a string
+function createElementFromHTML(htmlString) {
+  const template = document.createElement("template");
+  template.innerHTML = htmlString.trim();
+  return template.content.firstElementChild;
+}
+
+// 1. Header Component
+function createHeader() {
+  const html = `
+    <header id="header" class="fixed top-0 left-0 right-0 h-16 z-50 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm shadow-black backdrop-blur bg-slate-900">
+      <div class="px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
         <div class="flex items-center gap-4">
           <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800/70 transition-all duration-200 active:scale-95 shadow-sm" aria-label="Toggle sidebar">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,6 +25,7 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
             <span class="text-xl font-bold gradient-text hidden sm:block">Nexus</span>
           </div>
         </div>
+
         <div class="flex-1 max-w-2xl mx-4 hidden md:block">
           <div class="relative search-glow transition-all duration-300 rounded-xl">
             <input type="text" id="search-input" placeholder="Search anything..." class="w-full pl-10 pr-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/60 dark:focus:ring-indigo-400/60 transition-all duration-300 backdrop-blur-sm">
@@ -43,6 +34,7 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
             </svg>
           </div>
         </div>
+
         <div class="flex items-center gap-2 sm:gap-3">
           <button id="theme-toggle" class="p-2.5 rounded-lg hover:bg-slate-200/70 dark:hover:bg-slate-800/70 transition-all duration-200 active:scale-95" aria-label="Toggle theme">
             <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,14 +64,53 @@ header.innerHTML= `<div class="px-4 sm:px-6 lg:px-8 h-full flex items-center">
           </div>
         </div>
       </div>
-      <div class="md:hidden pb-3 pt-1 w-full">
-        <div class="relative search-glow transition-all duration-300 rounded-xl">
-          <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/60 transition-all duration-300 backdrop-blur-sm">
-          <svg class="w-5 h-5 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-        </div>
+    </header>
+  `;
+  return createElementFromHTML(html);
+}
+
+// 2. Sidebar Component
+function createSidebar() {
+  const aside = document.createElement("aside");
+  aside.className = "fixed left-0 top-16 w-64 min-h-[calc(100vh-4rem)] bg-slate-900/50 border-r border-slate-800 p-4 transition-transform z-40";
+  return aside;
+}
+
+// 3. Main Content Area Component
+function createMain() {
+  const main = document.createElement("main");
+  main.className = "pt-16 pl-64 pb-16 min-h-screen w-full bg-gray-800 text-gray-200 p-6";
+  return main;
+}
+
+// 4. Footer Component
+function createFooter() {
+  const html = `
+    <footer id="footer" class="fixed bottom-0 left-0 right-0 h-12 z-50 bg-gray-700/80 backdrop-blur border-t border-slate-800/50">
+      <div class="flex justify-between items-center h-full px-4 text-xs text-slate-400">
+        <span class="font-mono">🔐 Base URL: https://api.247cs.live</span>
+        <span class="font-mono">Bearer token active</span>
+        <span>Organized with ❤️</span>
       </div>
-    </div>`;
-footer.append(footerEl);
-app.append(header,main,footer,aside);
+    </footer>
+  `;
+  return createElementFromHTML(html);
+}
+
+// 5. App Initialization
+function initApp() {
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  app.className = "min-h-screen bg-gray-800 text-gray-200 relative";
+
+  const header = createHeader();
+  const aside = createSidebar();
+  const main = createMain();
+  const footer = createFooter();
+
+  app.append(header, aside, main, footer);
+}
+
+// Render app when DOM is ready
+document.addEventListener("DOMContentLoaded", initApp);
