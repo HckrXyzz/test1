@@ -1,50 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Analyzer Dashboard</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- XLSX -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <!-- PapaParse -->
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Toastify -->
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <!-- FileSaver -->
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-    <!-- html2canvas -->
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
-    <!-- jsPDF -->
-    <script src="https://cdn.jsdelivr.net/npm/jspdf"></script>
-    <!-- Grid.js -->
-    <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-    <!-- Lodash -->
-    <script src="https://cdn.jsdelivr.net/npm/lodash/lodash.min.js"></script>
-    <!-- DayJS -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
-    <!-- Anime.js -->
-    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090d16" />
+  <title>Follow-up Transactions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] } } } };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: 'DM Sans', sans-serif; background: #090d16; }
+    h1,h2,h3 { font-family: 'Manrope', sans-serif; }
+    .grid-bg { background-image: linear-gradient(rgba(148,163,184,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.035) 1px,transparent 1px); background-size: 42px 42px; }
+    .fade-up { animation: fadeUp .55s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
+    .pulse-dot { animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity:.45; box-shadow:0 0 0 5px rgba(52,211,153,.08) } }
+    dialog { color: inherit; }
+    dialog::backdrop { background: rgba(1,4,10,.76); backdrop-filter: blur(7px); }
+    .modal-in { animation: modalIn .22s ease-out both; }
+    @keyframes modalIn { from { opacity:0; transform:translateY(8px) scale(.985) } to { opacity:1; transform:translateY(0) scale(1) } }
+    .scrollbar::-webkit-scrollbar { width:8px;height:8px }
+    .scrollbar::-webkit-scrollbar-thumb { background:#263247;border-radius:99px }
+  </style>
 </head>
-<body>
-<div id="app"></div>
-<!-- Dashboard -->
+<body class="min-h-screen text-slate-200 antialiased">
+  <div class="pointer-events-none fixed inset-0 grid-bg"></div>
+  <div class="pointer-events-none fixed -top-48 left-1/3 h-[28rem] w-[28rem] rounded-full bg-indigo-600/10 blur-[120px]"></div>
+  <main class="relative mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:px-12">
+    <header class="fade-up mb-8 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+      <div>
+        <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/[.06] px-3 py-1.5 text-xs font-semibold tracking-wide text-emerald-300">
+          <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400"></span> TRANSACTION MONITOR
+        </div>
+        <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Follow-up transactions</h1>
+        <p class="mt-2 max-w-xl text-sm leading-6 text-slate-400">A focused view of transactions that need follow-up. Open a record to review its full details.</p>
+      </div>
+      <button id="refreshBtn" class="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-white/10 bg-white/[.04] px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/[.08] sm:self-auto">
+        <svg id="refreshIcon" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.7-2L20 12M4 12l2.7 5a7 7 0 0 0 11.7-2"/></svg> Refresh data
+      </button>
+    </header>
 
-<script src="/js/app.js"></script>
+    <section class="fade-up mb-6 grid gap-4 sm:grid-cols-3" style="animation-delay:70ms">
+      <div class="rounded-2xl border border-white/[.08] bg-[#101724]/90 p-5 shadow-xl shadow-black/10">
+        <div class="text-xs font-semibold uppercase tracking-[.14em] text-slate-500">Follow-ups</div>
+        <div id="countStat" class="mt-3 text-3xl font-bold tracking-tight text-white">—</div>
+        <div class="mt-1 text-xs text-slate-500">matching transactions</div>
+      </div>
+      <div class="rounded-2xl border border-white/[.08] bg-[#101724]/90 p-5 shadow-xl shadow-black/10">
+        <div class="text-xs font-semibold uppercase tracking-[.14em] text-slate-500">Total amount</div>
+        <div id="amountStat" class="mt-3 text-3xl font-bold tracking-tight text-white">—</div>
+        <div class="mt-1 text-xs text-slate-500">across matching records</div>
+      </div>
+      <div class="rounded-2xl border border-white/[.08] bg-[#101724]/90 p-5 shadow-xl shadow-black/10">
+        <div class="text-xs font-semibold uppercase tracking-[.14em] text-slate-500">Data sources</div>
+        <div id="sourceStat" class="mt-3 text-3xl font-bold tracking-tight text-white">—</div>
+        <div id="sourceNote" class="mt-1 text-xs text-slate-500">JSON files loaded</div>
+      </div>
+    </section>
 
+    <section class="fade-up overflow-hidden rounded-2xl border border-white/[.08] bg-[#101724]/95 shadow-2xl shadow-black/20" style="animation-delay:130ms">
+      <div class="flex flex-col gap-3 border-b border-white/[.07] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div><h2 class="font-semibold text-white">Transaction list</h2><p class="mt-1 text-xs text-slate-500">Showing records with status <span class="font-medium text-emerald-300">ALREADY FOLLOW UP</span></p></div>
+        <div class="relative w-full sm:w-72">
+          <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="searchInput" type="search" placeholder="Search reference or amount..." class="w-full rounded-xl border border-white/[.08] bg-[#0a101b] py-2.5 pl-9 pr-3 text-sm text-slate-200 outline-none placeholder:text-slate-600 focus:border-indigo-400/50 focus:ring-2 focus:ring-indigo-400/10" />
+        </div>
+      </div>
+      <div class="scrollbar overflow-x-auto">
+        <table class="w-full min-w-[850px] text-left text-sm">
+          <thead class="bg-white/[.025] text-[11px] uppercase tracking-[.13em] text-slate-500"><tr>
+            <th class="px-6 py-3.5 font-semibold">Index</th><th class="px-6 py-3.5 font-semibold">Reference no</th><th class="px-6 py-3.5 font-semibold">Amount</th><th class="px-6 py-3.5 font-semibold">Image link</th><th class="px-6 py-3.5 font-semibold">SSP API status</th><th class="px-6 py-3.5 font-semibold">Status</th><th class="px-6 py-3.5 text-right font-semibold">Details</th>
+          </tr></thead>
+          <tbody id="tableBody" class="divide-y divide-white/[.055]"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="hidden px-6 py-16 text-center">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[.08] bg-white/[.03] text-slate-500"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></div>
+        <p id="emptyTitle" class="font-semibold text-slate-300">No follow-up transactions found</p><p id="emptyText" class="mt-1 text-sm text-slate-500">Add the JSON files beside this page, then refresh.</p>
+      </div>
+      <div class="flex items-center justify-between border-t border-white/[.06] px-5 py-3.5 text-xs text-slate-500 sm:px-6"><span id="resultCount">Loading records…</span><span id="lastUpdated"></span></div>
+    </section>
+    <p class="mt-5 text-center text-[11px] text-slate-600">Sources: M1, M2, B1–B5, K1, J1 and T1</p>
+  </main>
+
+  <dialog id="detailsDialog" class="m-auto w-[min(680px,calc(100%-32px))] overflow-hidden rounded-2xl border border-white/10 bg-[#111a29] p-0 shadow-2xl shadow-black/50">
+    <div class="modal-in">
+      <div class="flex items-start justify-between border-b border-white/[.07] px-6 py-5"><div><div class="text-[11px] font-semibold uppercase tracking-[.14em] text-indigo-300">Transaction details</div><h2 id="dialogTitle" class="mt-1 text-xl font-bold text-white">Record</h2></div><button id="closeDialog" aria-label="Close details" class="rounded-lg p-2 text-slate-400 transition hover:bg-white/[.07] hover:text-white"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m18 6-12 12M6 6l12 12"/></svg></button></div>
+      <div id="detailGrid" class="scrollbar grid max-h-[65vh] grid-cols-1 gap-3 overflow-y-auto p-6 sm:grid-cols-2"></div>
+      <div class="border-t border-white/[.07] px-6 py-4 text-right"><button id="doneDialog" class="rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-400">Done</button></div>
+    </div>
+  </dialog>
+
+  <script>
+    const FILES = ['M1.json','M2.json','B1.json','B2.json','B3.json','B4.json','B5.json','K1.json','J1.json','T1.json'];
+    const TARGET_STATUS = 'ALREADY FOLLOW UP';
+    let records = [];
+    let allRows = [];
+    const $ = (id) => document.getElementById(id);
+    const normalize = (value) => String(value ?? '').trim().toUpperCase();
+    const safeText = (value) => String(value ?? '').trim();
+    function money(value) {
+      const raw = safeText(value);
+      const n = Number(raw.replace(/,/g, ''));
+      return raw && Number.isFinite(n) ? n.toLocaleString(undefined, { maximumFractionDigits: 2 }) : (raw || '—');
+    }
+    function fieldLabel(value) { return String(value ?? '').trim() || 'Unnamed field'; }
+    function makeCell(text, cls='') { const el=document.createElement('td'); el.className=cls; el.textContent=text; return el; }
+    function renderRows() {
+      const query = $('searchInput').value.trim().toLowerCase();
+      const visible = records.filter(r => !query || [r.reference,r.amount,r.source,r.ssp,r.status].some(v=>safeText(v).toLowerCase().includes(query)));
+      const body = $('tableBody'); body.replaceChildren();
+      visible.forEach((r) => {
+        const tr=document.createElement('tr'); tr.className='transition hover:bg-white/[.025]';
+        tr.append(makeCell(String(r.index ?? '—'),'px-6 py-4 text-slate-500 tabular-nums'));
+        const ref=makeCell(safeText(r.reference)||'—','px-6 py-4 font-medium text-white'); tr.append(ref);
+        tr.append(makeCell(money(r.amount),'px-6 py-4 font-semibold text-slate-200 tabular-nums'));
+        const imgCell=document.createElement('td'); imgCell.className='px-6 py-4';
+        if (r.image && /^https?:\/\//i.test(String(r.image))) { const a=document.createElement('a'); a.href=String(r.image); a.target='_blank'; a.rel='noopener noreferrer'; a.textContent='View image ↗'; a.className='font-medium text-indigo-300 transition hover:text-indigo-200'; imgCell.append(a); }
+        else { const s=document.createElement('span'); s.textContent='—'; s.className='text-slate-600'; imgCell.append(s); } tr.append(imgCell);
+        tr.append(makeCell(safeText(r.ssp)||'—','px-6 py-4 text-slate-400'));
+        const status=makeCell(TARGET_STATUS,'px-6 py-4'); status.innerHTML='<span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[.07] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>ALREADY FOLLOW UP</span>'; tr.append(status);
+        const action=document.createElement('td'); action.className='px-6 py-4 text-right'; const button=document.createElement('button'); button.className='rounded-lg border border-white/[.09] bg-white/[.03] px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-indigo-400/30 hover:bg-indigo-400/[.08] hover:text-indigo-200'; button.textContent='Details'; button.addEventListener('click',()=>openDetails(r)); action.append(button); tr.append(action);
+        body.append(tr);
+      });
+      $('resultCount').textContent = visible.length ? `Showing ${visible.length} of ${records.length} transactions` : '0 transactions';
+      $('emptyState').classList.toggle('hidden', visible.length !== 0);
+      if (!visible.length && records.length && query) { $('emptyTitle').textContent='No matching transactions'; $('emptyText').textContent='Try a different reference number or amount.'; }
+      else if (!records.length) { $('emptyTitle').textContent='No follow-up transactions found'; $('emptyText').textContent=allRows.length ? 'The source files loaded, but none have the required status.' : 'Add the JSON files beside this page, then refresh.'; }
+    }
+    function openDetails(r) {
+      $('dialogTitle').textContent = `${safeText(r.reference) || 'Transaction'} · ${r.source}`;
+      const grid=$('detailGrid'); grid.replaceChildren();
+      r.fields.forEach(([key,value])=>{
+        const card=document.createElement('div'); card.className='min-w-0 rounded-xl border border-white/[.06] bg-white/[.025] p-3.5';
+        const label=document.createElement('div'); label.className='mb-1.5 text-[10px] font-semibold uppercase tracking-[.12em] text-slate-500'; label.textContent=fieldLabel(key);
+        const val=document.createElement('div'); val.className='break-words text-sm leading-5 text-slate-200';
+        const str=safeText(value); if (/^https?:\/\//i.test(str)) { const a=document.createElement('a'); a.href=str; a.target='_blank'; a.rel='noopener noreferrer'; a.textContent=str; a.className='text-indigo-300 underline decoration-indigo-300/30 underline-offset-2 hover:text-indigo-200'; val.append(a); } else val.textContent=str || '—';
+        card.append(label,val); grid.append(card);
+      });
+      $('detailsDialog').showModal();
+    }
+    async function loadData() {
+      $('refreshBtn').disabled=true; $('refreshIcon').classList.add('animate-spin'); $('resultCount').textContent='Loading records…';
+      const results=await Promise.all(FILES.map(async file=>{
+        try { const response=await fetch(file,{cache:'no-store'}); if(!response.ok) throw new Error(`HTTP ${response.status}`); const json=await response.json(); if(!Array.isArray(json)) throw new Error('Expected a JSON array'); return {file,json,error:null}; }
+        catch(error) { return {file,json:[],error:error.message}; }
+      }));
+      records=[]; allRows=[]; let loaded=0;
+      for (const result of results) {
+        if(result.error) continue; loaded++;
+        const entries=result.json; const header=entries.find(item=>Number(item?.index)===1) || entries[0];
+        const headers=Array.isArray(header?.rowData)?header.rowData:[];
+        const statusIndex=headers.findIndex(h=>normalize(h)==='STATUS');
+        if(statusIndex<0) continue;
+        for(const item of entries) {
+          if(!Array.isArray(item?.rowData) || item===header) continue;
+          const row=item.rowData;
+          const fields=headers.map((name,i)=>[fieldLabel(name),row[i] ?? '']);
+          allRows.push({source:result.file,index:item.index,fields});
+          if(normalize(row[statusIndex])!==TARGET_STATUS) continue;
+          const at=(name)=>{const i=headers.findIndex(h=>normalize(h)===name);return i<0?'':row[i]??'';};
+          records.push({source:result.file,index:item.index,fields,reference:at('REFERENCE NO'),amount:at('AMOUNT'),image:at('IMAGE LINK'),ssp:at('SSP API STATUS'),status:at('STATUS')});
+        }
+      }
+      $('countStat').textContent=records.length.toLocaleString();
+      const total=records.reduce((sum,r)=>{const n=Number(String(r.amount).replace(/,/g,''));return sum+(Number.isFinite(n)?n:0)},0);
+      $('amountStat').textContent=total.toLocaleString(undefined,{maximumFractionDigits:2});
+      $('sourceStat').textContent=`${loaded} / ${FILES.length}`;
+      $('sourceNote').textContent=loaded===FILES.length?'all JSON files loaded':`${FILES.length-loaded} file${FILES.length-loaded===1?'':'s'} unavailable`;
+      $('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+      $('refreshBtn').disabled=false; $('refreshIcon').classList.remove('animate-spin'); renderRows();
+    }
+    $('refreshBtn').addEventListener('click',loadData);
+    $('searchInput').addEventListener('input',renderRows);
+    $('closeDialog').addEventListener('click',()=>$('detailsDialog').close());
+    $('doneDialog').addEventListener('click',()=>$('detailsDialog').close());
+    $('detailsDialog').addEventListener('click',e=>{if(e.target===$('detailsDialog')) $('detailsDialog').close()});
+    loadData();
+  </script>
+<script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
 </body>
 </html>
