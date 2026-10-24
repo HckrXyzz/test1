@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-10-25T00:27:46.825889",
+  "total_requests": 12,
+  "successful": 12,
+  "failed": 0,
+  "errors": 0,
+  "details": [
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/For Checking!c2:d/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "rows.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/B3!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "B3.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/For%20Checking!a:z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "rows.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/B2!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "B2.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/B1!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "B1.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/B4!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "B4.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/J1!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "J1.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/B5!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "B5.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/K1!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "K1.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/M1!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "M1.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/T1!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "T1.json",
+      "status_code": 200
+    },
+    {
+      "url": "https://api.247cs.live:443/google-sheets/1Va4qhc2l5cVHp6iSAX7Fu-jlsyjX84uodZ2iBZATYGQ/M2!A:Z/rows?connectionId=6809f036046f2e1e143045ee",
+      "status": "success",
+      "filename": "M2.json",
+      "status_code": 200
+    }
+  ]
+}
