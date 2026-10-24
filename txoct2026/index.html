@@ -77,7 +77,10 @@
       <div class="scrollbar overflow-x-auto">
         <table class="w-full min-w-[850px] text-left text-sm">
           <thead class="bg-white/[.025] text-[11px] uppercase tracking-[.13em] text-slate-500"><tr>
-            <th class="px-6 py-3.5 font-semibold">Index</th><th class="px-6 py-3.5 font-semibold">Reference no</th><th class="px-6 py-3.5 font-semibold">Amount</th><th class="px-6 py-3.5 font-semibold">Image link</th><th class="px-6 py-3.5 font-semibold">SSP API status</th><th class="px-6 py-3.5 font-semibold">Status</th><th class="px-6 py-3.5 text-right font-semibold">Details</th>
+            <th class="px-6 py-3.5 font-semibold">Index</th><th class="px-6 py-3.5 font-semibold">Reference no</th><th class="px-6 py-3.5 font-semibold">Amount</th>
+            <th class="px-6 py-3.5 font-semibold">Image link</th>
+            <th class="px-6 py-3.5 font-semibold">SSP API status</th>
+            <th class="px-6 py-3.5 text-right font-semibold">Details</th>
           </tr></thead>
           <tbody id="tableBody" class="divide-y divide-white/[.055]"></tbody>
         </table>
@@ -122,7 +125,7 @@
       visible.forEach((r) => {
         const tr=document.createElement('tr'); tr.className='transition hover:bg-white/[.025]';
         tr.append(makeCell(String(r.index ?? '—'),'px-6 py-4 text-slate-500 tabular-nums'));
-        const ref=makeCell(safeText(r.reference)||'—','px-6 py-4 font-medium text-white tx'); tr.append(ref);
+        const ref=makeCell(safeText(r.reference)||'—','px-6 py-4 font-medium text-red-400 s2 tx'); tr.append(ref);
         tr.append(makeCell(money(r.amount),'px-6 py-4 font-semibold text-slate-200 tabular-nums'));
         const imgCell=document.createElement('td'); imgCell.className='px-6 py-4';
         if (r.image && /^https?:\/\//i.test(String(r.image))) { const a=document.createElement('a'); a.href=String(r.image); a.target='_blank'; a.rel='noopener noreferrer'; a.textContent='View image ↗'; a.className='font-medium text-indigo-300 transition hover:text-indigo-200'; imgCell.append(a); }
