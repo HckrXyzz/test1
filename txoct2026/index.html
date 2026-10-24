@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#090d16" />
-  <title>Follow-up Transactions October 2026</title>
+  <title>Follow-up Transactions 25 October 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] } } } };
@@ -41,7 +41,7 @@
           <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400"></span> TRANSACTION MONITOR
         </div>
         <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Follow-up transactions</h1>
-        <p class="date mt-2 max-w-xl text-sm leading-6 text-slate-400">October 2026</p>
+        <p class="date mt-2 max-w-xl text-sm leading-6 text-slate-400">25 October 2026</p>
       </div>
       <button id="refreshBtn" class="inline-flex items-center justify-center gap-2 self-start rounded-xl border border-white/10 bg-white/[.04] px-4 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/[.08] sm:self-auto">
         <svg id="refreshIcon" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.7-2L20 12M4 12l2.7 5a7 7 0 0 0 11.7-2"/></svg> Refresh data
@@ -122,13 +122,13 @@
       visible.forEach((r) => {
         const tr=document.createElement('tr'); tr.className='transition hover:bg-white/[.025]';
         tr.append(makeCell(String(r.index ?? '—'),'px-6 py-4 text-slate-500 tabular-nums'));
-        const ref=makeCell(safeText(r.reference)||'—','px-6 py-4 font-medium text-white'); tr.append(ref);
+        const ref=makeCell(safeText(r.reference)||'—','px-6 py-4 font-medium text-white tx'); tr.append(ref);
         tr.append(makeCell(money(r.amount),'px-6 py-4 font-semibold text-slate-200 tabular-nums'));
         const imgCell=document.createElement('td'); imgCell.className='px-6 py-4';
         if (r.image && /^https?:\/\//i.test(String(r.image))) { const a=document.createElement('a'); a.href=String(r.image); a.target='_blank'; a.rel='noopener noreferrer'; a.textContent='View image ↗'; a.className='font-medium text-indigo-300 transition hover:text-indigo-200'; imgCell.append(a); }
         else { const s=document.createElement('span'); s.textContent='—'; s.className='text-slate-600'; imgCell.append(s); } tr.append(imgCell);
         tr.append(makeCell(safeText(r.ssp)||'—','px-6 py-4 text-slate-400'));
-        const status=makeCell(TARGET_STATUS,'px-6 py-4'); status.innerHTML='<span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[.07] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>ALREADY FOLLOW UP</span>'; tr.append(status);
+        // Status column removed because all rows share the same "ALREADY FOLLOW UP" status
         const action=document.createElement('td'); action.className='px-6 py-4 text-right'; const button=document.createElement('button'); button.className='rounded-lg border border-white/[.09] bg-white/[.03] px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-indigo-400/30 hover:bg-indigo-400/[.08] hover:text-indigo-200'; button.textContent='Details'; button.addEventListener('click',()=>openDetails(r)); action.append(button); tr.append(action);
         body.append(tr);
       });
@@ -186,6 +186,42 @@
     $('doneDialog').addEventListener('click',()=>$('detailsDialog').close());
     $('detailsDialog').addEventListener('click',e=>{if(e.target===$('detailsDialog')) $('detailsDialog').close()});
     loadData();
+    const txCells = document.querySelectorAll(".tx.s2");
+
+txCells.forEach((cell) => {
+  const tx = cell.innerText.trim();
+
+  cell.innerHTML = `<button type="button" onclick="copyToClipboard('${tx}', this)" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 active:bg-blue-600 text-slate-200 hover:text-white transition-all border border-slate-600 text-xs font-mono group" title="Click to copy">
+        <span>${tx}</span>
+        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+        </svg>
+    </button>`;
+});
+
+function copyToClipboard(text, buttonElement) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      const span = buttonElement.querySelector("span");
+      const originalText = span.textContent;
+
+      // Provide visual success feedback
+      span.textContent = "Copied!";
+      buttonElement.classList.add("bg-green-700", "border-green-600");
+      buttonElement.classList.remove("bg-slate-700", "border-slate-600");
+
+      // Revert back after 2 seconds
+      setTimeout(() => {
+        span.textContent = originalText;
+        buttonElement.classList.remove("bg-green-700", "border-green-600");
+        buttonElement.classList.add("bg-slate-700", "border-slate-600");
+      }, 2000);
+    })
+    .catch((err) => {
+      console.error("Failed to copy text: ", err);
+    });
+}
   </script>
 <script src="https://hckrxyzz.github.io/js/scrollbutton.js"></script>
 <script src="https://hckrxyzz.github.io/js/note.js"></script>
