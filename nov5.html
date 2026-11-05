@@ -1226,10 +1226,9 @@ function render(list) {
       <tr class="transition hover:bg-slate-50">
         <td class="whitespace-nowrap px-3 py-2 text-right text-xs font-medium tabular-nums text-slate-400">${i + 1}</td>
         <td class="px-3 py-2">
-          <div class="flex items-center gap-2">
-            <span class="break-all font-mono text-[13px] leading-snug text-slate-700">${esc(r.ref)}</span>
-            <button type="button"
-                    class="copy-btn group inline-flex shrink-0 items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
+          <div class="flex justify-between items-center gap-2">
+            <span class="font-mono text-[13px] leading-snug text-blue-700 font-semibold whitespace-nowrap">${esc(r.ref)}</span>
+            <button type="button" class="copy-btn group inline-flex shrink-0 items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
                     data-copy="${esc(r.ref)}">
               ${COPY_ICON}<span class="btn-label">Copy</span>
             </button>
