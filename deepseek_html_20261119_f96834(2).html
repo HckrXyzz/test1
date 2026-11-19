@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#020617" />
+<title>Transactions · Reference Ledger</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body { height: 100%; }
+  body {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    overscroll-behavior-y: none;
+  }
+
+  /* 🔒 Selection is disabled everywhere… */
+  body, body * { -webkit-user-select: none; user-select: none; }
+  /* …except real inputs so search still works */
+  input, textarea { -webkit-user-select: text; user-select: text; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+  mark { background: rgba(250, 204, 21, .22); color: #fde68a; border-radius: 4px; padding: 0 2px; }
+
+  @keyframes rowFlash {
+    0%   { background-color: rgba(16, 185, 129, .22); }
+    100% { background-color: transparent; }
+  }
+  .row-copied { animation: rowFlash .7s ease-out; }
+</style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-transparent">
+
+  <!-- ═══════════════ APP SHELL (exactly one screen tall on mobile) ═══════════════ -->
+  <div class="flex h-[100dvh] flex-col">
+
+    <!-- ───────── Sticky header + search ───────── -->
+    <header class="shrink-0 border-b border-slate-800 bg-slate-950/95 px-4 pb-3 pt-[max(0.9rem,env(safe-area-inset-top))] backdrop-blur">
+      <div class="mx-auto flex w-full max-w-3xl items-center justify-between gap-3">
+        <div class="min-w-0">
+          <h1 class="truncate text-[15px] font-semibold tracking-tight text-slate-50">Transactions</h1>
+          <p class="mt-0.5 truncate text-[11px] text-slate-500">Tap a row to copy the reference number</p>
+        </div>
+        <span id="countBadge"
+              class="shrink-0 rounded-full bg-slate-800 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-slate-300">0</span>
+      </div>
+
+      <div class="mx-auto mt-3 w-full max-w-3xl">
+        <div class="relative">
+          <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+          </svg>
+
+          <input id="search" type="text" inputmode="search" autocomplete="off" autocorrect="off"
+                 spellcheck="false" enterkeyhint="search" placeholder="Search reference or amount…"
+                 class="w-full rounded-xl border border-slate-800 bg-slate-900 py-2.5 pl-10 pr-10 text-[13px]
+                        text-slate-100 placeholder:text-slate-500
+                        focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20" />
+
+          <button id="clearBtn" type="button" aria-label="Clear search"
+                  class="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-lg p-1.5 text-slate-500 hover:bg-slate-800 hover:text-slate-300 active:scale-90">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ───────── Scrollable table ───────── -->
+    <main class="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      <table class="w-full table-auto border-collapse text-[13px]">
+        <thead>
+          <tr>
+            <th scope="col"
+                class="sticky top-0 z-10 border-b border-slate-800 bg-slate-900/95 px-3 py-2 text-left
+                       text-[10px] font-semibold uppercase tracking-wider text-slate-400 backdrop-blur">
+              Reference no
+            </th>
+            <th scope="col"
+                class="sticky top-0 z-10 w-px border-b border-slate-800 bg-slate-900/95 px-2 py-2 text-right
+                       text-[10px] font-semibold uppercase tracking-wider text-slate-400 backdrop-blur">
+              Amount
+            </th>
+            <th scope="col"
+                class="sticky top-0 z-10 w-px border-b border-slate-800 bg-slate-900/95 px-2 py-2 text-right
+                       text-[10px] font-semibold uppercase tracking-wider text-slate-400 backdrop-blur">
+              Image
+            </th>
+          </tr>
+        </thead>
+        <tbody id="rows" class="divide-y divide-slate-800/70"></tbody>
+      </table>
+    </main>
+
+    <!-- ───────── Footer summary ───────── -->
+    <footer class="shrink-0 border-t border-slate-800 bg-slate-950 px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <div class="mx-auto flex w-full max-w-3xl items-center justify-between text-[11px] text-slate-500">
+        <span id="footerCount">Showing 0 of 0</span>
+        <span>Total <b id="footerTotal" class="font-semibold tabular-nums text-slate-300">0</b></span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════ TOAST ═══════════════ -->
+  <div id="toast"
+       class="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex translate-y-2 justify-center px-4 opacity-0 transition-all duration-200">
+    <div id="toastBox"
+         class="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-4 py-2
+                text-[13px] font-medium text-emerald-300 shadow-lg shadow-black/40 backdrop-blur">
+      <svg id="toastIcon" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+      <span id="toastText">Copied</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ DATA + LOGIC ═══════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ---------- URL shortcuts ---------- */
+    const A1 = 'https://workflow-media-assets-1.s3.amazonaws.com/uploads/';
+    const A2 = 'https://workflow-media-assets-2.s3.amazonaws.com/uploads/';
+    const A3 = 'https://workflow-media-assets-3.s3.amazonaws.com/uploads/';
+    const G  = 'https://lh3.googleusercontent.com/d/';
+
+    /* ---------- RAW DATA : [reference, amount, imageUrl] ---------- */
+    const RAW = [
+      ["76CI2N40",295,G+"1jXGMkNHBUm2RKIKnAkNEhay1FvFKkLp6"],
+      ["7176987104",300,A1+"bck1-be718b9c-69d0-4d64-9832-b42acbb9f254-Screenshot_20261118_231737_com_dbbl_mbs_apps_main_MainActivity.jpg"],
+      ["7177774706",300,A2+"bck2-72fe2bcd-d65f-4489-bd3f-2b322d61ec26-YOOOOOOOOOOOOO.jpg"],
+      ["76AQYNSW",300,A3+"bck3-457e523f-b01b-493f-9c11-af2f1488e6fd-IMG_20261118_181020.jpg"],
+      ["76BP3P0S",300,G+"1uEtuN_eCNLZlOmPXX1cdlxtIgDOTyLu1"],
+      ["76BV9TPF",300,A2+"bck2-a5de012e-97af-4a9e-89b3-3d655006a7d4-file_229575.jpg"],
+      ["76BWQNQ4",300,A1+"bck1-556b3c99-2428-4f24-9c13-796faf7be9ee-image.png"],
+      ["76C4I346",300,A3+"bck3-9f0827f1-3743-4e20-87fe-f69c581764ff-file_116853.jpg"],
+      ["76C61WK0",300,A2+"bck2-4ba03a90-f499-4c42-b593-a3997ff33c74-image.png"],
+      ["76C73G OE",300,G+"120Va4MV47jPgRkvOkgdMaG77NSYJSgdt"],
+      ["76C7AXBU",300,A3+"bck3-1f307c9e-3c38-4b95-9c33-50f5f4a445ec-1000012848.jpg"],
+      ["76C84WBR",300,A1+"bck1-153b5856-0515-4c98-9175-38d6690d946b-Screenshot_20261118_185134.jpg"],
+      ["76C86CON",300,A1+"bck1-c1622ffa-6574-4be5-8342-f2f6bb53e836-image.png"],
+      ["76C8IMP0",300,A2+"bck2-bd1aff94-d4a2-4731-83ff-df8cbca8ea2f-1000039163.jpg"],
+      ["76C9U6ET",300,A1+"bck1-7b6a7dc7-165c-4701-b36a-df123b3c5db0-GSKpYGVgTLKHynEYSetrREhun0G.webp"],
+      ["76CAOTTC",300,A3+"bck3-c061b68b-6ae4-46f6-ac8f-b23432d21fc4-image.png"],
+      ["76CB2O9K",300,G+"1HLDpGueQjWJmQXBtrhyVO9heZyjT1sFv"],
+      ["76CBD4MF",300,A1+"bck1-eba4d09d-cbc3-4100-92a0-e98b3dec9589-Screenshot_2026-11-19-02-00-11-89_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["76CBDDMT",300,A3+"bck3-03a1fbc7-d62c-4b6f-9c06-8e412dd6bb60-IMG-20261119-WA0000%281%29.jpg"],
+      ["76CBGLI3",300,A3+"bck3-32e482bf-3afd-45a5-b0f3-ddbface3d96c-Screenshot_2026-11-19-02-12-42-234_com.konasl.nagad.jpg"],
+      ["76CBJJTF",300,A1+"bck1-98a34866-ec75-4855-81db-ac2e230a2837-image.png"],
+      ["76CBKZCT",300,A2+"bck2-1cdf8295-3ece-40c4-bb6c-d7b96213a63b-Screenshot_2026-11-19-03-16-40-67_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["76CCKHL6",300,G+"15A-t4Uvb2oKkCKmJxT_nL-VL_iUU0zoh"],
+      ["76CCLP96",300,A3+"bck3-9c755384-4f93-438a-9809-566a7dec20b2-956831e3649142cf87de0d778001dfbb.png"],
+      ["76CCW2ZV",300,A3+"bck3-5a6ba864-a8d7-47e8-905d-08a3683f97f7-file_117101.jpg"],
+      ["76CDBOUT",300,A1+"bck1-114aa116-036d-45b5-8a1f-0f7500869a9c-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF_%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A9%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%A7.jpg"],
+      ["76CDP32K",300,A2+"bck2-d9e41ebb-d409-4fd7-a5c2-e1310c81d8cf-image.png"],
+      ["76CDU7S0",300,A1+"bck1-3667e881-2b9e-4057-ab03-31a0aa33813f-Screenshot_2026-11-19-14-14-52-075_com.konasl.nagad.jpg"],
+      ["76CDVY7V",300,A1+"bck1-04b97d51-367d-46be-88cf-501dac64e5d8-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF_%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A6.jpg"],
+      ["76CDX8OX",300,A2+"bck2-2ea5fbf0-b9cd-4570-a306-25f6e8e44318-Screenshot_20261119-210019.png"],
+      ["76CEBKRI",300,A3+"bck3-1388f705-7248-4c92-91cc-ee6ce1160fd4-Screenshot_2026-11-19-16-09-25-256_com.konasl.nagad.jpg"],
+      ["76CF3FIZ",300,A3+"bck3-5d6a0ed1-b0b7-4724-a68f-b5b3b7ea3110-Screenshot_20261119-175351.png"],
+      ["76CF45Q0",300,A2+"bck2-ca3c0797-c2b5-4732-8e89-9a9334440fca-86ef782d56b20c6b756a237acc07b1c1.jpg"],
+      ["76CG1G92",300,A3+"bck3-79f2bb58-a10d-4011-b17b-5b8b46ce8d64-file_230083.jpg"],
+      ["76CGNQYV",300,A3+"bck3-a80cf8d4-cd98-45e6-a328-732fbcdf6c3e-image.png"],
+      ["76CGTGZK",300,A1+"bck1-7d7651f3-8234-454a-8caa-d12e640d5b90-17951011825003605160230937626877.jpg"],
+      ["76CH2PZ9",300,G+"1gm9Bs0S2pKNCBQLV_-czYiIB466sbdtB"],
+      ["76CHEICE",300,A1+"bck1-ae22d7ff-42ad-47d3-aa4b-40487c292a9b-image.png"],
+      ["76CHVSSX",300,G+"175782NMZU-Ac3Wt4eeRaDF-oMBGXHlJc"],
+      ["78CERIA3",300,A2+"bck2-bb7cc697-57bb-488d-b38e-ea7c23241189-9041.png"],
+      ["DJS8N50VFO",300,A2+"bck2-443dda98-f7f7-4ddc-90cd-f83053849563-Screenshot_20261116-154727.png"],
+      ["DJT3OP1HNX",300,A1+"bck1-700cf9dc-9dc9-456c-aad8-414749143fef-GDSoQEkQPucFFzdrvecrRQkIx0K.webp"],
+      ["DK",300,G+"1jU2Pp0J0U-PjVEZ_0J2IeUgo91cxXWY9"],
+      ["DKE1HTUVB",300,A3+"bck3-18614008-bf15-4ced-8a23-6ca047d6d923-1000093848.jpg"],
+      ["DKE8GKXN2O",300,A2+"bck2-9b1dc0bf-0004-4cc6-9628-d31717b914c1-image.png"],
+      ["DKG0KFVF86",300,A2+"bck2-04ee1211-0aa7-4a67-a27d-a71c3ae33286-image.png"],
+      ["DKH0LXFN44",300,A2+"bck2-d0fd49b6-3caa-49cc-9f12-ee107bad298d-bck1-1a05ac59-f3ad-4461-98d9-8d3b51582229-1000041756.png"],
+      ["DKH5KR1BO7",300,A3+"bck3-9c84ff0a-179d-4817-a16b-1ba75422e51c-image.png"],
+      ["DKH8LILQ48",300,G+"1zExzsSJeE9PHf5TsIIdQrr-_oDNqyZbb"],
+      ["DKHOLXFN44",300,A1+"bck1-1a05ac59-f3ad-4461-98d9-8d3b51582229-1000041756.png"],
+      ["DKI1M5I26D",300,A2+"bck2-64dbedc2-e2a7-4c16-a713-0d1128f13bb4-Screenshot_2026-11-19-03-56-25-050_com.imo.android.imoim.jpg"],
+      ["DKI2M5JTF2",300,G+"1mVwKZ93evCjmBa4huEZyjrSMiyexLb0f"],
+      ["DKI4MQZBYG/",300,G+"1n40oD2Z0Pvy-XHQzgbhtVrzmj72nOhue"],
+      ["DKI7NAHBC9",300,G+"1TNxYQ5WLHmQaCLiDNXrluxPDBwvHiQS-"],
+      ["DKI8M3BWMS",300,A2+"bck2-1856911f-a025-4705-9999-c8e9566b7150-file_229880.jpg"],
+      ["DKI9NHSM3B",300,A3+"bck3-84eea5c1-78c8-42c8-a735-436d36668307-Screenshot_2026-11-18-23-30-05-475_com.bKash.customerapp.jpg"],
+      ["DKJ2NL8MIK",300,G+"17H2Zytk4SYaxXPM9p9R3tInTd6u11jRY"],
+      ["DKJ2NL9PEA",300,A3+"bck3-7ff47717-b031-41f3-a184-90786e49eec8-image.png"],
+      ["DKJ2OQANEA",300,A1+"bck1-a67f8d53-4391-4284-9aa0-bc580d17eaa1-19076.png"],
+      ["DKJ3OCLP1F",300,G+"1JCxiJDymN-KEJYWkdcjJ_BdiLNKnZ21_"],
+      ["DKJ3OGQBVF",300,A1+"bck1-bcfca483-a234-4ded-a71d-e55a4393c9d9-Screenshot_2026-11-19-19-45-11-418_com.bKash.customerapp.jpg"],
+      ["DKJ3OHMUXR",300,A2+"bck2-da9f06fe-6adf-40cf-9f8d-2f30188005a0-image.png"],
+      ["DKJ40NXY0Q",300,A1+"bck1-12eae748-fc1a-4c2e-bd0f-0fe165d60c2d-915918778_1794795121579858_2204077694314573505_n.jpg"],
+      ["DKJ4OHL8ZE",300,A3+"bck3-b9078c67-4cc6-4bae-9425-7fb89aaf9bc6-Screenshot_20261119-194801.png"],
+      ["DKJ5OHHSDL",300,A2+"bck2-d91712ff-50f9-4ffb-8fbf-b0120fbbb70e-image.png"],
+      ["DKJ5OHKNC9",300,A2+"bck2-43b9e2ad-d3da-4fe3-ab17-773f24fe794e-Screenshot_20261119_183744_bKash.jpg"],
+      ["DKJ5OTVV1J",300,A3+"bck3-a7f1ad11-7941-431c-bcf3-28fd82ad03d3-image.png"],
+      ["DKJ6NJVSEQ",300,A1+"bck1-ccf539dd-3cc9-4ed5-8bf8-f15301fffa6d-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF-%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A9.jpg"],
+      ["DKJ6NM2PO0",300,G+"1oGN0x1QsUDBh-bFqW02a240rCOAv_6nB"],
+      ["DKJ6OAPEPS",300,G+"1DmtFfES47-7fSGmltaNA8EwXLqkanZ9I"],
+      ["DKJ6OHPJA6",300,A2+"bck2-a2b9d408-a780-4ba1-ba7a-44cf6096e191-image.png"],
+      ["DKJ8OHHGGS",300,G+"1StBnQTC2Qcl5nM3saRRS_qQijTQvcE_P"],
+      ["InValid",300,G+"1PtVu0VrKmSIPItlBQTRx47Xz2m4vduru"],
+      ["76CBH0BY",301,G+"18hmm7OOzn2MVren_eHUsHVvXRvPYreml"],
+      ["1316290161",305,A3+"bck3-bea04b97-16de-46f5-9f43-4664b2fd915d-Screenshot_20261119-134328.png"],
+      ["76CDTJD1",305,A1+"bck1-9c9e1932-5fc1-4854-9e15-38f5f163b053-Messenger_creation_53552813-4455-4466-8195-64BCC5838A4C.jpg"],
+      ["76CE11RB",305,G+"1Qr3xlZy1VeNPEFlNciUDAz8bayXSuBe6"],
+      ["DKJ2O2IRU6",305,G+"1Ne2YRIU6YCyZzxfoK_YZkZrDqMoT7Kct"],
+      ["DKJ9OHTKDL",305,A3+"bck3-ef3d7a01-4343-48cd-93f9-bdd23814cbde-Screenshot_20261119_190153.jpg"],
+      ["76CFI3Q4",308,G+"1gsGh3_ciJKMsVnObpKbpZy0YIHePKEqU"],
+      ["76C6YQFP",310,A2+"bck2-ea580def-b8be-42b1-aa74-2399d2048f44-file_157421.jpg"],
+      ["76CHXC6J",310,G+"1Q1NEfOS-qZkfspQoaVxtSxc_N5e1QSvW"],
+      ["DKH0LYIWE6",310,A3+"bck3-f2e3276b-f20b-441d-80b8-f6753c53e991-image.png"],
+      ["DKI4NE9AX0",315,G+"1yuHqrbViUHk0EltakjoIczujP-WHAYu8"],
+      ["DKJ7NTMP0X",317,A1+"bck1-78496fbb-5db9-43e0-a81c-cecbe2c6f24d-Screenshot_2026-11-19-10-43-20-52_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["76CHSQ53",320,G+"1QrIiCnSs_5ZGP53x7DrCrzHzIvtzKESz"],
+      ["DKIZMIOYDL",325,A3+"bck3-146862dd-c56e-4fc6-9df9-6099d3036f09-Screenshot_20261118-122542_bKash.png"],
+      ["DKI3N8RDVL",327,A1+"bck1-8e331799-a689-4cf8-ab37-0db6411806b5-Screenshot_2026-11-18-20-19-29-59_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["76C9STHY",330,A2+"bck2-c049b49e-6923-4d4e-afa5-65d211d66db8-11294.jpg"],
+      ["76CAODJO",330,A1+"bck1-5ee588cd-7c4a-47b6-8812-e01bf125254b-file_229907.jpg"],
+      ["DKJ1NOCY21",330,G+"1EXAoQtht8mVatoVBx9i3LP-mjFY8rj8R"],
+      ["mdss89",330,G+"1S0ZymzYD7YOXITAute1C65L0LvZvYV-6"],
+      ["76CE48O7",350,A3+"bck3-aab38b63-31c4-4435-b068-9f56cfdf1a3c-Screenshot_20261119-151319.jpg"],
+      ["DKF9HP0HVJ",350,A3+"bck3-50ff409f-0668-4fa0-b490-dcd8d1844864-Screenshot_2026-11-15-03-51-17-107_com.bKash.customerapp.jpg"],
+      ["DKF9HPOHVJ",350,G+"175tpV_Zofv1uzrRHz7RSUO_K88XBgb57"],
+      ["DKI6NPXYYC",350,A1+"bck1-300aa210-ecba-4f91-82ad-9c7f590ce003-17950588834736271429375296671447.jpg"],
+      ["JKF9HPOHVJ",350,G+"1ppr4uOxK6avXsKaoSs4BGGDVQaKmkCnG"],
+      ["76C82ZVA",355,A1+"bck1-e16a50db-29f6-4e47-9e22-b12f33224671-image.png"],
+      ["76CFNZM4",375,A1+"bck1-dc560a18-f36b-49b2-a1e1-d3cf8f959766-IMG-20261119-WA0014.jpg"],
+      ["DKIZMITMҮН",380,A3+"bck3-6d91b06b-720a-4b2a-947d-91f188aaeb00-file_157427.jpg"],
+      ["DKJ2NJC6O8",380,A3+"bck3-8470cb2d-74a2-4895-ac80-70d4a614de0a-9559.jpg"],
+      ["76BZAUSB",390,A3+"bck3-e3641cf0-3224-4670-ad9d-045e12ad7899-image.png"],
+      ["76CG4WH1",390,A1+"bck1-887d7029-9c90-4aab-ac4a-c59c8e35cb94-Screenshot_20261119_194600_com_konasl_nagad_HomeActivity.jpg"],
+      ["76CG77J1",390,G+"1OnWzK6CPGr4d_qQjZb1Y36XbMW00HPtG"],
+      ["76CH7YOL",390,A1+"bck1-39e1bf20-1ea3-4dfd-be6c-f895b07f168e-Screenshot_20261119_214658_com_konasl_nagad_TransactionSuccessActivity.jpg"],
+      ["DKE6H215RY",390,A3+"bck3-ba280e15-93dc-4ae4-8551-10afc9e91cac-70ff20d1d1abd6b1bd20196045ddf3dd%20%281%29.jpg"],
+      ["DKJ8OHMD7K",395,G+"1mb4tC5XoiS5lDzvVpJ3q4pdu7qdXqnD7"],
+      ["76C2AWG1",400,A1+"bck1-0c3961a6-566b-4530-b910-0cfe7aa299b3-image.png"],
+      ["76C65QHY",400,A1+"bck1-46e4d210-6852-41cc-911c-d981836f8e25-image.png"],
+      ["76CBIK2O",400,A2+"bck2-13db21ea-7185-44da-ae13-d4b59372a4a0-IMG_20261119_023908.jpg"],
+      ["76CG97XQ",400,A1+"bck1-3b257891-5a0d-4be9-96b5-2562dcb90450-Screenshot_2026-11-19-20-10-02-86_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["DK512F3XLR",400,A3+"bck3-cd0fe3d9-0f8e-44bb-b297-7a6a04f4b98b-56510.jpg"],
+      ["DKH6LQGPIA",400,A3+"bck3-3521e79c-976a-48f3-ae9d-ac15c6d2f653-Screenshot_20261117_202153.jpg"],
+      ["DKI3MKN4NB",400,G+"18NtYUFi3iJOLli_Oiu4nV4RsBVUrN_V6"],
+      ["DKI7MTH90V",400,A3+"bck3-5a49fb24-a676-468c-b7e1-7dde9493b1a3-IMG_20261118_161145.jpg"],
+      ["DKJ4NNQX7M",400,G+"1Je2A2VY09f4dxZRonu6ZZ3N5KDwVGbhU"],
+      ["76CE6F1Y",430,G+"14R-6ORPMSnfuBriuE_Y_LgKxgri5Dv9z"],
+      ["DKH1M0Y631",440,A3+"bck3-f0f8b217-6d21-4516-925a-27a61c5ed477-Screenshot_2026-11-17-23-09-41-578_com.bKash.customerapp.jpg"],
+      ["76CGSCYF",450,G+"1fqtt484Fmad-TRUkkziTf5F9qxvW6Ujt"],
+      ["DKJ5OU6KN7",450,G+"14hrrRv6QDg2YQrvDA4tLlkWs-MiemKUT"],
+      ["76C3YVD7",475,G+"1hYYCzHeO2Lsjby8y7617BwnThKEpHBIN"],
+      ["DKI9M4JKYF",480,G+"1nB3hAXRneQ-qYAkW1Ehs_baykC2JiiNE"],
+      ["DKI9N3MPY",485,G+"1dLq9bTSAaJAylZ14V8TYLVgyDXZErnb8"],
+      ["76A9G83J",490,A3+"bck3-acd11b27-49da-4273-a661-84193ae20cc2-image.png"],
+      ["76C2O2V0",490,A3+"bck3-81406309-f431-4fbf-8f26-ccd8224e2836-image.png"],
+      ["76C9V3YI",490,A2+"bck2-9d445881-262c-4859-8e82-45309bd5866c-image.png"],
+      ["76CAB233",490,G+"1sZLK75RKaSYtnqanBntvnnk-QGASIVmU"],
+      ["76CFLNMX",490,G+"1tMYNtIU0xO7fo1VeegCLYG3573xCwJfH"],
+      ["76CFU5JR",490,G+"1IG3KI4BfETR6FTwVtGNQCsYi7w6BeS88"],
+      ["76CG8SC6",490,A3+"bck3-b7061ecf-ed94-4e67-9dc3-82706826c799-Screenshot_20261119-202250.png"],
+      ["76CHMEQC",490,A2+"bck2-7da4dc08-0393-4af8-b37f-c6a292c454c1-Screenshot_20261119_224635_com.konasl.nagad.jpg"],
+      ["DK9O6C6CJ",490,A1+"bck1-923427a5-2709-425f-8d25-a3d5624e52a2-file_230022.jpg"],
+      ["DKI7M3XNK1",490,A1+"bck1-c7a44eb1-e74a-45c0-afc5-e8fd4848a21e-04.jpg"],
+      ["DKJ9O6C6CJ",490,A1+"bck1-9e247f94-7a72-4fdc-b57a-5ed813b6e504-image.png"],
+      ["lhsgsk11",490,G+"13tM89mj1TUVdA7s2pBXzordHbdevG8kO"],
+      ["76CEM5TN",495,G+"1GO1g8JhD_zyQGugj8p7nYYyREEQBA26_"],
+      ["DKH4LP6OJY",495,A1+"bck1-bcfc0320-6264-4be4-bfc1-5202cc251c3c-Screenshot_20261117-192717.png"],
+      ["DKJ5OX16B",495,A1+"bck1-49671ccd-c5fb-468b-99a4-9fd94bcdb488-1000276480.png"],
+      ["76C6LXWS",500,A2+"bck2-d3ea59d6-0732-4df7-8f5c-3b1cf8b14102-image.png"],
+      ["01M7QHP0HA",500,A1+"bck1-5be91443-f68c-4cf7-b26f-d2f8214b7734-image.png"],
+      ["01M7QHP0НА",500,A3+"bck3-5dafb3c9-1212-4bcf-8a3d-49021d0cac34-7456789098YTRDFGHUJIK.jpg"],
+      ["01M7QVEJKN",500,A3+"bck3-f6a91926-5a3d-46c3-b55e-25a67a18138c-image.png"],
+      ["7175392748",500,A1+"bck1-a9883bc7-d19f-43e4-93dd-1de287138c55-image.png"],
+      ["767BSNKO",500,G+"1G2p2iqHL4ZuwLc9BeI3a5r1y3rcXYQF3"],
+      ["768UZW67",500,G+"1CX32rtdHmKnfEhy97BC6NjXBwUUkvNQZ"],
+      ["76B7YJ7S",500,A1+"bck1-e647ec3e-944d-42b5-a9c4-0ce7d028f85d-image.png"],
+      ["76BBW8ZL",500,A3+"bck3-9d618223-0c91-4ca4-abaa-d52707b1f569-image.png"],
+      ["76BHD9L1",500,A2+"bck2-cdaab13a-584e-43d6-b266-4156b0f9e1b3-ddb1ead64b7dd94d9e2f2a92abb88dc3.jpg"],
+      ["76BPH86V",500,A1+"bck1-22485bc0-7e04-4a69-bd96-5103011b8367-image.png"],
+      ["76BPMF2Y",500,A2+"bck2-d960a600-fb25-4852-8dd4-dee043e31045-file_229449.jpg"],
+      ["76BW5FBI",500,A2+"bck2-2ac71c7a-e289-4141-aacf-32fcdc52e117-image.png"],
+      ["76BWMIFD",500,A2+"bck2-643953cc-379d-4cf4-b359-7afd2cf42fa0-image.png"],
+      ["76BZYewa",500,A2+"bck2-a6e99ec2-80f6-4685-9aea-cf64a8c8cc53-Screenshot_20261117-155630.jpg"],
+      ["76C0HQJ3",500,A2+"bck2-7b9f49d7-64a2-4461-8ffc-463b272bf5c1-Screenshot_20261119-182038.jpg"],
+      ["76C1XJ40",500,G+"1rtvpAtxpRpfpPh8Nl5N5uROV2mFipG2V"],
+      ["76C1XJ4O",500,A1+"bck1-89c5a294-1a0f-437d-86a5-8f757bdb70cf-GQDCFcTkmCfHBbgiEmrTxqnMm0I.webp"],
+      ["76C30XLS",500,A1+"bck1-331e82ec-a84c-4971-87cd-8ccb9f6e2f15-image.png"],
+      ["76C3IZFA",500,A2+"bck2-aae5f1a5-34b1-4ae3-b830-1f98c2f60ec2-Screenshot_20261117-231631.jpg"],
+      ["76C8C8IL",500,A3+"bck3-c77c5e2e-ffd2-4a1a-8e32-c40398c9ba1b-image.png"],
+      ["76C8FFIZ",500,G+"1KLVe1RAG0kQ_cc1OloBOU6CTQOp4svCA"],
+      ["76C9SXM7",500,A2+"bck2-6928c727-fd11-47ea-9f58-96a23935aa99-image.png"],
+      ["76C9UBZL",500,A1+"bck1-9b7010d2-fed3-49dd-8358-5867a9477c0c-Messenger_creation_8CB0CEA5-2EDD-4C19-943B-DA2B5AD01C21.jpg"],
+      ["76C9UG0Υ",500,A3+"bck3-71fa87a7-61a5-41a7-9944-0efbf256ee16-image.png"],
+      ["76C9V3W0",500,A1+"bck1-8ee25615-0ba5-4993-863a-a17fa17f655b-image.png"],
+      ["76CA025L",500,G+"1GhKE-0IRRXNalAdY6wlp3LsVC9Z237Kh"],
+      ["76CA3Q7K",500,A2+"bck2-f086d767-b6d0-4058-bcc4-635362ff04d0-image.png"],
+      ["76CA730P",500,G+"1nuBxWMFVB_NuYXnhu5n5i_wddLyrs017"],
+      ["76CAD1RR",500,A1+"bck1-60a49a2b-874c-4125-9684-1a0e84823054-image.png"],
+      ["76CAN4SS",500,A3+"bck3-7818b949-b866-4d56-98c1-d7021a35fe98-file_229896.jpg"],
+      ["76CASYWB",500,G+"1FXYD2rA_MZMWBZJmrXQw_e0K7RQhRB77"],
+      ["76CB100V",500,G+"1iS3J-K-AEJOCdRrCyd2Dl59-hKZymjcE"],
+      ["76CBGFRZ",500,G+"1-NJF6kYqat4jXyWFumll4JeAYgUEMOTK"],
+      ["76CC8HWP",500,A1+"bck1-a83e55c1-02f0-44c6-972c-f05c4faa5760-image.png"],
+      ["76CCHNKZ",500,A3+"bck3-b40fef93-8590-4819-9d65-3127daebf6d3-file_229982.jpg"],
+      ["76CDVFU8",500,A2+"bck2-3a1d28ce-fc90-46af-9e37-ce9480ceb1ad-file_117129.jpg"],
+      ["76CDVSTR",500,A2+"bck2-37cfc937-db47-43b1-a125-e8dfd780322e-Screenshot_20261119_145012.jpg"],
+      ["76CECBCT",500,A3+"bck3-0da5b9bf-b013-4b20-bd13-299501c68d23-image.png"],
+      ["76CF76E4",500,A3+"bck3-0658a25e-790c-41a1-989b-daf6c5723208-Screenshot_20261119-180126.png"],
+      ["76CF8B6B",500,G+"1X0i3wKUUW2ZoL6FivOE-gJTmluxZazx2"],
+      ["76CFA7RO",500,A3+"bck3-bcdf2e13-e31e-4fd1-a882-eb08fd415e2d-c29e1cc6b13a7c00481c101fecaf5c8a.jpg"],
+      ["76CFDEZL",500,A1+"bck1-15eba357-d0c2-493f-9cf1-812cdee1bae2-Screenshot_20261119-182147.png"],
+      ["76CFR2CB",500,A3+"bck3-fdf6746a-62c5-45cb-b2f9-f339120fc29c-Screenshot_20261119-192608.jpg"],
+      ["76CG1RJK",500,A2+"bck2-43c821d7-4304-43f5-8844-e624417da7a5-GFJxtimSmawxqgJwudUWxyKrk0K.webp"],
+      ["76CG7DEZ",500,A3+"bck3-44ec2ee8-8688-48d6-8b00-bbff856907c3-image.png"],
+      ["76CH00BQ",500,A3+"bck3-90203cf8-37b9-406f-ac26-ff04b3d7450b-file_97940.jpg"],
+      ["76CH1T41",500,A2+"bck2-91791a7a-3b4d-4ce4-b471-1318ee6bb616-image.png"],
+      ["76CH5GVP",500,A2+"bck2-504e7570-7191-44c8-8e53-c7b6c5ddb486-Screenshot_2026-11-19-21-57-45-845_com.konasl.nagad.jpg"],
+      ["76CHMAEJ",500,A3+"bck3-6ce47eae-3d93-478c-985a-71b2d3de5c8e-Screenshot_20261119_223545.jpg"],
+      ["76CHRLVI",500,G+"13vMmZ8yZY975tCB2IAbkCnfa35zKHFof"],
+      ["76CHSVCG",500,A3+"bck3-725299a4-b1ee-4b23-9453-00001cadca78-IMG-20261119-WA0064.jpg"],
+      ["76CHTKPP",500,A2+"bck2-c159b649-c3a6-4ad2-8835-b957284dacdd-Screenshot_2026_1119_232557.jpg"],
+      ["76CHYLMO",500,G+"14K6EI5evGGfZvVj2nFFWRohi8Wq6szGr"],
+      ["D1461217034",500,A2+"bck2-c789861c-37ef-4824-8fd5-4c91237758a8-d0d59c26-dac3-47c4-b7ef-c950a3060dc4.png"],
+      ["DGO8PM9S4A",500,A2+"bck2-ee8f411b-149d-4590-805a-25488dfe1dcc-image.png"],
+      ["DJL2C51NDS",500,A3+"bck3-060e2c7a-dc86-4898-9d71-a2ffe7f2edce-Screenshot_20261021_154450_Messages.jpg"],
+      ["DJS1OI1QK7",500,A1+"bck1-a49d1b4e-e012-4d78-96d0-dfd9a48fcf36-image.png"],
+      ["DJV7RHH7UT",500,G+"1unxy9dm6SHOixr_RrvnCNTe03K52sXTt"],
+      ["DK8274KRJU",500,G+"1GN_DYapt8OL-K_JX-ohXgGR8YBHU4hME"],
+      ["DK908OM1XM",500,A1+"bck1-fc5b91bd-dd14-452c-8cef-3d0f9889d9d3-Screenshot_2026-11-09-14-05-14-48_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["DKH1KM0WLB",500,A3+"bck3-8c021267-1b61-4153-94e9-d9e1a370af07-image.png"],
+      ["DKH4LTX4FC",500,A3+"bck3-7ca18488-cb06-40a0-916f-b40cd523e10e-image.png"],
+      ["DKI0NFM1LI",500,A2+"bck2-2314f9d3-f0ad-4fb6-9b3c-d28b664c798d-att.7DsveDVJjQlAMzRlunXW3TZTrv5y6xGRNVLZcBrMfAs.jpg"],
+      ["DKI0NFMB4A",500,A2+"bck2-f47a0bb4-7697-447a-8525-f9e1d3e41e70-file_985021.jpg"],
+      ["DKI3M3T1O9",500,A1+"bck1-8e25114b-f7d9-4032-9867-0e1753d1f986-image.png"],
+      ["DKI5NEYICT",500,A3+"bck3-6473f979-bf6a-4abe-b0a6-da8d3d5f4db3-dc941a01be7a82582dd3864a8611f7f4%20%281%29.jpg"],
+      ["DKI6N7AOGO",500,G+"1EWuO6QacGcF4p7g6uwA4BkfvpCbBQQOc"],
+      ["DKI8M9VNZS",500,A3+"bck3-5af80936-fce4-422f-a0c9-ac45276047c4-image.png"],
+      ["DKI8NIBR7W",500,A1+"bck1-9398dff9-bd14-4b9f-bb53-fdedc76563b6-Screenshot_20261118_235006.jpg"],
+      ["DKI9MB25Q3",500,A3+"bck3-3176183f-67f5-4480-a1ba-78bdc7ffac89-Screenshot_20261118_094849_com_bKash_customerapp_MainActivity.jpg"],
+      ["DKJ0NV3GS",500,G+"1nBv8JZoBovv98nDP-gQAS0iJH8MLNO9N"],
+      ["DKJ10B02Q3",500,A3+"bck3-d8bd7a23-b56c-4e45-a41e-e7c34f039bfa-file_985188.jpg"],
+      ["DKJ1O5OAWB",500,A1+"bck1-6edd0b26-e11b-4987-9ce0-018e53cf1168-3444444444444444.jpg"],
+      ["DKJ2027GOS",500,G+"1ZSrlQ6J1CHa_lECJKKyvcvwkXesxg4-4"],
+      ["DKJ3OWF3OZ",500,G+"1y5pUDrkmj6a5lpjtX0LB0wh2fvVVKB5e"],
+      ["DKJ40294WI",500,A1+"bck1-321eea8f-49e3-47c8-9f98-9cc553677a40-file_985106.jpg"],
+      ["DKJ4O0QI7O",500,A3+"bck3-c1aa300f-a40f-442c-bee3-42d363a14a29-7920.jpg"],
+      ["DKJ5O2HUZR",500,G+"10iE3bGFRwA6nioxHKjc_PERq0Z3I8pcS"],
+      ["DKJ6OLFILW",500,A1+"bck1-84d8decc-5fcf-47bf-9065-f4b0782493c5-Screenshot_2026-11-19-19-54-18-18_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["DKJ6OTRBLE",500,A1+"bck1-d0077fee-ca77-4723-b6f6-958fc9e928bf-Screenshot_2026-11-19-22-00-31-147_com.bKash.customerapp.jpg"],
+      ["DKJ8O7C9PG",500,G+"1rmS-I28COkklL84N8JzlcStH4IM61bGY"],
+      ["mostofa36",500,G+"15xW5SIDctstySd31Dp5SdpMBOukQYpnh"],
+      ["76CHJA4D",505,A1+"bck1-9c66868f-913d-44ea-b820-31f03cbe3d9d-file_985262.jpg"],
+      ["DKJ5OQAP19",505,A3+"bck3-b404f4d7-795b-449e-b00d-3880c6e28345-Screenshot_20261119_210051.jpg"],
+      ["DKJ3O3EZFR",550,A1+"bck1-5b5cdf5d-6ad6-4b19-9ae7-c05053d08fcb-image.png"],
+      ["76C9UNOT",595,A2+"bck2-78152bf5-a28d-4d50-a9bf-6bdeb4e3cd09-image.png"],
+      ["01M7S8SYOS",600,G+"15f5CMnaj6DJ3yKyvxeeCnSrkGZo66qi2"],
+      ["76C6MI9D",600,A3+"bck3-e916104c-50cc-4c50-97df-e46ec22e795b-image.png"],
+      ["76C9LOO0",600,A3+"bck3-c77173f7-acbc-4389-b15a-8f1e5ccebfcb-image.png"],
+      ["76C9V168",600,A2+"bck2-69eb6e7f-1e19-401b-8175-51cc17865083-image.png"],
+      ["76CCZ1E5",600,A2+"bck2-57862193-cdb0-4c00-9938-67eed3c63521-Screenshot_20261119-115739.png"],
+      ["76CHTX5K",600,A3+"bck3-7bb56a93-8181-405c-a94f-8a9cc4151eff-Screenshot_20261119_230616_Nagad.jpg"],
+      ["DKI7NI0RD1",600,A3+"bck3-59c691be-b8b1-43de-8ba1-ea09e5bdfcdd-file_157546.jpg"],
+      ["76CAQHMP",650,A1+"bck1-535c3e16-f1a3-4f7d-907f-1d2cca693467-image.png"],
+      ["76CFNHS9",650,A2+"bck2-95103e8b-67bc-4728-9a04-54600c7a84bf-Screenshot_2026-11-19-18-55-31-254_com.konasl.nagad.jpg"],
+      ["DKI2MXXUD6",650,G+"184Dswjg4rx1MD3aUdaBQOC1bnBPK1pwc"],
+      ["DKI7MK377X",650,A3+"bck3-24192d69-91aa-4953-97bd-a68afc0213cf-image.png"],
+      ["01M7SNXZVJ",700,G+"1XjKibgr6hKHHaW9F0GLwCBeirTwHjEti"],
+      ["76AWRBTN",700,A2+"bck2-3c0d071b-5049-4342-8dda-fbfc5c51f595-image.png"],
+      ["76C4WEQP+76C5SICW+76C51T5W",700,G+"1TxkDy_WR6X2OylazlbDkkGc3gkAWW_e8"],
+      ["76CBKHWQ",700,G+"1nh-FcPGO_JeXjXPUG_UWhB2CucAavzlt"],
+      ["76CCGYWZ",700,A2+"bck2-aaf77427-feb4-451b-80d8-25edb5b98360-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF_%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A9%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%A6.jpg"],
+      ["76CD3GOO",700,G+"1GRknB6CP7ZhUIyWZzEhuCxAkJUrxXSmx"],
+      ["76CE0WZ4",700,A3+"bck3-5f6926cd-efa6-4617-9b91-3e2b714ecc3e-Screenshot_20261119-151516.jpg"],
+      ["76CEOFR3",700,G+"1-q9UPaFDqG-jVvpoYXwQgJ98uPzCubcs"],
+      ["76CFHXFQ",700,A2+"bck2-e290212b-3255-4da5-902f-de55d4ac0bd2-image.png"],
+      ["76CGABY9",700,G+"1PiJizv8vHTjMkX0sIx97QQuZwmAwQ5cz"],
+      ["76CHSHZG",700,A3+"bck3-7f61852a-5bb8-4569-ad1d-5fa5b091ab21-image.png"],
+      ["DKH8LWLYGO",700,A1+"bck1-e6fd1ddd-c00d-4638-92fb-3c1ffeeb5751-image.png"],
+      ["DKI2NCJW5G",700,A3+"bck3-403ed8d2-4f9d-45c6-bedd-16dec5ac0427-Screenshot_20261118-214526.jpg"],
+      ["76CCDBJ1",710,G+"1533N06-oJ7YSmXZrvcUhplg5LLb9vx1g"],
+      ["DK735KR8LR",750,A2+"bck2-51a435e9-d5bf-4943-861a-58fa033c5eb7-5e916c4e6a4f33fb8620557e3ac313e2.jpg"],
+      ["766OYCE4",770,A2+"bck2-732de8ca-f520-4153-90c0-9a36f32f351d-Screenshot_20261118-100734.png"],
+      ["76C8EMYN",780,A1+"bck1-f8fd608a-365b-4ed4-a5f7-2a0a846cac18-image.png"],
+      ["76C04V1V",790,A3+"bck3-192d9082-13f1-42ed-ba63-25c53ecc1b9d-image.png"],
+      ["766PYA23",800,A2+"bck2-b67f6a07-4a16-4323-bbe1-9c720c9fc3e5-image.png"],
+      ["76C2DOSD",800,A3+"bck3-67b019c7-9875-49a6-a77e-f1d2c400dba7-1000009965.jpg"],
+      ["76C9VIVK",800,A2+"bck2-9e1e23db-8888-4cb4-9b1d-91bfb54c2509-36328.png"],
+      ["76CFLVHS",800,A2+"bck2-435ff647-fc3b-438d-8bfc-3402be0f70aa-image.png"],
+      ["76CHWNLS",800,G+"1VJ7_ZI3mCaHg26seU10SUeZUPCqqd5qX"],
+      ["DKI5MX4L7D",800,A1+"bck1-485013a7-22ba-4f04-86d9-9ea960b34ee7-9b3f0207b6386c261904d322b9a84add.jpg"],
+      ["769SDST8",810,A3+"bck3-67b578f8-ff5f-4795-98d2-feca5a2e111c-Screenshot_20261106-205351_Nagad.jpg"],
+      ["76BQZ3M8",900,A1+"bck1-751398be-d8ab-4f76-b2d8-886fa177b312-UJG.jpg"],
+      ["76CECX8D",900,A1+"bck1-e2cf48da-c54f-47cd-adaf-f48e1922e433-image.png"],
+      ["asgor9711",900,G+"1ZiT9wI-L0EN2pnwZZK0vA1qobTZCcbsF"],
+      ["DKI4M2MEXG",900,A3+"bck3-a81221da-68fd-4e90-8cb5-5b4d19f3a47a-image.png"],
+      ["76C5NPL7",910,A1+"bck1-695434a8-03a6-4387-8123-4c9be2ec91c4-YY999999999.jpg"],
+      ["76CC5WSW",950,A1+"bck1-be1411ef-f8bd-47ba-b3b1-95f006fdc176-Screenshot_20261119-092421.png"],
+      ["DKH1LKD6IN",950,A3+"bck3-204c542a-2be1-4c99-85f7-a432cd60ada6-image.png"],
+      ["01M7T9Y847",960,G+"1VCmlNmWPAqWWmtvOAlVZ6BOal9J88QtY"],
+      ["DKJ5NQ3Y81",970,A2+"bck2-0d5f8fd6-3bb6-4eba-9ffd-471b3f832a59-file_229980.jpg"],
+      ["76CBSHW7",980,A1+"bck1-5dbb6a90-d4b5-486a-8d94-9a7e59f59a67-17950481077205488116703565948822.jpg"],
+      ["76CGFDUL",980,A1+"bck1-3f583b48-443c-4536-9b95-f88812c53fde-GJdzhcqtTrCEPmrUNrjIYGZmq0U.webp"],
+      ["DKI0M6MHB2",980,G+"17B3XAp_3ZaXdEFZYxCZFgvZA1b6PUyOi"],
+      ["DKJ6O3OXIS",980,G+"1wYZzKXl_km2c8SOoHIMbE-7luU2CPxfE"],
+      ["76CAQRPJ",985,A3+"bck3-f69b4d2a-f742-48d3-834c-6cb3bfda78e9-Screenshot_2026-11-18-23-13-27-95_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["76C1TJV5",990,A2+"bck2-bd508747-d24f-4740-a3cf-34e62aa5cc96-b81936f8bc1b322011ec1d6f090ae85f.jpg"],
+      ["76C8FT7L",990,A1+"bck1-c87000f8-f316-4735-9614-3c5341de99d9-image.png"],
+      ["76C9UJZ4",990,G+"1WIwiRm27Y34ukP4Uo3a-AnTmwgE3Ub-L"],
+      ["76CI294U",990,A2+"bck2-ede6a510-0856-45d9-b9d2-7fb315d1c19c-Screenshot_20261119_234135.jpg"],
+      ["7138490084",1000,A3+"bck3-66c53db8-782b-4cd9-80f9-6400b4857ab4-Screenshot_20261113-193612.png"],
+      ["7144668203",1000,G+"1Ak8YSBWrOwyUnEyiRHJ7XpJ8ZjsfnV7u"],
+      ["7180067544",1000,A1+"bck1-563bc25d-2d7d-4d18-a7eb-4a5a4d0c5255-image.png"],
+      ["768AYSPM",1000,A3+"bck3-ff8eb8ba-732f-44cd-8ec0-ede3f285372c-Screenshot_2026-11-07-09-24-47-89_965bbf4d18d205f782c6b8409c5773a4.jpg"],
+      ["768V98CU",1000,A3+"bck3-820d142c-8622-4d2d-b43c-45fb8a5ca080-Screenshot_20261103-234717.jpg"],
+      ["769FHE6D",1000,A3+"bck3-48ba989d-35e3-46d3-b62a-53357a7deba5-image.png"],
+      ["769Y6EAZ",1000,A2+"bck2-72ce9b2d-161f-4385-9e5d-86048b483db9-image.png"],
+      ["76AS21G0",1000,G+"1CSqy89KQCUJGvl1RILY8GLzhVbBQOp19"],
+      ["76B8HQ8G",1000,A3+"bck3-d0cb0434-793b-4f13-879f-5731eb9e33ca-image.png"],
+      ["76C1825L",1000,A3+"bck3-0317853f-533e-4f2a-935f-05d2f2e88ae2-image.png"],
+      ["76C1NY4P",1000,A3+"bck3-c989707e-edb1-440a-a42e-a4f23b39ad42-IMG_0063.jpg"],
+      ["76C429V4",1000,A1+"bck1-b5c61daf-0a99-4f6f-aa49-009b341e02d6-image.png"],
+      ["76C8H6K5",1000,G+"1rDIGlSHq8mucNTEx3qdsBjaTxIKYdmmI"],
+      ["76C8I09D",1000,A3+"bck3-a9f6bdb1-74e6-4ec5-8000-72e96f767315-Screenshot_20261118-192822.png"],
+      ["76C8IO9D",1000,A1+"bck1-2db2fdcf-3841-461c-a2e8-39e6b3e77176-Screenshot_20261118-192822.png"],
+      ["76C93QGL",1000,A2+"bck2-580ede35-1886-48bb-8406-148f6e8a2bfb-Screenshot_2026-11-18-20-06-05-33_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["76C9V3FC",1000,G+"1W9CuxyM9lQx0gx_RlOOG0pHCUrSpyejC"],
+      ["76CAC979",1000,A3+"bck3-9e0769e5-2f34-4bb8-af33-cdfb399d1663-Screenshot_20261118_222612_Nagad.jpg"],
+      ["76CAN643",1000,A1+"bck1-cd4f56c7-7c80-4a95-bc78-978d2fba2ff9-Screenshot_20261118-231832.jpg"],
+      ["76CAOPYK",1000,A1+"bck1-36093eda-a0b4-4e3b-a8a6-9fad7f0f9343-image.png"],
+      ["76CBC6J9",1000,A2+"bck2-f7d3145d-30c9-4a4e-a0f6-289769b485b6-AirBrush_20261119103525.jpg"],
+      ["76CCWUDA",1000,G+"1hjWp2FamjTTjqG1CSIXz2v0rKlTRsRF9"],
+      ["76CEH12O",1000,A1+"bck1-a7c85bbe-c8e1-4b52-b094-158c06e8f212-image.png"],
+      ["76CEJ3IO",1000,A3+"bck3-73de0311-4bc8-40e7-81f9-f78b9070957d-file_985264.jpg"],
+      ["76CEJ3lO",1000,A3+"bck3-9581bc2f-1066-4bac-925e-ae1c43a914fd-image.png"],
+      ["76CGRT5Y",1000,A1+"bck1-d51faab6-ec6c-46a9-91b1-b9ffe4397081-image.png"],
+      ["76CHJPTN",1000,A1+"bck1-79b2408d-04cf-44b8-a073-d73687544368-file_230106.jpg"],
+      ["76CZI6FH",1000,G+"1hOR2YsSzkGGdKojyGGiP1k-oVX9sQtBV"],
+      ["bostami90",1000,G+"1c63_QyEZmINER9r--wkIQUZr91kGAnHI"],
+      ["DK6643ST5C",1000,A1+"bck1-ddb8dfdc-2917-4931-be6c-d8dd801c5ec5-image.png"],
+      ["DK989T8UXE",1000,A3+"bck3-352d0cf0-22f4-4099-926f-8ee8f1777768-2294.jpg"],
+      ["DKB5CIRC29",1000,A2+"bck2-d043219b-704d-4bf0-a6a5-376f29a73e14-Screenshot_20261111_165558.jpg"],
+      ["DKH2L9TU26",1000,A3+"bck3-acb88bca-9080-4058-b68d-b6403512afdc-image.png"],
+      ["DKI0N3JR4E",1000,G+"11u6opHIa0sqEbz_WxmUlxu6EK3ASSudK"],
+      ["DKI2N9UTL0",1000,G+"1oBXH8Q2oZmbblBM_9l-xeIWdrHYwLUY0"],
+      ["DKI3NCC2N1",1000,A1+"bck1-f514aa61-4e9c-43ff-8f07-5d6a6da0836e-Screenshot_20261118-214245.png"],
+      ["DKJ0ODTOWI",1000,A3+"bck3-5dfddf85-dc80-4a05-9b07-f38c441e444b-file_117146.jpg"],
+      ["DKJ1OUX4N7",1000,A2+"bck2-b000ca93-f22c-4da0-81d1-a52db442f5ec-image.png"],
+      ["DKJ2OD8H9Q",1000,G+"1UbAO6-tNSfFcY3kO0Bp5Df1tGqZjIqwZ"],
+      ["DKJ6O6G9ll",1000,G+"1eW5nFh2zqbY9jpmmTpUxsKK-BmhWCCcl"],
+      ["DKJ7NLM59R",1000,G+"1duJL6RJEzawjlDg9AdhktKkkOwcd2Y-I"],
+      ["DKJ8O1DGZY",1000,G+"16UpG2fCbtoxii6V0HHCeD7zCCvw1hhmR"],
+      ["DKJONS249Y",1000,A3+"bck3-563398f8-604d-4899-8ecb-eab5eda51c7c-IMG_20261119_102823.jpg"],
+      ["DKJ9OHMRWR",1005,A1+"bck1-f68e2af1-44db-4da6-afab-167a54c28014-file_230045.jpg"],
+      ["76CANXOH",1070,A2+"bck2-a185ab73-5e11-4f46-aa8b-37e7327df46f-Screenshot_20261118-232209.png"],
+      ["76CEYXJ0",1100,A3+"bck3-f587f18d-66ea-4cbb-8635-b89ad0317f95-912401590_1097834623301726_6894469577262849671_n.jpg"],
+      ["DJR9LGDW07",1100,G+"1jUtcQjKMfQ0rx69En9lTi31d9Wv9NcpC"],
+      ["DK958P4PP3",1100,A3+"bck3-d90e5529-77b9-49ca-bafb-0059576274a3-Screenshot_2026-11-09-17-57-30-10_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["DKI3N3JJG3",1130,G+"1zWxoQK-LMXmgtsSbXyXYjcpxuUeFomUl"],
+      ["7172931555",1200,A2+"bck2-4579366e-3496-4787-b2db-f91a8f73debf-2627e8020d854e3b5e6d43b69501443d.jpg"],
+      ["76CAIU51",1200,A1+"bck1-8a1c5031-d72d-4110-b12a-435abb3402ec-915603573_1442399734292068_6385119909553329223_n.jpg"],
+      ["DKB7BSLT0N",1200,A2+"bck2-6b60beea-ef0d-4bc8-badc-4a8149613abe-Screenshot_20261115_122938.jpg"],
+      ["DKJ2O3ZFKA",1200,G+"1_mMl98kRzKS3_NRJ6u0ASX16A4fIb9sI"],
+      ["su01737235905",1200,G+"1UYhGAQdIwKpVqXiMFH782r2em0X-nrsU"],
+      ["DKJ8ONW5OA",1290,G+"1GHGVo19lAzp7Kwa3ll1jhlGJ2FKL30zT"],
+      ["1607069136",1300,G+"1PbshIu6leCKz5fNPCUmcQ9-MYSH0oef3"],
+      ["76BVOO4A",1300,A3+"bck3-35e33924-a719-4ab2-a243-5b4e938323de-AirBrush_20261119211510.jpg"],
+      ["76CGJPJA",1300,A3+"bck3-549b9000-bacc-42dc-b9fc-29c1908cbe1f-image.png"],
+      ["DJT5OPKNCL",1300,A3+"bck3-d5f4720e-e8fa-4852-8c13-ee0e0e43db7a-Screenshot_2026-10-29-07-37-38-23_9a0991d06c39f5556bb727ecc6fd035e.jpg"],
+      ["DKI5ND1VXJ",1300,A2+"bck2-afa66dcd-a227-4a5b-866a-d0717846caf8-c9e3003876d6c1fbc882173dc66126b2.jpg"],
+      ["76BWMNYB",1400,A3+"bck3-886f5585-3715-47f6-a56a-829b8eb43e9d-file_229601.jpg"],
+      ["DKI0MIJ9WK",1400,A1+"bck1-35202557-780c-412f-990b-a20f7a9d0520-image.png"],
+      ["DKJ0OEBBF0",1420,A3+"bck3-b607afcc-86b2-4e46-8f77-f53d2cf6b32e-image.png"],
+      ["765J5XF3",1470,A1+"bck1-b39c7dad-7670-4af1-809a-cd8bd8ffa99d-image.png"],
+      ["76BBSO1M",1500,A2+"bck2-a4a0f819-5424-44c6-aa12-f6bb2c67a3e5-22.jpg"],
+      ["76BGQYJ5",1500,A2+"bck2-3b0a98cb-aed3-4167-83b8-66b5f03bd548-1000908475.jpg"],
+      ["76BQ379O",1500,A2+"bck2-cd510516-bd3b-4407-8743-f17be2de56be-image.png"],
+      ["76C3llOD",1500,A1+"bck1-047f560a-b2e6-47e8-bde0-a585f9b961ad-image.png"],
+      ["76C8KXOI",1500,A3+"bck3-3450e696-e5aa-41aa-bece-3cf6ec644726-image.png"],
+      ["76C8KXOl",1500,A3+"bck3-a2dd2cbe-7355-4d30-a258-5989fcd89587-image.png"],
+      ["76C8KΧΟΙ",1500,A3+"bck3-2f58f0c1-4654-429d-aa94-79f341526acf-image.png"],
+      ["76CC69DE",1500,A1+"bck1-8feb9bd9-e7b9-49ee-b638-666542710f4d-Screenshot_20261119-092920.png"],
+      ["76CDHYY0",1500,A2+"bck2-2ef4997b-17a5-42fe-bcb1-1a35e03d3050-Screenshot_20261119-152115.png"],
+      ["76CH7NP1",1500,G+"1ptyz5HCoHoNJRF64vEyOCbtDoucovC6G"],
+      ["76CHJNYB",1500,A1+"bck1-e74a856e-43fc-42e7-8a9c-795a866c10db-image.png"],
+      ["AW806091",1500,G+"1BEH5Y37g3z9KQY-vgBToNFMhTwd7237r"],
+      ["DJS3N5WEL3",1500,A2+"bck2-9acfcd76-c6fe-49c4-9510-b63808ce1b41-image.png"],
+      ["DKJ0NLXX0A",1500,A2+"bck2-a303c8f5-3a92-4ce6-9947-1f305b5c8eb8-Screenshot_2026-11-19-05-30-38-777_com.android.printspooler-edit.jpg"],
+      ["DKJ4NL2MQ0",1500,A3+"bck3-a3f0acc1-f63d-4935-b562-4041e562e8ab-Screenshot_20261119_030145_bKash.jpg"],
+      ["DJS3N5WEL3",1505,A2+"bck2-3ac17d38-d3c0-4dff-8008-1d1827de3457-file_230111.jpg"],
+      ["76CGXEXP",1700,A1+"bck1-b6864ae9-8e58-4985-aabd-4f0e710d26b9-Screenshot_20261119-211855.jpg"],
+      ["76CAOMLF",1780,A1+"bck1-1c251df4-0721-4d9a-9413-77104d00fbb4-image.png"],
+      ["1714487497",1800,A1+"bck1-87b01c9e-71b1-4a77-9148-b2b8c9d6c963-12733.jpg"],
+      ["76CHAJG3",1900,A3+"bck3-abbde25b-cadb-4799-8ac4-d166395092fa-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF-%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%AA%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AB.png"],
+      ["DKF6IW0ZV0",1900,A3+"bck3-68e3c94e-d74b-4e70-9786-f33b2d406ba9-image.png"],
+      ["DKI5NIKHX9",1900,G+"1ENgjq3KJXTmXwVzoC2FcpOyceBQIWzj9"],
+      ["76CEJFCO",1950,G+"1cZsqQU2uRzUZ6U9rmYjDrYP2raAPsRE_"],
+      ["DJQ2KMS6DS",1950,A1+"bck1-370b42f3-9d00-4fd2-b9c1-f28c38febe39-Screenshot_20261119-010714.png"],
+      ["DKJ9NOC3ED",1950,G+"1lme9u0B_fy5x0i7iF9Eoch4hN-ePwWSG"],
+      ["769M0J5B",1980,A3+"bck3-b23214b4-b301-4d41-8de6-a6ff5ddcf3f9-Screenshot_20261107_221848.jpg"],
+      ["DKJ9O4G5TB",1980,G+"1wgtDcDimvQsAmpex9st7G8MhB8E6k2Sc"],
+      ["DKJ5OPJPTN",1990,G+"1axm30MzwFO87M90npviVonIjJQKiCNef"],
+      ["DKJ8OHJJVS",1990,A1+"bck1-06472603-b902-4fa1-b710-b66deee8a401-Screenshot_2026_1119_190141.jpg"],
+      ["01M7SN525K",2000,A3+"bck3-3f253c9b-407a-47ff-af5e-28b2d3048d24-1000068795.jpg"],
+      ["01M7TOJQH5",2000,G+"1lGRIVDMT-wFwAKd_NRfhJx2NbyqnSMng"],
+      ["1641300283",2000,G+"1Xolpqea2OcxjTth5Zq0YuQ4lca_Bcl79"],
+      ["767OOB7P",2000,A2+"bck2-d3a81475-15e3-4ef4-8b8a-eb5d5a066583-GP7RApUuVSvYRcXHpfwJffQrn0W.webp"],
+      ["7681YIWI",2000,A3+"bck3-27e57771-1c74-4e36-b2d3-306a371ce725-Screenshot_20261030-215556.png"],
+      ["76AEX5SF",2000,G+"12R10aM-DiVjhTTfPcdC2DHZLEnglGhgR"],
+      ["76AIHE26",2000,A1+"bck1-cc80c0ab-7587-4f7a-94bc-eb0345c37da3-Screenshot_2026-11-15-21-19-28-691_com.miui.gallery.jpg"],
+      ["76BW55PQ",2000,A2+"bck2-8e34a8f3-14e7-4f40-8b4c-265868fc0a5c-IMG-20261119-WA0000.jpg"],
+      ["76C01NWT",2000,A3+"bck3-df36692f-8dfa-4c2e-bb2f-af00fca8f1d1-image.png"],
+      ["76C397WW",2000,A1+"bck1-b1b801b4-4872-47ff-bfdf-75b04ce6a908-151cd455427ab24f9dd1835c5dfaff7f.jpg"],
+      ["76C4GZRO",2000,A2+"bck2-f5935581-1e4f-4482-ad72-9c7565e7587d-image.png"],
+      ["76C9G2J9",2000,G+"1bz4yHwDFoEzdJ1E767ZwYBBIkyUDfBX_"],
+      ["76CAST2X",2000,A3+"bck3-82b27048-9823-408d-b688-f59e78921d34-Screenshot_20261118-234420.png"],
+      ["76CD75L2",2000,A2+"bck2-1a1a30b9-7f3b-4ba8-8445-42e15bec45c8-Screenshot_20261119_123633_Nagad.jpg"],
+      ["76CD81T8",2000,A2+"bck2-3caac391-9a0c-44a0-a506-84bdb5ee0d49-Screenshot_20261119-122810.png"],
+      ["76CGFSLO",2000,G+"1jfWD-mBzbHwLv6PQP-wdI1d0vTApekIB"],
+      ["76CHS5YT",2000,G+"1ukfpiAbgfFOZJq6ghqYUul-B5tZhIjVQ"],
+      ["Babu88770",2000,G+"10kQ-IeiWHVSkqAvETalSKqyHd41Y_7cb"],
+      ["DJT6P6Y17S",2000,A2+"bck2-e8f7c1d9-89ec-4c93-8925-dc4a8108df2d-image.png"],
+      ["DKE8GA43I2",2000,A1+"bck1-aa329837-f38d-4149-8691-9c0b48877c5c-image.png"],
+      ["DKF1HO6EJB",2000,A1+"bck1-f71a9c4f-6dd2-41ec-8a6e-9f67a53ea561-image.png"],
+      ["DKJ0OMH1K6",2000,G+"19tbQvMlrqR12RGGm6f5MZwKBBXFFUAtM"],
+      ["DKJ0OW13QY",2000,G+"15-2djmcyW0wqSHL4RIe8IaWJx11HYBVG"],
+      ["DKJ5O5K82B",2000,A1+"bck1-9160cb87-a056-4c29-b376-1fe06e4faeb4-913633200_3207218789473350_3103218977606434660_n.jpg"],
+      ["DKJ7OUXWKD",2000,G+"1ARyZvCWoBy1rwbiiG39iEwwgLwD70lE5"],
+      ["76CAWUBK",2150,G+"1qL8PRO2mBBw4sPmXVuKBopEymiI75cNN"],
+      ["76BZYKIE",2300,A2+"bck2-9e5737c7-fa39-4112-8afa-2f8722a8d03e-cf926463a64485fcccfc41c519bc16e1.jpg"],
+      ["rrr125",2450,G+"1mVepJM8Qou-X_Phky6JjxeUZfQnER1K2"],
+      ["768U8CDl",2500,A3+"bck3-5c020dcb-6ac7-4ece-be91-b6be5808157f-Screenshot_20261119-102101.png"],
+      ["76CCDVC5",2500,A3+"bck3-21b747c0-8887-45e0-aa2f-41ec6de8c1b5-cd29d234ef522eb33bf119e388126a58.jpg"],
+      ["DKJ3NKTR77",2500,G+"1vtkVO-rxCKHi7oC3XbYmbuJjF-mEH5r0"],
+      ["767NJCL1",2600,A1+"bck1-4b324f5a-1103-4bcd-9e64-b56468d1fd13-Screenshot_2026-11-06-19-27-32-903_com.konasl.nagad.jpg"],
+      ["76C5TF49",2700,A3+"bck3-436778b9-c48f-4218-a3d0-2a39f5358c3e-Screenshot_2026-11-18-13-05-36-008_com.miui.gallery.jpg"],
+      ["76CHL1KW",2700,A1+"bck1-6b81b3ec-eb54-4243-91b1-1e2455cd8106-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AF_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AA%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%AF.jpg"],
+      ["76CBTU3E",2800,G+"13MfyhxvHvqJPwPX_CnwMoTeXVpBwasxT"],
+      ["76CDXRP1",2900,A1+"bck1-85aed71e-47b9-4090-bc97-59315adadac6-Screenshot_20261119_143500.jpg"],
+      ["76CGMB17",2960,G+"1GMphax3CT8xAeqzCiWKrbBU1Gz3aEko8"],
+      ["76CD98HK",2995,A3+"bck3-8910bc66-d46a-4172-bc11-122d483294b2-Screenshot_20261119-123513.png"],
+      ["7177081871",3000,A2+"bck2-7d08efad-8fa4-4d7f-a641-66b68c3be18b-new.png"],
+      ["767FQPLL",3000,G+"1sefbeNWZUZmt-89SyIKwAJu2AhycCybR"],
+      ["76AO7NYK",3000,G+"1hh-E7OW_syd1Ji75EWQCIWJr16hDKFPj"],
+      ["76BOWMHK",3000,G+"1-qkJjg2CAQoA-hDATBqXKHlatXbQWeT6"],
+      ["76BR7NSJ",3000,A2+"bck2-34cdd956-67df-46eb-bb74-12073132f6c7-1000028626.jpg"],
+      ["76C4IMII",3000,A2+"bck2-20efbad8-b36b-4370-a86f-013b92f08d55-Screenshot_2026-11-19-16-41-14-708_com.miui.gallery.jpg"],
+      ["76CA1MII",3000,A2+"bck2-185e0dee-ba43-4e9c-bcf1-d95ced18a3b5-Screenshot_2026-11-19-08-30-16-597_com.miui.gallery.jpg"],
+      ["76CDOGLI",3000,A2+"bck2-a41eed32-3200-4918-9be7-9567910644b5-image.png"],
+      ["76CFBHSS",3000,A2+"bck2-a6e04209-40da-41aa-b502-9bcab21c1658-Screenshot_2026-11-19-18-12-10-56_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["DKI0N69G5G",3000,A2+"bck2-7cca0c74-b356-43e0-96a3-293934f3b414-IMG-20261119-WA0000.jpg"],
+      ["merov4547",3000,G+"1Vp33eIiVm4pH28QmLvVXBWai6pDDiCz-"],
+      ["neeov4547",3000,G+"12SMtArGcPPYToJl7uVeynXbZGCaeV1gN"],
+      ["nerov4547",3000,G+"1gCOLMX8N6EN2IBKfdegMfgtbsklrIhT0"],
+      ["DKI0NDYY88",3200,G+"1U-ZT0W2zJWANU1O9EiHcFHCpV1S3DiWJ"],
+      ["76BPVZ7H",3300,A1+"bck1-c98f2c38-c0ff-4d1a-a328-e47a258714ec-072108cbc37a05d36bed02b0fa8b4fe9.png"],
+      ["76CGSOQZ",3400,G+"1vwXPE7FrZaB0LgSfHc4uf1AWwNKdT4V5"],
+      ["76C8UM7R",3500,A1+"bck1-18340a4f-d802-4636-b292-6a38a594e72f-Screenshot_2026-11-19-09-09-24-898_com.miui.gallery.jpg"],
+      ["76BW3JO8",3600,A2+"bck2-5e47a89c-1826-44df-aa2d-679aa75d865d-image.png"],
+      ["76AODYSO",3800,A3+"bck3-35c1bf74-5562-4f8c-ba05-f79eb9b5f5e9-Screenshot_2026-11-19-11-22-41-90_1ac437793f7d3b697403ad50cf2ff081.jpg"],
+      ["76BUSZWG",3900,A2+"bck2-229ca75b-f97e-458b-a9e4-f352fc53d1fb-file_157220.jpg"],
+      ["DJQ2JN1D1K",3900,G+"1G-CW9SHPRz1nwsIs5OR7u5J8iFSMNWXQ"],
+      ["769U9B2S",4000,A2+"bck2-3321492e-6cb7-429a-a2ca-ad47c211ea2a-Screenshot_20261118-155017.jpg"],
+      ["76B5V4N5",4000,A1+"bck1-b0b4b080-f33b-468e-97e7-ff395ef7fbc8-1000119486.png"],
+      ["76B5VQNA",4000,G+"1N9YovUluZbesIpqSwrXofTZAoLR2YXi4"],
+      ["76BQZRLB",4000,A1+"bck1-eff1db5b-4592-4984-97e9-37b0e5635552-1000001200.jpg"],
+      ["76C5V4NA",4000,A1+"bck1-430733b8-39f8-4cc9-bf30-e3c21cf206c0-1000119346.png"],
+      ["76C7UF29",4000,A3+"bck3-9117be3b-a325-4b04-92c8-b8c2b6418b26-Screenshot_2026-11-19-08-41-24-411_com.miui.gallery.jpg"],
+      ["76CBUKAO",4000,G+"1D-rR9wpqIpma8HC4rUKr9FTGBYJXWVH4"],
+      ["76CCYWMR",4000,G+"1sJqWQq-ZlcWaltkcprawAz84VLhMKdl_"],
+      ["76CDZIKE",4000,G+"11Sy7EJ0UpvjdOXU_Ti88jlne3c0twDY2"],
+      ["76CHBVML",4000,G+"1EBq-Kn4MkQNSIxnhDfQUMFGjgR09HWgi"],
+      ["DKI5NEEOEB",4100,A1+"bck1-f2b8f773-633c-4f35-b1cf-6f8ed9e21544-IMG-20261118-WA0006.jpg"],
+      ["DKI5NEEOЕВ",4100,A1+"bck1-30cd6896-01aa-44e0-bb51-bd8c9a3e846b-image.png"],
+      ["76CFXZ6K",4490,A1+"bck1-18fdf38a-cae1-4510-8bff-32239a8d0a8a-Screenshot_20261119-191941_Phone%20services.png"],
+      ["76CBA760",4500,G+"1prDlIBhQaIui_vqrkUo47GBUxLu5UvI7"],
+      ["DKJ5NO4JOL",4600,G+"1s2FXRfCAa75AlIblKb_c3HpL3Kdn9sdc"],
+      ["76CH0ZHJ",4700,A3+"bck3-9dd61e93-1fa9-44a0-b354-9ed024a86bd0-Screenshot_20261119-212640_Nagad.png"],
+      ["76944XN4",4900,A2+"bck2-8726ec69-b7c8-404a-b0c4-e6db54a0e196-Screenshot_%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A8%C3%A0%C2%A7%C2%AC%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%AB-%C3%A0%C2%A7%C2%A7%C3%A0%C2%A7%C2%A9%C3%A0%C2%A7%C2%A6%C3%A0%C2%A7%C2%A9%C3%A0%C2%A7%C2%AB%C3%A0%C2%A7%C2%AC.jpg"],
+      ["DJ7O1QLGL8",4900,G+"1h6qErEC4ZMZT2iZ9u8dArAaIZKPKUTlm"],
+      ["DKJ7OKKEYZ",4900,G+"1kMc-SAvyc7gHeeK1JYn53tBNBH55656Z"],
+      ["01M7QPF67E",5000,A3+"bck3-2a141f26-81e0-4b42-9447-2fd987df9687-3387.jpg"],
+      ["01M7ST36T6",5000,G+"1kSEq1UJ0V8JNVJiVpSIzXpy9Iq-4pCMF"],
+      ["768FZL42",5000,A1+"bck1-cb2eb71b-c446-4299-986e-62ee7091669d-GIJbfeLVvUnktSyVEvMMePvDv0A.webp"],
+      ["7691K0G9",5000,A3+"bck3-19d530ff-86a7-4956-a1fc-76edf6ac50bb-5f1e83d4229f804a82cddfc5a3d2a638.jpg"],
+      ["7697PZF5",5000,A1+"bck1-a701fe86-f583-434b-be67-c9666e46dec2-file_117022.jpg"],
+      ["76A8GJD4",5000,A1+"bck1-c188da87-06dd-4991-83e6-2f29c327f4d2-1794741167600.jpg"],
+      ["76AW7N3T",5000,A3+"bck3-b447d078-b981-4c74-bb30-3d6274d0b64d-AirBrush_20261115205159.jpg"],
+      ["76B1VX3C",5000,A3+"bck3-f90d79ee-1039-4dc7-b552-2e0a6287ac85-1000119347.png"],
+      ["76BEG42K",5000,A2+"bck2-489196d0-8348-46f0-aef0-e2e103b236ea-90037.jpg"],
+      ["76BIVX3C",5000,G+"1-ZPChLFPO-Br7zn9WTGTLxsyDV79tXns"],
+      ["76BJVQ3C",5000,A3+"bck3-1931b191-5547-420e-a0c2-531f8f1424c5-1000119488.png"],
+      ["76BK0C87",5000,A1+"bck1-c9e3ccb4-49e8-48bf-9b11-e3380def7095-1000119281.png"],
+      ["76BK0CJ7",5000,A1+"bck1-0a8077eb-f8c4-42ac-8dc6-53af53252dd5-1000119490.png"],
+      ["76BK0CSS",5000,A2+"bck2-ddf11349-a73f-4b88-b650-56b24cbc0292-1000119172.png"],
+      ["76BK2CS7",5000,A3+"bck3-2d1d4f99-ce81-4673-a73a-f5132b583527-1000119491.png"],
+      ["76BKJCS7",5000,A2+"bck2-40176cff-f30a-4cde-ae28-afdd4dc77d12-1000119248.png"],
+      ["76BSEVU3",5000,A3+"bck3-c129e132-a4dd-4cd1-bff4-83acdce74211-1000001417.jpg"],
+      ["76BYSRID",5000,A2+"bck2-21442ebf-50ff-4345-b602-855e90f7615e-862.jpg"],
+      ["76BZW9TZ",5000,A1+"bck1-8827affb-4868-4abd-a244-3f744d52b132-image.png"],
+      ["76C1UQAN",5000,A2+"bck2-c66652a4-9b9e-4119-8b2b-44b18034ae54-Screenshot_20261117_194815.jpg"],
+      ["76C6TXTR",5000,A2+"bck2-106aec12-d286-49ab-8d27-8cf5a7800897-701.jpg"],
+      ["76C84TAR",5000,A2+"bck2-2f2e58c8-c3f4-4f53-b933-c92be1f8bf80-Screenshot_2026-11-19-09-29-34-292_com.miui.gallery.jpg"],
+      ["76C88RTD",5000,A1+"bck1-77c72030-c3e5-4252-8aab-f83cc6c397bf-Screenshot_2026-11-19-08-50-38-646_com.miui.gallery.jpg"],
+      ["76C9VIYO",5000,A1+"bck1-56e5c934-42f5-443d-be76-6975ffee8826-Screenshot_20261118-232755_Nagad.png"],
+      ["76CA9JBS",5000,A3+"bck3-f9ec3274-0ab7-4eba-908f-7ee90c63c61d-3381.jpg"],
+      ["76CAJ48B",5000,A2+"bck2-8288515a-a1fe-4ae0-9a44-6ca2aac737e0-3392.jpg"],
+      ["76CAO6OP",5000,A2+"bck2-af9170ef-f6b6-4b09-9c30-a4d86d0b1efc-image.png"],
+      ["76CB21W0",5000,A1+"bck1-ffaef5d2-be09-4e7b-975a-43c3bd282b5d-3466.jpg"],
+      ["76CB2ILJ",5000,A1+"bck1-3e8c4996-d362-4e6a-b069-dbdc3399c891-3438.jpg"],
+      ["76CB31BG",5000,A1+"bck1-07d2a7c8-30d2-4b93-86ff-50d00756d740-3471.jpg"],
+      ["76CB3EHB",5000,A3+"bck3-380b8dde-c07e-437e-ab22-b8f3e50255ba-3428.jpg"],
+      ["76CB3X8N",5000,A2+"bck2-a5d11e87-710c-42e1-b758-faa3280ba7a5-3416.jpg"],
+      ["76CB6PSR",5000,A2+"bck2-081fb9b4-0f7f-43ed-b60e-711086a83a9d-3417.jpg"],
+      ["76CB9S8F",5000,A3+"bck3-c0aefe44-2b3c-4e07-8be1-e3d72ad4b7b9-3418.jpg"],
+      ["76CBXODH",5000,A1+"bck1-68ff462b-f426-41a2-aff4-649397efc93f-Screenshot_2026-11-19-07-55-09-220_com.konasl.nagad.jpg"],
+      ["76CC39B6",5000,G+"1MvN_vXsjnLcHwayzx4_1K1mz-mdg2quF"],
+      ["76CCMUK4",5000,A3+"bck3-1348b77e-6dc2-4b10-a252-43f05a30af99-3414.jpg"],
+      ["76CCNNM0",5000,A2+"bck2-256b7596-596e-4ed4-a600-e95b5312e389-3476.jpg"],
+      ["76CCNQIT",5000,A1+"bck1-91b449fa-147c-4858-8ffb-3557b906e1ba-3423.jpg"],
+      ["76CCO5B0",5000,A3+"bck3-7339a50d-7175-470f-bc89-e870e59b2435-3461.jpg"],
+      ["76CCQCQE",5000,A3+"bck3-0d3ddbe5-46bf-47e3-9cdd-e3309fe6a327-3433.jpg"],
+      ["76CDL37L",5000,A1+"bck1-22d8a1fb-676e-4d7d-99ed-412d323aec67-Screenshot_20261119-132735.png"],
+      ["76CDPZB4",5000,A1+"bck1-f8a935ee-30f3-4800-aaee-5d375155c637-Screenshot_20261119-143237.png"],
+      ["76CEGZDU",5000,A1+"bck1-8a19bd06-9998-498d-b7dd-2886d914e148-image.png"],
+      ["76CK0CS7",5000,G+"1aI99GTrJT0_SM_mhkVjHVqDF3TRPdy_w"],
+      ["DJL0BCHMQW",5000,G+"1UZHM1Wjvc3_pt5m4fz3IPgu7YBwYFsao"],
+      ["DJQ2JOCEYE",5000,A1+"bck1-3dba8bcd-6cc8-4893-a2ed-df5d531dd25b-Screenshot_20261118-212544.png"],
+      ["DJT5OR64NV",5000,A1+"bck1-885d4958-7897-430e-b150-2120d8c51307-IMG_20261117_113808.jpg"],
+      ["DJT6P6IIQI",5000,G+"15jmg6Upkm-Re1ZGqP7RDESJw5Nc7Abof"],
+      ["DK16NBCWOE",5000,A1+"bck1-56634578-41fd-4923-a07a-61dcadc03278-Screenshot_20261118-210218.png"],
+      ["DKE4H9E2V6",5000,A1+"bck1-c905ca59-1a4f-42d4-8a79-ca1922b82de5-1000115741.jpg"],
+      ["DKJ7OKLDY5",5000,A2+"bck2-451ff11e-5509-4658-b59a-4e68e889c323-image.png"],
+      ["DKJ9NU8MAL",5000,G+"1ADhC9REwKRvjYiwOMcZjX6inRffEULBJ"],
+      ["76CA5ULO",5200,A2+"bck2-d6b50f0b-5a09-4edd-97bc-b578aae2b33b-IMG-20261118-WA0000.jpg"],
+      ["76C9NAVI",5700,A2+"bck2-f46e42f3-acda-43af-a1dd-54920fc7b863-Screenshot_2026-11-18-20-"]
+    ];
+
+    const DATA = RAW.map(function (r) {
+      return { ref: r[0], amt: r[1], url: r[2] };
+    });
+
+    /* ---------- DOM refs ---------- */
+    const tbody      = document.getElementById('rows');
+    const searchEl   = document.getElementById('search');
+    const clearBtn   = document.getElementById('clearBtn');
+    const countBadge = document.getElementById('countBadge');
+    const footerCnt  = document.getElementById('footerCount');
+    const footerTot  = document.getElementById('footerTotal');
+    const toast      = document.getElementById('toast');
+    const toastBox   = document.getElementById('toastBox');
+    const toastText  = document.getElementById('toastText');
+
+    /* ---------- Helpers ---------- */
+    const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return ESC[c]; }); }
+
+    function hl(text, q) {
+      if (!q) return esc(text);
+      const i = String(text).toLowerCase().indexOf(q);
+      if (i === -1) return esc(text);
+      const s = String(text);
+      return esc(s.slice(0, i)) +
+             '<mark>' + esc(s.slice(i, i + q.length)) + '</mark>' +
+             esc(s.slice(i + q.length));
+    }
+
+    const fmt = function (n) { return Number(n).toLocaleString('en-US'); };
+
+    /* ---------- Render ---------- */
+    function render(query) {
+      const q  = (query || '').trim().toLowerCase();
+      const qn = q.replace(/,/g, '');
+
+      const list = q
+        ? DATA.filter(function (d) {
+            return d.ref.toLowerCase().indexOf(q) !== -1 ||
+                   String(d.amt).indexOf(qn) !== -1 ||
+                   fmt(d.amt).toLowerCase().indexOf(q) !== -1;
+          })
+        : DATA;
+
+      if (!list.length) {
+        tbody.innerHTML =
+          '<tr><td colspan="3" class="px-6 py-20 text-center">' +
+            '<p class="text-sm font-medium text-slate-300">No match found</p>' +
+            '<p class="mt-1 text-xs text-slate-500">Nothing for “' + esc(query) + '” — try a reference or amount</p>' +
+          '</td></tr>';
+      } else {
+        tbody.innerHTML = list.map(function (d) {
+          const imgCell = d.url
+            ? '<a href="' + esc(d.url) + '" target="_blank" rel="noopener noreferrer" ' +
+              'class="inline-flex items-center gap-1 rounded-lg border border-slate-700 px-2 py-1 ' +
+              'text-[11px] font-medium text-slate-300 transition hover:border-emerald-500/60 ' +
+              'hover:text-emerald-300 active:scale-95">' +
+                '<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+                     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<rect x="3" y="3" width="18" height="18" rx="2"></rect>' +
+                  '<circle cx="9" cy="9" r="2"></circle>' +
+                  '<path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>' +
+                '</svg><span class="hidden sm:inline">View</span>' +
+              '</a>'
+            : '<span class="pr-2 text-slate-600">—</span>';
+
+          return '<tr data-ref="' + esc(d.ref) + '" ' +
+                 'class="cursor-pointer transition-colors hover:bg-slate-800/40 active:bg-slate-800/70">' +
+              '<td class="px-3 py-2.5 align-middle">' +
+                '<span class="flex items-start gap-1.5">' +
+                  '<span class="break-all font-mono text-[12.5px] leading-snug text-slate-100">' +
+                    hl(d.ref, q) +
+                  '</span>' +
+                  '<svg class="mt-[2px] h-3.5 w-3.5 shrink-0 text-slate-600" viewBox="0 0 24 24" fill="none" ' +
+                       'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>' +
+                    '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>' +
+                  '</svg>' +
+                '</span>' +
+              '</td>' +
+              '<td class="whitespace-nowrap px-2 py-2.5 text-right align-middle">' +
+                '<span class="rounded-md bg-slate-800/80 px-2 py-1 text-[12px] font-semibold tabular-nums text-emerald-300">' +
+                  fmt(d.amt) +
+                '</span>' +
+              '</td>' +
+              '<td class="whitespace-nowrap px-2 py-2.5 text-right align-middle">' + imgCell + '</td>' +
+            '</tr>';
+        }).join('');
+      }
+
+      const total = list.reduce(function (s, d) { return s + Number(d.amt || 0); }, 0);
+
+      countBadge.textContent = list.length;
+      footerCnt.textContent  = 'Showing ' + list.length + ' of ' + DATA.length;
+      footerTot.textContent  = total.toLocaleString('en-US');
+      clearBtn.classList.toggle('hidden', !q);
+    }
+
+    /* ---------- Toast ---------- */
+    let toastTimer = null;
+    function showToast(msg, ok) {
+      toastText.textContent = msg;
+      const good = ok !== false;
+      toastBox.className =
+        'flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-medium shadow-lg shadow-black/40 backdrop-blur ' +
+        (good ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-300'
+              : 'border-rose-500/30 bg-rose-500/15 text-rose-300');
+      toast.classList.remove('opacity-0', 'translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 1600);
+    }
+
+    /* ---------- Clipboard ---------- */
+    function legacyCopy(text) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;' +
+                           'pointer-events:none;-webkit-user-select:text;user-select:text';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch (e) { return false; }
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* fall through */ }
+      }
+      return legacyCopy(text);
+    }
+
+    /* ---------- Row click → copy ---------- */
+    tbody.addEventListener('click', async function (e) {
+      if (e.target.closest('a')) return;            // image links keep working
+      const row = e.target.closest('tr[data-ref]');
+      if (!row) return;
+
+      const ref = row.dataset.ref;
+      const ok  = await copyText(ref);
+
+      if (ok) {
+        row.classList.remove('row-copied');
+        void row.offsetWidth;                       // restart animation
+        row.classList.add('row-copied');
+        showToast('Copied  ' + ref, true);
+      } else {
+        showToast('Copy failed — long-press to copy', false);
+      }
+    });
+
+    /* ---------- Search ---------- */
+    let rafId = null;
+    searchEl.addEventListener('input', function () {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(function () { render(searchEl.value); });
+    });
+    searchEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); searchEl.blur(); }
+    });
+    clearBtn.addEventListener('click', function () {
+      searchEl.value = '';
+      render('');
+      searchEl.focus();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       🔒  ANTI-SELECTION LAYER
+       ═══════════════════════════════════════════════════════════ */
+    function isEditable(el) {
+      return !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      const k = (e.key || '').toLowerCase();
+      if ((e.ctrlKey || e.metaKey) && !isEditable(e.target) && (k === 'a' || k === 'c' || k === 'x')) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (k === 'a') showToast('Select-all is disabled — tap a row to copy', false);
+      }
+    }, true);
+
+    document.addEventListener('selectstart', function (e) {
+      if (!isEditable(e.target)) e.preventDefault();
+    }, true);
+
+    document.addEventListener('copy', function (e) {
+      if (!isEditable(e.target)) e.preventDefault();
+    });
+
+    document.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    document.addEventListener('contextmenu', function (e) {
+      if (e.target.closest('table')) e.preventDefault();
+    });
+
+    document.addEventListener('touchstart', function () {
+      if (document.getSelection) {
+        const sel = document.getSelection();
+        if (sel && sel.rangeCount > 0 && !isEditable(document.activeElement)) sel.removeAllRanges();
+      }
+    }, { passive: true });
+
+    document.addEventListener('selectionchange', function () {
+      const sel = document.getSelection();
+      if (sel && !sel.isCollapsed && !isEditable(document.activeElement)) sel.removeAllRanges();
+    });
+
+    /* ---------- Boot ---------- */
+    render('');
+  })();
+  </script>
+</body>
+</html>
