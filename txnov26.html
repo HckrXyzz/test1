@@ -323,7 +323,7 @@
       tableBody.innerHTML = data.map((row, idx) => `
         <tr class="hover:bg-gray-800/50 transition-colors group">
           <td class="py-3 px-4 text-center text-xs font-mono text-slate-500">${idx + 1}</td>
-          <td class="py-3 px-4 font-mono font-medium text-slate-200 tx select-all">${row.tx}</td>
+          <td class="py-3 px-4 font-mono font-medium text-slate-200 tx select-all"><button type="button" class="text-blue-400 txBtn copyBtn" copy-data="${row.tx}" id="tx-${row.tx}">${row.tx}</button></td>
           <td class="py-3 px-4 text-right font-mono font-semibold text-emerald-400 amount">${row.amount}</td>
           <td class="py-3 px-4 text-right">
             ${
